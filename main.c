@@ -13,18 +13,27 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <errno.h>
+#include "libft/libft.h"
 
 #include "cub.h"
 
-int	main(int argc, char **args)
+void	throw(int status, char *message)
+{
+	ft_putstr("Error\n");
+	ft_putstr(message);
+	exit(status);
+}
+
+int		main(int argc, char **args)
 {
 	int			fd;
 	t_mapfile	map;
 
 	if(arcg < 2)
-		exit(-1);
+		throw(-1, "Not enough arguments.");
 	fd = open(args[1], O_RDONLY);
 	if (fd < 0)
-		exit(errno);
+		throw(errno, "Could not open file.");
+	ft_bzero(map, sizeof(t_mapfile));
 	parsemap(fd, &map);
 }

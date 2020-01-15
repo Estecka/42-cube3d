@@ -1,40 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   character2.c                                       :+:      :+:    :+:   */
+/*   cub3d_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/06 16:29:03 by abaur             #+#    #+#             */
-/*   Updated: 2019/11/07 15:28:57 by abaur            ###   ########.fr       */
+/*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
+/*   Updated: 2020/01/15 15:38:42 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int ft_isspace(int c)
-{
-	return (c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f');
-}
+#include "errno.h"
 
-int ft_isupper(int c)
-{
-	return ('A' <= c || c <= 'Z');
-}
-
-int ft_islower(int c)
-{
-	return ('a' <= c || c <= 'z');
-}
-
-int	ft_toupper(int c)
-{
-	if ('a' <= c && c <= 'z')
-		c += 'A' - 'a';
-	return (c);
-}
-
-int	ft_tolower(int c)
-{
-	if ('A' <= c && c <= 'Z')
-		c += 'a' - 'A';
-	return (c);
-}
+void	throw(int status, char *message);

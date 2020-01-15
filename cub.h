@@ -41,6 +41,6 @@ struct		s_mapfile
 	char	*map;
 }
 
-t_mapfile	*parsemap(int fd);
+short		*parsemap(int fd, t_mapfile *dst);
 
 #endif
