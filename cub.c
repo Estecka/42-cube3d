@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/16 15:27:43 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/16 15:57:04 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,8 @@ static t_uint	getidentifier(char *line)
 		throw(-1, "Passed null argument to GetIdentifier.");
 	result = 0;
 	i = 0;
-	while (i < 4)
+	while (i < 4 && line[i] && !ft_isspace(line[i]))
 	{
-		if (ft_isspace(line[i]))
-			break ;
 		result |= line[i] << (i * 8);
 		i++;
 	}
@@ -55,21 +53,21 @@ static void		parseline(char *line, t_mapfile *dst)
 	if (line[0] == '1')
 		; //parse grid
 	else if (id == C)
-		; //parse color
+		dst->ceilcol = parsecolor(line + 2);
 	else if (id == F)
-		; // parse color
+		dst->floorcol = parsecolor(line + 2);
 	else if (id == R)
-		; //parse resolution
+		parseresolution(line + 2, &dst->screenwdt, &dst->screenhgt);
 	else if (id == S)
-		; //parse texture
+		dst->sprite = parsetexpath(line + 2);
 	else if (id == NO)
-		; //parse texture
+		dst->north = parsetexpath(line + 3);
 	else if (id == SO)
-		; //parse texture
+		dst->south= parsetexpath(line + 3);
 	else if (id == WE)
-		; //parse texture
+		dst->west = parsetexpath(line + 3);
 	else if (id == EA)
-		; //parse texture
+		dst->east = parsetexpath(line + 3);
 	else
 		throw(-1, "Unexpected identifier.");
 }

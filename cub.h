@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/16 15:27:11 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/16 15:57:27 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ struct	s_color
 
 struct	s_mapfile
 {
-	int		width;
-	int		height;
+	int		screenwdt;
+	int		screenhgt;
 
-	char	*norh;
+	char	*north;
 	char	*south;
 	char	*east;
 	char	*west;
