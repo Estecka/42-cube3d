@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/15 15:38:42 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/16 13:23:37 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ static void	parseline(char *line, t_mapfile *dst)
 ** 	false Invalid cub file
 */
 
-short	parsemap(int fd, t_mapfile *dst)
+short		parsemap(int fd, t_mapfile *dst)
 {
 	char *line;
 	char err;
 
-	while(0 < (err = get_next_line(fd, line)))
+	while (0 < (err = get_next_line(fd, line)))
 	{
 		if (line[0] != '\0')
 			parseline(line, dst);

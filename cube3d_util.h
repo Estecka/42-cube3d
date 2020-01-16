@@ -1,15 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d_util.c                                       :+:      :+:    :+:   */
+/*   cube3d_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/15 15:38:42 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/16 12:48:44 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "errno.h"
+#ifndef CUBE3D_UTIL_H
+# define CUBE3D_UTIL_H
+
+# include "errno.h"
 
 void	throw(int status, char *message);
+
+#endif

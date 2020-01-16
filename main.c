@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/15 15:38:42 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/16 12:45:33 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		main(int argc, char **args)
 	int			fd;
 	t_mapfile	map;
 
-	if(arcg < 2)
+	if (arcg < 2)
 		throw(-1, "Not enough arguments.");
 	fd = open(args[1], O_RDONLY);
 	if (fd < 0)

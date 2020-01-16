@@ -6,24 +6,25 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/15 15:38:42 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/16 12:49:17 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB_H
+# define CUB_H
 
-typedef s_color		t_color
-typedef s_mapfile	t_mapfile;
+typedef struct s_color		t_color;
+typedef struct s_mapfile	t_mapfile;
 
-struct		s_color
+struct	s_color
 {
 	unsigned int	r : 8;
 	unsigned int	g : 8;
 	unsigned int	b : 8;
 	unsigned int	a : 8;
-}
+};
 
-struct		s_mapfile
+struct	s_mapfile
 {
 	int		width;
 	int		height;
@@ -39,8 +40,8 @@ struct		s_mapfile
 	t_color	ceilcol;
 
 	char	*map;
-}
+};
 
-short		*parsemap(int fd, t_mapfile *dst);
+short	*parsemap(int fd, t_mapfile *dst);
 
 #endif
