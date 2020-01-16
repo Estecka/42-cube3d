@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/16 12:49:17 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/16 15:27:11 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,6 @@ struct	s_mapfile
 	char	*map;
 };
 
-short	*parsemap(int fd, t_mapfile *dst);
+short	parsemap(int fd, t_mapfile *dst);
 
 #endif
