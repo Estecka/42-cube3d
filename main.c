@@ -13,14 +13,18 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <errno.h>
-#include "libft/libft.h"
 
+#include "cube3d_util.h"
 #include "cub.h"
 
-void	throw(int status, char *message)
+void	throw(int status, char *errformat, ...)
 {
+	va_list args;
+
 	ft_putstr("Error\n");
-	ft_putstr(message);
+	va_start(args, errformat);
+	ft_vprintf(errformat, args);
+	va_end(args);
 	exit(status);
 }
 

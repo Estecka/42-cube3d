@@ -14,11 +14,12 @@
 # define CUBE3D_UTIL_H
 
 # include "libft/libft.h"
+# include "ft_printf/ft_printf.h"
 # include "errno.h"
 
 typedef unsigned int	t_uint;
 typedef unsigned long	t_ulong;
 
-void	throw(int status, char *message);
+void	throw(int status, char *errformat, ...);
 
 #endif
