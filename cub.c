@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/17 13:14:18 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/17 16:04:22 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void		parseline(char *line, t_mapfile *dst)
 
 	id = getidentifier(line);
 	if (line[0] == '1' && dst->map == NULL)
-		; //parse grid
+		return; //parse grid
 	else if (id == C && dst->ceilcol.a == 0)
 		dst->ceilcol = parsecolor(skip_id(line));
 	else if (id == F && dst->floorcol.a == 0)
@@ -111,7 +111,7 @@ void			parsemap(int fd, t_mapfile *dst)
 	}
 	if (err < 0)
 		throw(errno, "GNL error");
-	if (dst->screenwdt == 0 || dst->screenhgt == 0 || dst->map == NULL
+	if (dst->screenwdt == 0 || dst->screenhgt == 0 //|| dst->map == NULL
 		|| dst->north == NULL || dst->south == NULL || dst->east == NULL
 		|| dst->west == NULL || dst->sprite == NULL || dst->floorcol.a == 0
 		|| dst->ceilcol.a == 0)

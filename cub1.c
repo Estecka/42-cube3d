@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 15:35:02 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/17 15:07:06 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/17 16:18:05 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	parseresolution(const char *line, int *width, int *height)
 	}
 	while (*line && ft_isspace(*line))
 		line++;
-	if (*line || *height || *width == 0)
+	if (*line || *height == 0 || *width == 0)
 		throw(-1, "Bad resolution format.");
 }
 
@@ -62,7 +62,7 @@ char	*parsetexpath(const char *line)
 
 	fd = open(line, O_RDONLY);
 	if (fd < 0)
-		throw(-1, "Invalid file path");
+		throw(-1, "Invalid texture path");
 	else
 		close(fd);
 	dst = ft_strdup(line);
@@ -84,11 +84,11 @@ t_color	parsecolor(const char *line)
 	color = (t_color){ 0, 0, 0, 1 };
 	while (ft_isdigit(*line))
 		color.r = (10 * color.r) + *(line++) - '0';
-	if (*line != ',' && !ft_isdigit(*(++line)))
+	if (*line != ',' || !ft_isdigit(*(++line)))
 		throw(-1, "Invalid character after Red.");
 	while (ft_isdigit(*line))
 		color.g = (10 * color.g) + *(line++) - '0';
-	if (*line != ',' && !ft_isdigit(*(++line)))
+	if (*line != ',' || !ft_isdigit(*(++line)))
 		throw(-1, "Invalid character after Green.");
 	while (ft_isdigit(*line))
 		color.b = (10 * color.b) + *(line++) - '0';

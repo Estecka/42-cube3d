@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/17 11:17:26 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/17 16:12:47 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	throw(int status, char *message)
 	exit(status);
 }
 
+#include <stdio.h>
 int		main(int argc, char **args)
 {
 	int			fd;
@@ -36,4 +37,21 @@ int		main(int argc, char **args)
 		throw(errno, "Could not open file.");
 	ft_bzero(&map, sizeof(t_mapfile));
 	parsemap(fd, &map);
+
+	printf("\
+R %d %d \n\
+NO %s \n\
+SO %s \n\
+WE %s \n\
+EA %s \n\
+S  %s \n\
+F  %d,%d,%d \n\
+C  %d,%d,%d \n\
+",
+		map.screenwdt, map.screenhgt,
+		map.north, map.south, map.west, map.east,
+		map.sprite,
+		map.floorcol.r, map.floorcol.g, map.floorcol.b,
+		map.ceilcol.r, map.ceilcol.g, map.ceilcol.b
+		);
 }
