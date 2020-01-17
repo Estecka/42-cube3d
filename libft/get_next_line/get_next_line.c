@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:19:44 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/13 15:36:30 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/16 12:07:34 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ static char	*flushbuff(t_gnlbuffer *first, char *dst)
 			free(prev);
 		}
 	}
+	if (current)
+		free(current);
 	if (dst)
 		*cursor = '\0';
 	return (dst);
@@ -92,7 +94,7 @@ static char	*flushbuff(t_gnlbuffer *first, char *dst)
 
 int			get_next_char(int fd, char *dst)
 {
-	static char	buffer[BUFFER_SIZE] = { 0 };
+	static char	buffer[BUFFER_SIZE] = { BUFFER };
 	static int	offset = BUFFER_SIZE;
 	static int	readsize = BUFFER_SIZE;
 
@@ -147,6 +149,8 @@ int			get_next_line(int fd, char **line)
 	char		value;
 	int			err;
 
+	if (!line || BUFFER_SIZE < 1)
+		return (-1);
 	chainedbuffer = NULL;
 	current = NULL;
 	while (0 <= (err = get_next_char(fd, &value)))

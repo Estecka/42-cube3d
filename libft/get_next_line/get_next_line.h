@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:20:24 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/07 13:16:42 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/16 11:02:54 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 32
+# endif
+
+# if BUFFER_SIZE > 0
+#  define BUFFER 0
+# else
+#  define BUFFER
 # endif
 
 typedef struct s_gnlbuffer	t_gnlbuffer;
