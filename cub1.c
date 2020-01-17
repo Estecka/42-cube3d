@@ -27,6 +27,9 @@
 
 void	parseresolution(const char *line, int *width, int *height)
 {
+	const char *src;
+
+	src = dst;
 	*width = 0;
 	*height = 0;
 	while (*line && ft_isdigit(*line))
@@ -44,7 +47,7 @@ void	parseresolution(const char *line, int *width, int *height)
 	while (*line && ft_isspace(*line))
 		line++;
 	if (*line || *height == 0 || *width == 0)
-		throw(-1, "Bad resolution format.");
+		throw(-1, "Bad resolution format: \n%s", src);
 }
 
 /*
@@ -62,12 +65,12 @@ char	*parsetexpath(const char *line)
 
 	fd = open(line, O_RDONLY);
 	if (fd < 0)
-		throw(-1, "Invalid texture path");
+		throw(errno, "Invalid texture path: %d \n%s", errno, line);
 	else
 		close(fd);
 	dst = ft_strdup(line);
 	if (!dst)
-		throw(-1, "Malloc failed in ParseTexturePath");
+		throw(errno, "Fatal: Malloc failed in ParseTexturePath: %d\n%s", errno, line);
 	return (dst);
 }
 
@@ -79,22 +82,24 @@ char	*parsetexpath(const char *line)
 
 t_color	parsecolor(const char *line)
 {
-	t_color	color;
+	t_color		color;
+	const char	*src;
 
+	src = line;
 	color = (t_color){ 0, 0, 0, 1 };
 	while (ft_isdigit(*line))
 		color.r = (10 * color.r) + *(line++) - '0';
 	if (*line != ',' || !ft_isdigit(*(++line)))
-		throw(-1, "Invalid character after Red.");
+		throw(-1, "Invalid character after Red: %s", src);
 	while (ft_isdigit(*line))
 		color.g = (10 * color.g) + *(line++) - '0';
 	if (*line != ',' || !ft_isdigit(*(++line)))
-		throw(-1, "Invalid character after Green.");
+		throw(-1, "Invalid character after Green: %s", src);
 	while (ft_isdigit(*line))
 		color.b = (10 * color.b) + *(line++) - '0';
 	while (ft_isspace(*line))
 		line++;
 	if (*line)
-		throw(-1, "Invalid character after Blue");
+		throw(-1, "Invalid character after Blue: %s", src);
 	return (color);
 }

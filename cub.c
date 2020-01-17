@@ -22,14 +22,17 @@
 
 static char		*skip_id(const char *line)
 {
+	const char *src;
+
+	src = line;
 	while (*line && !ft_isspace(*line))
 		line++;
 	if (!*line)
-		throw(-1, "Line has no argument.");
+		throw(-1, "Line has no argument: \n%s", src);
 	while (*line && ft_isspace(*line))
 		line++;
 	if (!*line)
-		throw(-1, "Line has no argument.");
+		throw(-1, "Line has no argument: \n%s", src);
 	return ((char*)line);
 }
 
@@ -47,7 +50,7 @@ static t_uint	getidentifier(char *line)
 	unsigned int	i;
 
 	if (!line)
-		throw(-1, "Passed null argument to GetIdentifier.");
+		throw(-1, "Fatal: Passed null argument to GetIdentifier.");
 	result = 0;
 	i = 0;
 	while (i < 4 && line[i] && !ft_isspace(line[i]))
@@ -89,7 +92,7 @@ static void		parseline(char *line, t_mapfile *dst)
 	else if (id == EA && dst->east == NULL)
 		dst->east = parsetexpath(skip_id(line));
 	else
-		throw(-1, "Unexpected identifier.");
+		throw(-1, "Unexpected identifier: \n%s", line);
 }
 
 /*
@@ -110,7 +113,7 @@ void			parsemap(int fd, t_mapfile *dst)
 		free(line);
 	}
 	if (err < 0)
-		throw(errno, "GNL error");
+		throw(errno, "Fatal: GNL error: %d", errno);
 	if (dst->screenwdt == 0 || dst->screenhgt == 0 //|| dst->map == NULL
 		|| dst->north == NULL || dst->south == NULL || dst->east == NULL
 		|| dst->west == NULL || dst->sprite == NULL || dst->floorcol.a == 0

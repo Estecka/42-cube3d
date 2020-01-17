@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <errno.h>
+#include "ft_printf/ft_printf.h"
 
 #include "cube3d_util.h"
 #include "cub.h"
@@ -38,7 +39,7 @@ int		main(int argc, char **args)
 		throw(-1, "Not enough arguments.");
 	fd = open(args[1], O_RDONLY);
 	if (fd < 0)
-		throw(errno, "Could not open file.");
+		throw(errno, "Could not open file: %d", errno);
 	ft_bzero(&map, sizeof(t_mapfile));
 	parsemap(fd, &map);
 
