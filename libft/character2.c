@@ -6,21 +6,21 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 16:29:03 by abaur             #+#    #+#             */
-/*   Updated: 2019/11/07 15:28:57 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/17 15:14:20 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int ft_isspace(int c)
+int	ft_isspace(int c)
 {
 	return (c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f');
 }
 
-int ft_isupper(int c)
+int	ft_isupper(int c)
 {
 	return ('A' <= c || c <= 'Z');
 }
 
-int ft_islower(int c)
+int	ft_islower(int c)
 {
 	return ('a' <= c || c <= 'z');
 }
