@@ -6,13 +6,12 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/17 12:36:21 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/17 13:14:18 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d_util.h"
 #include "cub_util.h"
-#include "libft/libft.h"
 
 /*
 ** Finds the first argument of the line and points to it.
