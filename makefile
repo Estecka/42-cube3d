@@ -1,5 +1,5 @@
 SRCS	= main.c \
-	cub.c cub1.c \
+	cub.c cub1.c cub2.c \
 
 OBJS	= ${SRCS:.c=.o}
 
