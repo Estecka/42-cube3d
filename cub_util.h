@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 13:55:08 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/16 15:51:49 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/20 14:19:12 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@
 # define MP	825307441
 
 # include "cub.h"
+# include "stringbuilder/stringbuilder.h"
 
 void	parseresolution(const char *line, int *width, int *height);
 char	*parsetexpath(const char *line);
 t_color	parsecolor(const char *line);
+t_strb	*parsegridwidth(const char *line, t_mapfile *file);
 
 #endif

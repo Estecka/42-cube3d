@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/17 12:36:01 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/20 14:19:53 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,22 @@ struct	s_color
 
 struct	s_mapfile
 {
-	int		screenwdt;
-	int		screenhgt;
+	int				screenwdt;
+	int				screenhgt;
 
-	char	*north;
-	char	*south;
-	char	*east;
-	char	*west;
+	char			*north;
+	char			*south;
+	char			*east;
+	char			*west;
 
-	char	*sprite;
+	char			*sprite;
 
-	t_color	floorcol;
-	t_color	ceilcol;
+	t_color			floorcol;
+	t_color			ceilcol;
 
-	char	*map;
+	unsigned int	mapwdt;
+	unsigned int	maphgt;
+	char*const		*map;
 };
 
 void	parsemap(int fd, t_mapfile *dst);
