@@ -21,7 +21,7 @@
 ** @param unsigned int width  The number of columns in the grid. (x)
 ** @param unsigned int height The number of rows in the grid. (y)
 ** @param char value The default vaalue to initialize the array with.
-** @return A pointer to the grid, or NULL if allocation failed.
+** @return char*const* A pointer to the grid, or NULL if allocation failed.
 */
 
 char*const	*gridmalloc(unsigned int width, unsigned int height, char value)

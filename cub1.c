@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 15:35:02 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/17 16:18:05 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/20 14:25:46 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	parseresolution(const char *line, int *width, int *height)
 {
 	const char *src;
 
-	src = dst;
+	src = line;
 	*width = 0;
 	*height = 0;
 	while (*line && ft_isdigit(*line))
@@ -70,7 +70,8 @@ char	*parsetexpath(const char *line)
 		close(fd);
 	dst = ft_strdup(line);
 	if (!dst)
-		throw(errno, "Fatal: Malloc failed in ParseTexturePath: %d\n%s", errno, line);
+		throw(errno, "Fatal: Malloc failed in ParseTexturePath: %d\n%s",
+			errno, line);
 	return (dst);
 }
 
