@@ -1,5 +1,6 @@
 SRCS	= main.c \
 	cub.c cub1.c cub2.c \
+	stringbuilder/stringbuilder.c \
 
 OBJS	= ${SRCS:.c=.o}
 
@@ -26,7 +27,7 @@ clean:
 	make clean -C libft
 	rm -f ${OBJS}
 	rm -f ${OBJS_BONUS}
-	rm -f *.gch
+	rm -rf *.gch
 
 fclean: clean
 	make fclean -C libft
