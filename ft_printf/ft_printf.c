@@ -6,11 +6,11 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 14:50:25 by abaur             #+#    #+#             */
-/*   Updated: 2019/12/03 12:01:45 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/20 16:11:44 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
+#include "libft.h"
 #include "ft_printf.h"
 
 #include <stdlib.h>

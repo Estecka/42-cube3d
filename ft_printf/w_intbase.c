@@ -6,12 +6,12 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 14:58:44 by abaur             #+#    #+#             */
-/*   Updated: 2019/12/04 14:59:26 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/20 16:12:14 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdarg.h>
-#include "libft/libft.h"
+#include "libft.h"
 #include "ft_printf.h"
 
 t_ulong		subcast(unsigned long value, char type)

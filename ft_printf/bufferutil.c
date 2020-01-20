@@ -6,14 +6,14 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 15:46:02 by abaur             #+#    #+#             */
-/*   Updated: 2019/12/03 13:01:37 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/20 16:11:14 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "libft/libft.h"
+#include "libft.h"
 #include "bufferutil.h"
 
 static inline int	autoflush(t_buffer *buffer)

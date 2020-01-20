@@ -1,3 +1,0 @@
-[submodule ".test"]
-	path = .test
-	url = https://github.com/Estecka/42-libft-test
