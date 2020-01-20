@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 15:23:51 by abaur             #+#    #+#             */
-/*   Updated: 2019/12/03 11:31:49 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/20 15:27:54 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 # include "bufferutil.h"
 
 int			ft_vprintf(const char *format, va_list args);
-int			ft_printf(const char *format, ...);
+int			ft_printf(const char *format, ...
+) __attribute__((format(printf,1,2)));
 
 /*
 ** Internals
