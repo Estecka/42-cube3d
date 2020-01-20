@@ -13,14 +13,19 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <errno.h>
-#include "libft/libft.h"
+#include "ft_printf/ft_printf.h"
 
+#include "cube3d_util.h"
 #include "cub.h"
 
-void	throw(int status, char *message)
+void	throw(int status, char *errformat, ...)
 {
+	va_list args;
+
 	ft_putstr("Error\n");
-	ft_putstr(message);
+	va_start(args, errformat);
+	ft_vprintf(errformat, args);
+	va_end(args);
 	exit(status);
 }
 
@@ -34,7 +39,7 @@ int		main(int argc, char **args)
 		throw(-1, "Not enough arguments.");
 	fd = open(args[1], O_RDONLY);
 	if (fd < 0)
-		throw(errno, "Could not open file.");
+		throw(errno, "Could not open file: %d", errno);
 	ft_bzero(&map, sizeof(t_mapfile));
 	parsemap(fd, &map);
 

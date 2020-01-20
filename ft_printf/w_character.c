@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cube3d_util.c                                      :+:      :+:    :+:   */
+/*   w_character.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/17 13:14:12 by abaur            ###   ########.fr       */
+/*   Created: 2019/11/26 14:11:40 by abaur             #+#    #+#             */
+/*   Updated: 2019/12/03 11:39:01 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUBE3D_UTIL_H
-# define CUBE3D_UTIL_H
+#include <stdarg.h>
+#include "ft_printf.h"
 
-# include "libft/libft.h"
-# include "errno.h"
+int	w_character(t_pftag *tag)
+{
+	char	arg;
+	int		result;
 
-typedef unsigned int	t_uint;
-typedef unsigned long	t_ulong;
-
-void	throw(int status, char *errformat, ...);
-
-#endif
+	result = 0;
+	arg = (char)tag->argument;
+	result += tag->printer(tag->buffer, arg);
+	result += flushbuffer(tag->buffer);
+	return (result);
+}

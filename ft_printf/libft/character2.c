@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cube3d_util.c                                      :+:      :+:    :+:   */
+/*   character2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/17 13:14:12 by abaur            ###   ########.fr       */
+/*   Created: 2019/11/06 16:29:03 by abaur             #+#    #+#             */
+/*   Updated: 2019/11/07 15:28:57 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUBE3D_UTIL_H
-# define CUBE3D_UTIL_H
+int	ft_toupper(int c)
+{
+	if ('a' <= c && c <= 'z')
+		c += 'A' - 'a';
+	return (c);
+}
 
-# include "libft/libft.h"
-# include "errno.h"
-
-typedef unsigned int	t_uint;
-typedef unsigned long	t_ulong;
-
-void	throw(int status, char *errformat, ...);
-
-#endif
+int	ft_tolower(int c)
+{
+	if ('A' <= c && c <= 'Z')
+		c += 'a' - 'A';
+	return (c);
+}

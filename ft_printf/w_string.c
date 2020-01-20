@@ -1,24 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cube3d_util.c                                      :+:      :+:    :+:   */
+/*   w_string.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/17 13:14:12 by abaur            ###   ########.fr       */
+/*   Created: 2019/11/22 17:17:57 by abaur             #+#    #+#             */
+/*   Updated: 2019/12/03 11:45:50 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUBE3D_UTIL_H
-# define CUBE3D_UTIL_H
+#include <stdarg.h>
+#include "ft_printf.h"
 
-# include "libft/libft.h"
-# include "errno.h"
+int	w_string(t_pftag *tag)
+{
+	char	*arg;
+	int		count;
+	int		i;
 
-typedef unsigned int	t_uint;
-typedef unsigned long	t_ulong;
-
-void	throw(int status, char *errformat, ...);
-
-#endif
+	count = 0;
+	i = 0;
+	arg = (char*)tag->argument;
+	if (!arg)
+		arg = "(null)";
+	while (*arg && (tag->precision < 0 || i++ < tag->precision))
+	{
+		count += tag->printer(tag->buffer, *arg);
+		arg++;
+	}
+	count += flushbuffer(tag->buffer);
+	return (count);
+}

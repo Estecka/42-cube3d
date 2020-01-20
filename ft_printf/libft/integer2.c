@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cube3d_util.c                                      :+:      :+:    :+:   */
+/*   integer2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/17 13:14:12 by abaur            ###   ########.fr       */
+/*   Created: 2019/11/06 10:42:08 by abaur             #+#    #+#             */
+/*   Updated: 2019/11/06 11:05:13 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUBE3D_UTIL_H
-# define CUBE3D_UTIL_H
+#include "libft.h"
 
-# include "libft/libft.h"
-# include "errno.h"
+/*
+** allocates and returns a string representing the given integer.
+*/
 
-typedef unsigned int	t_uint;
-typedef unsigned long	t_ulong;
+int		ft_atoi(const char *str)
+{
+	return (ft_atoi_base(str, "0123456789"));
+}
 
-void	throw(int status, char *errformat, ...);
-
-#endif
+char	*ft_itoa(int n)
+{
+	return (ft_itoa_base(n, "0123456789"));
+}

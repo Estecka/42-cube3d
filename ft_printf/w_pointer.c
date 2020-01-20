@@ -1,24 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cube3d_util.c                                      :+:      :+:    :+:   */
+/*   w_pointer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/17 13:14:12 by abaur            ###   ########.fr       */
+/*   Created: 2019/11/28 15:12:07 by abaur             #+#    #+#             */
+/*   Updated: 2019/11/29 20:41:01 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUBE3D_UTIL_H
-# define CUBE3D_UTIL_H
+#include <stdarg.h>
+#include "ft_printf.h"
 
-# include "libft/libft.h"
-# include "errno.h"
-
-typedef unsigned int	t_uint;
-typedef unsigned long	t_ulong;
-
-void	throw(int status, char *errformat, ...);
-
-#endif
+int	w_pointer(t_pftag *tag)
+{
+	return (w_intbase(tag, "0123456789abcdef", 1));
+}

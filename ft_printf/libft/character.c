@@ -1,24 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cube3d_util.c                                      :+:      :+:    :+:   */
+/*   character.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/17 13:14:12 by abaur            ###   ########.fr       */
+/*   Created: 2019/11/06 15:52:49 by abaur             #+#    #+#             */
+/*   Updated: 2019/11/07 15:28:48 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUBE3D_UTIL_H
-# define CUBE3D_UTIL_H
+int	ft_isalpha(int c)
+{
+	return (('A' <= c && c <= 'Z')
+		|| ('a' <= c && c <= 'z'));
+}
 
-# include "libft/libft.h"
-# include "errno.h"
+int	ft_isdigit(int c)
+{
+	return ('0' <= c && c <= '9');
+}
 
-typedef unsigned int	t_uint;
-typedef unsigned long	t_ulong;
+int	ft_isalnum(int c)
+{
+	return (ft_isalpha(c) || ft_isdigit(c));
+}
 
-void	throw(int status, char *errformat, ...);
+int	ft_isascii(int c)
+{
+	return (0x0 <= c && c <= 0x7f);
+}
 
-#endif
+int	ft_isprint(int c)
+{
+	return ((' ' <= c && c <= '?')
+		|| ('@' <= c && c <= '_')
+		|| ('`' <= c && c <= '~'));
+}

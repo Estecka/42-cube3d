@@ -1,24 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cube3d_util.c                                      :+:      :+:    :+:   */
+/*   bufferutil.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/17 13:14:12 by abaur            ###   ########.fr       */
+/*   Created: 2019/12/02 15:46:23 by abaur             #+#    #+#             */
+/*   Updated: 2019/12/03 12:03:14 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUBE3D_UTIL_H
-# define CUBE3D_UTIL_H
+#ifndef BUFFERUTIL_H
+# define BUFFERUTIL_H
 
-# include "libft/libft.h"
-# include "errno.h"
+# include <stdlib.h>
 
-typedef unsigned int	t_uint;
-typedef unsigned long	t_ulong;
+typedef struct s_buffer	t_buffer;
+struct		s_buffer
+{
+	size_t	capacity;
+	void	(*flushmethod)(char c);
 
-void	throw(int status, char *errformat, ...);
+	char	*content;
+	char	*lcursor;
+	char	*rcursor;
+};
+
+t_buffer	*newbuffer(size_t capacity, char content);
+int			flushbuffer(t_buffer *buffer);
+int			buffaddl(t_buffer *buffer, char value);
+int			buffaddr(t_buffer *buffer, char value);
 
 #endif
