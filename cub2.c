@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 10:23:21 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/20 14:17:58 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/21 14:29:42 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,44 @@ t_strb		*parsegridwidth(const char *line, t_mapfile *file)
 	}
 	file->maphgt = 1;
 	return (builder);
+}
+
+/*
+** Validates the format of a middle row of a cub map.
+** Checks for walls on both sides, and width.
+** Does not check for duplicate player.
+** @param const char* line the string to parse
+** @return short
+** 	throw Invalid row
+** 	0 Valid middle row
+** 	1 Valid final row
+*/
+
+short		validategridrow(const char *line, t_mapfile *file)
+{
+	const char		*src;
+	short			islastrow;
+	char			lasttile;
+	unsigned int	width;
+
+	islastrow = 1;
+	lasttile = 0;
+	src = line;
+	width = 0;
+	if (*line != '1')
+		throw(-1, "Missing western wall:\n%s", src);
+	while (*line)
+	{
+		if (ft_strcontain("012NEWS", *line))
+		{
+			islastrow &= ('1' != (lasttile = *line));
+			width++;
+		}
+		else if (!ft_isspace(*line))
+			throw(-1, "Invalide tile \"%c\" in:\n%s", *line, src);
+		line++;
+	}
+	if (lasttile != '1' || width != file->mapwdt)
+		throw(-1, "Missing eastern wall, or unexpected width :\n%s", src);
+	return (islastrow);
 }
