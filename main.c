@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/17 16:12:47 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/21 15:31:05 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <errno.h>
 #include "ft_printf/ft_printf.h"
 
-#include "cube3d_util.h"
+#include "cube3d.h"
 #include "cub.h"
 
 void	throw(int status, char *errformat, ...)

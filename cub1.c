@@ -6,11 +6,10 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 15:35:02 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/20 14:25:46 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/21 15:30:34 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d_util.h"
 #include "cub_util.h"
 
 #include <stdlib.h>

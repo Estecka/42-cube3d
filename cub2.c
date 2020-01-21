@@ -6,12 +6,11 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 10:23:21 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/21 14:29:42 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/21 15:30:43 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "cube3d_util.h"
 #include "cub_util.h"
 #include "stringbuilder/stringbuilder.h"
 
