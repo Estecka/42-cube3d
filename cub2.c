@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 10:23:21 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/22 11:54:51 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/22 14:40:12 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ short		validategridrow(const char *line, t_mapfile *file)
 	{
 		if (ft_strcontain("012NEWS", *line))
 		{
-			islastrow &= ('1' != (lasttile = *line));
+			islastrow &= ('1' == (lasttile = *line));
 			width++;
 		}
 		else if (!ft_isspace(*line))
@@ -134,6 +134,7 @@ int			parsegridrow(const char *line, t_mapfile *file, t_strb *builder)
 {
 	int count;
 
+	(void)file;
 	count = 0;
 	while (*line)
 	{
