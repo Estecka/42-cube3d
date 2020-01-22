@@ -1,4 +1,5 @@
 SRCS	= main.c \
+	throw.c \
 	cub.c cub1.c cub2.c \
 	stringbuilder/stringbuilder.c \
 
