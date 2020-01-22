@@ -30,5 +30,7 @@ void	parseresolution(const char *line, int *width, int *height);
 char	*parsetexpath(const char *line);
 t_color	parsecolor(const char *line);
 t_strb	*parsegridwidth(const char *line, t_mapfile *file);
+short	validategridrow(const char *line, t_mapfile *file);
+int		parsegridrow(const char *line, t_mapfile *file, t_strb *builder);
 
 #endif

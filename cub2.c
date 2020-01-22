@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 10:23:21 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/21 15:30:43 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/21 16:08:17 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ char*const	*gridmalloc(unsigned int width, unsigned int height, char value)
 
 /*
 ** Parses and validates the first row of a cub map.
-** Fills the first row into a stringbuilder.
+** Fills the tiles into a new stringbuilder.
 ** Sets `mapWidth` on the mapfile accordingly.
 ** Sets `mapHeight` to 1.
 ** @param const char* line The first map row from the cub file
 ** @param t_mapfile* file The file to fill in.
-** @return t_strbld* A pointer to a new String Builder
+** @return t_strbd* A pointer to a new String Builder
 */
 
 t_strb		*parsegridwidth(const char *line, t_mapfile *file)
@@ -67,7 +67,7 @@ t_strb		*parsegridwidth(const char *line, t_mapfile *file)
 	src = line;
 	builder = createstrbuilder();
 	if (!builder)
-		throw(errno, "StringBuilder mallocation failed: %d", errno);
+		throw(errno, "Fatal: StringBuilder mallocation failed: %d", errno);
 	while (*line)
 	{
 		if (*line == '1')
@@ -121,4 +121,32 @@ short		validategridrow(const char *line, t_mapfile *file)
 	if (lasttile != '1' || width != file->mapwdt)
 		throw(-1, "Missing eastern wall, or unexpected width :\n%s", src);
 	return (islastrow);
+}
+
+/*
+** Parses a middle row of a cube map. The format is assumed valid.
+** Fills the tiles into a stringbuilder.
+** @param const char* line The string to parse.
+** @param t_mapfile* file The mapfile to fill.
+** @param t_strb* builder The stringbuilder to use while building the grid.
+** @return int The amount of players found on this row.
+*/
+
+int			parsegridrow(const char *line, t_mapfile *file, t_strb *builder)
+{
+	int count;
+
+	count = 0;
+	while (*line)
+	{
+		if(!ft_isspace(*line))
+		{
+			if(!strbappend(builder, *line))
+				throw(errno, "Fatal: StrinBuilder.Append failed: %d", errno);
+			if(ft_strcontain("NEWS", *line))
+				count++;
+		}
+		line++;
+	}
+	return (count);
 }
