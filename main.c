@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/21 15:31:05 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/21 15:57:42 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		main(int argc, char **args)
 	if (fd < 0)
 		throw(errno, "Could not open file: %d", errno);
 	ft_bzero(&map, sizeof(t_mapfile));
-	parsemap(fd, &map);
+	parsefile(fd, &map);
 
 	printf("\
 R %d %d \n\

@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/21 15:30:28 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/21 16:21:45 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static void		parseline(char *line, t_mapfile *dst)
 ** @param t_mapfile* The mapfile object to fill.
 */
 
-void			parsemap(int fd, t_mapfile *dst)
+void			parsefile(int fd, t_mapfile *dst)
 {
 	char *line;
 	char err;
