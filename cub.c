@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/21 16:21:45 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/22 13:39:59 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,40 @@ static void		parseline(char *line, t_mapfile *dst)
 		dst->east = parsetexpath(skip_id(line));
 	else
 		throw(-1, "Unexpected identifier: \n%s", line);
+}
+
+/*
+** Parse the map section of a cub file.
+** The very first row is assumed to be already parsed.
+** Checks that the file ends with the grid, empty lines are tolerated.
+** @param int fd The file descriptor to read from.
+** @param t_mapfile* file The object to fill.
+** @param t_strb* builder The stringbuilder to use.
+*/
+
+static void		parsetiles(int fd, t_mapfile *file, t_strb *builder)
+{
+	char	*line;
+	char	c;
+	short	isvalidend;
+	int		playercount;
+	int		gnl;
+
+	playercount = 0;
+	isvalidend = 0;
+	while(0 < (gnl = get_next_line(fd, &line)) && line[0])
+	{
+		isvalidend = validategridrow(line, file);
+		playercount += parsegridrow(line, file, builder);
+		free(line);
+		file->maphgt++;
+	}
+	throwif(gnl < 0, errno, "[FATAL] GNL error: %d", errno);
+	throwif(playercount != 1,  -1, "Invalid player count: %d", playercount);
+	throwif(!isvalidend, -1, "Invalid final row.");
+	while (0 < (gnl = get_next_char(fd, &c)))
+		throwif(!ft_isspace(c), -1, "Invalid end of file: %c", c);
+	throwif(gnl < 0, errno, "[FATAL] get_next_char error: %d", errno);
 }
 
 /*
