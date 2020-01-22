@@ -6,11 +6,14 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 12:01:12 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/20 13:46:59 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/22 12:46:58 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stringbuilder.h"
+
+#include <errno.h>
+#include "../throw.h"
 
 /*
 ** Allocates and initialize a stringbuilder.
@@ -22,12 +25,12 @@ t_strb	*createstrbuilder(void)
 	t_strb	*builder;
 
 	if (!(builder = malloc(sizeof(struct s_strb))))
-		return (NULL);
+		throw(errno, "[FATAL] StringBuilder malloc failed. %d", errno);
 	builder->content = malloc(sizeof(char) * 32);
 	if (!builder->content)
 	{
 		free(builder);
-		return (NULL);
+		throw(errno, "[FATAL] StringBuilder malloc failed. %d", errno);
 	}
 	builder->capacity = 32;
 	builder->size = 1;
@@ -55,7 +58,7 @@ short	strbappend(t_strb *builder, char c)
 	if (builder->size >= builder->capacity)
 	{
 		if (!(newstr = malloc(builder->capacity * 2)))
-			return (-1);
+			throw(errno, "[FATAL] StringBuilder append failed. %d", errno);
 		i = 0;
 		while (i < builder->capacity)
 		{

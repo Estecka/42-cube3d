@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 10:23:21 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/21 16:08:17 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/22 11:54:51 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ t_strb		*parsegridwidth(const char *line, t_mapfile *file)
 
 	src = line;
 	builder = createstrbuilder();
-	if (!builder)
-		throw(errno, "Fatal: StringBuilder mallocation failed: %d", errno);
 	while (*line)
 	{
 		if (*line == '1')
@@ -141,8 +139,7 @@ int			parsegridrow(const char *line, t_mapfile *file, t_strb *builder)
 	{
 		if(!ft_isspace(*line))
 		{
-			if(!strbappend(builder, *line))
-				throw(errno, "Fatal: StrinBuilder.Append failed: %d", errno);
+			strbappend(builder, *line);
 			if(ft_strcontain("NEWS", *line))
 				count++;
 		}
