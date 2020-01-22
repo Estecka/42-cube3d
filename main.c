@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/21 15:57:42 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/22 11:13:26 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,6 @@
 
 #include "cube3d.h"
 #include "cub.h"
-
-void	throw(int status, char *errformat, ...)
-{
-	va_list args;
-
-	ft_putstr("Error\n");
-	va_start(args, errformat);
-	ft_vprintf(errformat, args);
-	va_end(args);
-	exit(status);
-}
 
 #include <stdio.h>
 int		main(int argc, char **args)

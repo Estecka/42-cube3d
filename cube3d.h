@@ -6,15 +6,16 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/21 15:41:34 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/22 11:38:05 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUBE3D_H
 # define CUBE3D_H
 
+# include <errno.h>
+# include "throw.h"
 # include "libft/libft.h"
-# include "errno.h"
 
 typedef unsigned int	t_uint;
 typedef unsigned long	t_ulong;
@@ -51,8 +52,5 @@ struct	s_vec4
 	float	z;
 	float	w;
 };
-
-void	throw(int status, char *errformat, ...
-) __attribute__((format(printf,2,3)));
 
 #endif
