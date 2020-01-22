@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/22 13:39:59 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/22 14:03:20 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,7 @@ static void		parseline(char *line, t_mapfile *dst)
 	unsigned int	id;
 
 	id = getidentifier(line);
-	if (line[0] == '1' && dst->map == NULL)
-		return; //parse grid
-	else if (id == C && dst->ceilcol.a == 0)
+	if (id == C && dst->ceilcol.a == 0)
 		dst->ceilcol = parsecolor(skip_id(line));
 	else if (id == F && dst->floorcol.a == 0)
 		dst->floorcol = parsecolor(skip_id(line));
@@ -136,10 +134,11 @@ static void		parsetiles(int fd, t_mapfile *file, t_strb *builder)
 
 void			parsefile(int fd, t_mapfile *dst)
 {
-	char *line;
-	char err;
+	char	*line;
+	int		err;
+	t_strb	*strbuilder;
 
-	while (0 < (err = get_next_line(fd, &line)))
+	while (0 < (err = get_next_line(fd, &line)) && line[0] != '1')
 	{
 		if (line[0] != '\0')
 			parseline(line, dst);
@@ -147,9 +146,12 @@ void			parsefile(int fd, t_mapfile *dst)
 	}
 	if (err < 0)
 		throw(errno, "Fatal: GNL error: %d", errno);
-	if (dst->screenwdt == 0 || dst->screenhgt == 0 //|| dst->map == NULL
+	if (err == 0 || dst->screenwdt == 0 || dst->screenhgt == 0
 		|| dst->north == NULL || dst->south == NULL || dst->east == NULL
 		|| dst->west == NULL || dst->sprite == NULL || dst->floorcol.a == 0
 		|| dst->ceilcol.a == 0)
 		throw(-1, "Incomplete cub file.");
+	strbuilder = parsegridwidth(line, dst);
+	parsetiles(fd, dst, strbuilder);
+	dst->tiles = strbflush(strbuilder);
 }

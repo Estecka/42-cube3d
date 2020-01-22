@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/21 15:56:24 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/22 13:35:53 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ struct	s_mapfile
 
 	unsigned int	mapwdt;
 	unsigned int	maphgt;
-	char*const		*map;
+	char			*tiles;
 };
 
 void	parsefile(int fd, t_mapfile *dst);
