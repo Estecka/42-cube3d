@@ -1,24 +1,31 @@
-SRCS	= main.c \
-	throw.c \
-	cub.c cub1.c cub2.c \
-	stringbuilder/stringbuilder.c \
+SRCS	= main.c
+OBJS	= ${SRCS:.c=.o} ${MISC_OBJS} ${CUB_OBJS}
 
-OBJS	= ${SRCS:.c=.o}
+MISC_SRCS = throw.c stringbuilder/stringbuilder.c
+MISC_OBJS = ${MISC_SRCS:.c=.o}
+
+CUB_SRCS = cub.c cub1.c cub2.c
+CUB_OBJS = ${CUB_SRCS:.c=.o}
+
 
 NAME	= cube3d.out
+CUB		= cub_parser.out
 LIBFT	= libft/libft.a
 PRINTF	= ft_printf/libftprintf.a
 
-CC		= gcc
 
+CC		= gcc
 CFLAGS	= -Wall -Wextra #-Werror
+LIBFLAGS = \
+	-L libft -lft \
+	-L ft_printf -lftprintf \
+
 
 
 ${NAME}: ${OBJS} ${LIBFT} ${PRINTF}
 	gcc ${OBJS} -o ${NAME} \
-	-L libft -lft \
-	-L ft_printf -lftprintf \
-	${CFLAGS}
+	${LIBFLAGS} \
+	${CFLAGS} \
 
 libft: ${LIBFT}
 ${LIBFT}: 
@@ -28,12 +35,20 @@ printf: ${PRINTF}
 ${PRINTF}:
 	make -C ft_printf
 
-all: ${NAME}
+all: ${NAME} ${CUB}
+
+cub: ${CUB}
+${CUB}: .test/main_cub.o  ${CUB_OBJS} ${MISC_OBJS} ${PRINTF} ${LIBFT}
+	gcc .test/main_cub.o ${CUB_OBJS} ${MISC_OBJS} \
+	-o ${CUB} \
+	${LIBFLAGS} \
+	${CFLAGS} \
+
+
 
 clean:
-	rm -f ${OBJS}
-	rm -f ${OBJS_BONUS}
-	rm -rf *.gch
+	rm -f *.o
+	rm -f *.gch
 
 fclean: clean
 	make fclean -C libft
@@ -44,4 +59,4 @@ fclean: clean
 
 re: fclean ${NAME}
 
-.PHONY: all clean fclean re libft printf
+.PHONY: all clean fclean re libft printf cub
