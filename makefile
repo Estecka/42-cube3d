@@ -1,7 +1,9 @@
 SRCS	= main.c
 OBJS	= ${SRCS:.c=.o} ${MISC_OBJS} ${CUB_OBJS}
 
-MISC_SRCS = throw.c stringbuilder/stringbuilder.c
+MISC_SRCS = throw.c \
+	stringbuilder/stringbuilder.c \
+	mallocspy/mallocspy.c mallocspy/mallocspy_internals.c
 MISC_OBJS = ${MISC_SRCS:.c=.o}
 
 CUB_SRCS = cub.c cub1.c cub2.c
