@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/22 14:03:20 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/27 12:47:37 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,11 @@ static void		parsetiles(int fd, t_mapfile *file, t_strb *builder)
 		isvalidend = validategridrow(line, file);
 		playercount += parsegridrow(line, file, builder);
 		free(line);
+		line = NULL;
 		file->maphgt++;
 	}
+	if (line)
+		free(line);
 	throwif(gnl < 0, errno, "[FATAL] GNL error: %d", errno);
 	throwif(playercount != 1,  -1, "Invalid player count: %d", playercount);
 	throwif(!isvalidend, -1, "Invalid final row.");
@@ -143,6 +146,7 @@ void			parsefile(int fd, t_mapfile *dst)
 		if (line[0] != '\0')
 			parseline(line, dst);
 		free(line);
+		line = NULL;
 	}
 	if (err < 0)
 		throw(errno, "Fatal: GNL error: %d", errno);
@@ -152,6 +156,8 @@ void			parsefile(int fd, t_mapfile *dst)
 		|| dst->ceilcol.a == 0)
 		throw(-1, "Incomplete cub file.");
 	strbuilder = parsegridwidth(line, dst);
+	if (line)
+		free(line);
 	parsetiles(fd, dst, strbuilder);
 	dst->tiles = strbflush(strbuilder);
 }
