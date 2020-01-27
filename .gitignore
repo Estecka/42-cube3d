@@ -2,3 +2,7 @@
 *.o
 *.gch
 *.swp
+
+*.dylib
+*.swiftdoc
+*.swiftmodule
