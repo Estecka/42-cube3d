@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/27 12:47:37 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/27 12:51:54 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ static void		parsetiles(int fd, t_mapfile *file, t_strb *builder)
 
 	playercount = 0;
 	isvalidend = 0;
-	while(0 < (gnl = get_next_line(fd, &line)) && line[0])
+	while (0 < (gnl = get_next_line(fd, &line)) && line[0])
 	{
 		isvalidend = validategridrow(line, file);
 		playercount += parsegridrow(line, file, builder);
@@ -122,7 +122,7 @@ static void		parsetiles(int fd, t_mapfile *file, t_strb *builder)
 	if (line)
 		free(line);
 	throwif(gnl < 0, errno, "[FATAL] GNL error: %d", errno);
-	throwif(playercount != 1,  -1, "Invalid player count: %d", playercount);
+	throwif(playercount != 1, -1, "Invalid player count: %d", playercount);
 	throwif(!isvalidend, -1, "Invalid final row.");
 	while (0 < (gnl = get_next_char(fd, &c)))
 		throwif(!ft_isspace(c), -1, "Invalid end of file: %c", c);

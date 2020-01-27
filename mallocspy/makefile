@@ -22,8 +22,8 @@ ${NAME}: ${OBJS}
 	ar rcs ${NAME} ${OBJS}
 
 test: ${TEST}
-${TEST}: ./.testmain.c ${NAME} ${LIBFT} ${PRINTF}
-	gcc ./.testmain.c -o ${TEST} ${LIBFLAGS}
+${TEST}: .test/main.c ${NAME} ${LIBFT} ${PRINTF}
+	gcc .test/main.c -o ${TEST} ${LIBFLAGS}
 
 
 libft: ${LIBFT}
