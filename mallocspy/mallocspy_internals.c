@@ -6,14 +6,14 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/23 14:12:14 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/27 12:08:44 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mallocspy_internals.h"
+#include "mallocspy.h"
 
-void	**g_spylist = NULL;
-size_t	g_spycap = 0;
+static void		**g_spylist = NULL;
+static size_t	g_spycap = 0;
 
 /*
 ** Initialize or expands the list of pointer.
@@ -23,7 +23,7 @@ size_t	g_spycap = 0;
 ** 	false Allocation failed
 */
 
-short	spyexpand(void)
+static short	spyexpand(void)
 {
 	void	**newlist;
 	size_t	newcap;
@@ -49,7 +49,7 @@ short	spyexpand(void)
 	return (1);
 }
 
-short	spyunreg(void *ptr)
+extern short	spyunreg(void *ptr)
 {
 	short	status;
 	size_t	i;
@@ -75,10 +75,9 @@ but that pointer is unknown : %p\n", ptr);
 ** @var short status
 ** 	1 << 0 The pointer is registered
 ** 	1 << 1 The pointer was already registered
-** 	1 << 2 Malloc failed
 */
 
-void	*spyreg(void *ptr)
+extern void		*spyreg(void *ptr)
 {
 	short	status;
 	size_t	i;
@@ -91,9 +90,9 @@ void	*spyreg(void *ptr)
 			g_spylist[i] = ptr;
 			status |= 1 << 0;
 		}
-		else if (g_spylist == ptr)
+		else if (g_spylist[i] == ptr)
 		{
-			if (!(status & 1 << 0))
+			if ((status & 1 << 0))
 				g_spylist[i] = NULL;
 			status |= 1 << 1 | 1 << 0;
 		}
@@ -107,7 +106,7 @@ void	*spyreg(void *ptr)
 	return (ptr);
 }
 
-size_t	spylog(void)
+extern size_t	spylog(void)
 {
 	size_t	count;
 	size_t	i;
@@ -120,11 +119,13 @@ size_t	spylog(void)
 			ft_printf("%p\n", g_spylist[i]);
 			count++;
 		}
-	ft_printf("There are %lu pointers still registered.", count);
+	ft_printf("\nUp to %u pointers were registered simultaneously.\n",
+		(unsigned int)g_spycap);
+	ft_printf("There are %u pointers still registered.\n", (unsigned int)count);
 	return (count);
 }
 
-size_t	spyflush(void)
+extern	size_t	spyflush(void)
 {
 	size_t	i;
 	size_t	count;

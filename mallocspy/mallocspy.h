@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/23 14:42:07 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/23 13:39:25 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 #  define SPYVERBOSE 1
 # endif
 # ifndef SPYBRAVE
-#  define SPYBRAVE 1
+#  define SPYBRAVE 0
 # endif
 
 /*

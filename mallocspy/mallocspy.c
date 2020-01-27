@@ -6,13 +6,13 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 13:55:03 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/23 14:05:08 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/27 12:06:52 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mallocspy_internals.h"
+#include "mallocspy.h"
 
-void	*spymalloc(size_t size)
+extern void	*spymalloc(size_t size)
 {
 	void	*ptr;
 
@@ -27,7 +27,7 @@ void	*spymalloc(size_t size)
 	return (ptr);
 }
 
-void	spyfree(void *ptr)
+extern void	spyfree(void *ptr)
 {
 	if (!ptr)
 		return ;
