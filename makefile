@@ -14,7 +14,7 @@ NAME	= cube3d.out
 CUB		= cub_parser.out
 LIBFT	= libft/libft.a
 PRINTF	= ft_printf/libftprintf.a
-MINILIBX = minilibx/libmlx.dylib
+MINILIBX = libmlx.dylib
 
 
 CC		= gcc
@@ -22,11 +22,11 @@ CFLAGS	= -Wall -Wextra #-Werror
 LIBFLAGS = \
 	-L libft -lft \
 	-L ft_printf -lftprintf \
-	-L minilibx -lmlx \
+	-L ./ -lmlx \
 
 
 
-${NAME}: ${OBJS} ${LIBFT} ${PRINTF}
+${NAME}: ${OBJS} ${LIBFT} ${PRINTF} ${MINILIBX}
 	gcc ${OBJS} -o ${NAME} \
 	${LIBFLAGS} \
 	${CFLAGS} \
@@ -42,6 +42,7 @@ ${PRINTF}:
 minilibx: ${MINILIBX}
 ${MINILIBX}:
 	make -C minilibx
+	cp minilibx/libmlx.dylib ./
 
 all: ${NAME} ${CUB}
 
@@ -61,6 +62,7 @@ clean:
 fclean: clean
 	make fclean -C libft
 	make fclean -C ft_printf
+	make clean -C minilibx
 	rm -f ${LIBFT}
 	rm -f ${PRINTF}
 	rm -f ${NAME}
