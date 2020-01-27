@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/22 14:33:10 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/27 15:51:32 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,24 @@
 #include "cube3d.h"
 #include "cub.h"
 
-#include <stdio.h>
-int		main(int argc, char **args)
+#include "minilibx/mlx.h"
+#include "keycode.h"
+
+static int	exitonesc(int keycode, void *null)
+{
+	(void)null;
+	if (keycode == KCESC)
+		exit(0);
+	return (0);
+}
+
+
+extern int	main(int argc, char **args)
 {
 	int			fd;
 	t_mapfile	map;
+	void		*mlx;
+	void		*win;
 
 	if (argc < 2)
 		throw(-1, "Not enough arguments.");
@@ -31,34 +44,9 @@ int		main(int argc, char **args)
 		throw(errno, "Could not open file: %d", errno);
 	ft_bzero(&map, sizeof(t_mapfile));
 	parsefile(fd, &map);
-
-	printf("\
-R %d %d \n\
-NO %s \n\
-SO %s \n\
-WE %s \n\
-EA %s \n\
-S  %s \n\
-F  %d,%d,%d \n\
-C  %d,%d,%d \n\
-\
-Map size: %u %u \n\
-Map content: \n\
-",
-		map.screenwdt, map.screenhgt,
-		map.north, map.south, map.west, map.east,
-		map.sprite,
-		map.floorcol.r, map.floorcol.g, map.floorcol.b,
-		map.ceilcol.r, map.ceilcol.g, map.ceilcol.b,
-		map.mapwdt, map.maphgt
-		);
-
-	for (unsigned int y=0; y<map.maphgt; y++)
-	{
-		for (unsigned int x=0; x<map.mapwdt; x++)
-		{
-			printf("%c", map.tiles[(map.mapwdt * y) + x]);
-		}
-		printf("\n");
-	}
+	if (!(mlx = mlx_init()))
+		throw(errno, "[FATAL] MinilibX init failed : %d", errno);
+	win = mlx_new_window(mlx, map.screenwdt, map.screenhgt, "Cube3D : The Reckoning");
+	mlx_key_hook(win, exitonesc, NULL);
+	mlx_loop(mlx);
 }
