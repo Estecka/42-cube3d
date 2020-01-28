@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/28 15:01:33 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/28 16:42:35 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,28 @@
 typedef unsigned int	t_uint;
 typedef unsigned long	t_ulong;
 
-typedef struct s_color	t_color;
-struct	s_color
+typedef struct s_rgb	t_rgb;
+struct	s_rgb
 {
-	unsigned int	r : 8;
-	unsigned int	g : 8;
 	unsigned int	b : 8;
+	unsigned int	g : 8;
+	unsigned int	r : 8;
+};
+
+typedef struct s_rgba	t_rgba;
+struct	s_rgba
+{
+	unsigned int	b : 8;
+	unsigned int	g : 8;
+	unsigned int	r : 8;
 	unsigned int	a : 8;
+};
+
+union	u_color
+{
+	unsigned int	raw;
+	struct s_rgb	rgb;
+	struct s_rgba	rgba;
 };
 
 typedef struct s_vec2i	t_vec2i;

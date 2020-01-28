@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/27 12:51:54 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/28 16:22:00 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ static void		parseline(char *line, t_mapfile *dst)
 	unsigned int	id;
 
 	id = getidentifier(line);
-	if (id == C && dst->ceilcol.a == 0)
-		dst->ceilcol = parsecolor(skip_id(line));
-	else if (id == F && dst->floorcol.a == 0)
-		dst->floorcol = parsecolor(skip_id(line));
+	if (id == C && dst->ceilcol.rgba.a == 0)
+		dst->ceilcol.rgba = parsecolor(skip_id(line));
+	else if (id == F && dst->floorcol.rgba.a == 0)
+		dst->floorcol.rgba = parsecolor(skip_id(line));
 	else if (id == R && dst->screenwdt == 0 && dst->screenhgt == 0)
 		parseresolution(skip_id(line), &dst->screenwdt, &dst->screenhgt);
 	else if (id == S && dst->sprite == NULL)
@@ -152,8 +152,8 @@ void			parsefile(int fd, t_mapfile *dst)
 		throw(errno, "Fatal: GNL error: %d", errno);
 	if (err == 0 || dst->screenwdt == 0 || dst->screenhgt == 0
 		|| dst->north == NULL || dst->south == NULL || dst->east == NULL
-		|| dst->west == NULL || dst->sprite == NULL || dst->floorcol.a == 0
-		|| dst->ceilcol.a == 0)
+		|| dst->west == NULL || dst->sprite == NULL
+		|| dst->floorcol.rgba.a == 0 || dst->ceilcol.rgba.a == 0)
 		throw(-1, "Incomplete cub file.");
 	strbuilder = parsegridwidth(line, dst);
 	if (line)

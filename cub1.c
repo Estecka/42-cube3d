@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 15:35:02 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/21 15:30:34 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/28 16:49:06 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,13 @@ char	*parsetexpath(const char *line)
 ** @return A fully opaque color.
 */
 
-t_color	parsecolor(const char *line)
+t_rgba	parsecolor(const char *line)
 {
-	t_color		color;
+	t_rgba		color;
 	const char	*src;
 
 	src = line;
-	color = (t_color){ 0, 0, 0, 1 };
+	color = (t_rgba){ 0, 0, 0, 1 };
 	while (ft_isdigit(*line))
 		color.r = (10 * color.r) + *(line++) - '0';
 	if (*line != ',' || !ft_isdigit(*(++line)))

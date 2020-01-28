@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/22 13:35:53 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/28 16:12:34 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "cube3d.h"
 
-typedef struct s_color		t_color;
 typedef struct s_mapfile	t_mapfile;
 
 struct	s_mapfile
@@ -30,8 +29,8 @@ struct	s_mapfile
 
 	char			*sprite;
 
-	t_color			floorcol;
-	t_color			ceilcol;
+	union u_color	floorcol;
+	union u_color	ceilcol;
 
 	unsigned int	mapwdt;
 	unsigned int	maphgt;
