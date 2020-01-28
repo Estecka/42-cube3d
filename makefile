@@ -40,9 +40,10 @@ ${PRINTF}:
 	make -C ft_printf
 
 minilibx: ${MINILIBX}
-${MINILIBX}:
+${MINILIBX}: minilibx/${MINILIBX}
+	cp minilibx/${MINILIBX} ./
+minilibx/${MINILIBX}:
 	make -C minilibx
-	cp minilibx/libmlx.dylib ./
 
 all: ${NAME} ${CUB}
 
@@ -65,6 +66,7 @@ fclean: clean
 	make clean -C minilibx
 	rm -f ${LIBFT}
 	rm -f ${PRINTF}
+	rm -f ${MINILIBX}
 	rm -f ${NAME}
 
 re: fclean ${NAME}
