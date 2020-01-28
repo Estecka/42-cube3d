@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/27 15:51:32 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/28 12:52:06 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@
 
 #include "minilibx/mlx.h"
 #include "keycode.h"
+
+static int	exitonx(void *null)
+{
+	(void)null;
+	exit(0);
+	return (0);
+}
 
 static int	exitonesc(int keycode, void *null)
 {
@@ -48,5 +55,6 @@ extern int	main(int argc, char **args)
 		throw(errno, "[FATAL] MinilibX init failed : %d", errno);
 	win = mlx_new_window(mlx, map.screenwdt, map.screenhgt, "Cube3D : The Reckoning");
 	mlx_key_hook(win, exitonesc, NULL);
+	mlx_hook(win, 17, 1<<17, exitonx, NULL);
 	mlx_loop(mlx);
 }
