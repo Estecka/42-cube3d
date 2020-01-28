@@ -20,21 +20,16 @@
 
 static t_mlx_img	g_skybox = { 0 };
 
-static void 		mlx_img_set(t_mlx_img *img, int x, int y, union u_color color)
+static void 		mlx_img_set(
+	t_mlx_img *img, int x, int y, union u_color color)
 {
-	char *addr;
-
-	addr = img->content + (y * img->size_line) + (x * img->bits_per_pixel / 8);
-	if (img->endian)
-		*(t_rgba*)addr = color.rgba;
-	else
-		*(t_rgb*)addr = color.rgb;
+	img->pixels[(y * img->width) + x] = color;
 }
 
 extern int			graphhook(void *null)
 {
 	(void)null;
-	mlx_put_image_to_window(g_mlx, g_window, g_skybox.content, 0, 0);
+	mlx_put_image_to_window(g_mlx, g_window, g_skybox.ptr, 0, 0);
 	return (0);
 }
 
@@ -46,12 +41,12 @@ extern void			graphicinit(t_mapfile *map)
 
 	g_skybox.width = map->screenwdt;
 	g_skybox.height = map->screenhgt;
-	g_skybox.content = 
-		(char*)mlx_new_image(g_mlx, g_skybox.width, g_skybox.height);
-	if (!g_skybox.content)
+	g_skybox.ptr = mlx_new_image(g_mlx, g_skybox.width, g_skybox.height);
+	g_skybox.pixels = (union u_color*)mlx_get_data_addr(g_skybox.ptr,
+			&g_skybox.bits_per_pixel, &g_skybox.size_line, &g_skybox.endian);
+	if (!g_skybox.ptr)
 		throw(errno, "[FATAL] Could not create skybox: %d", errno);
 	y = -1;
-	return;
 	while (++y < g_skybox.height)
 	{
 		if (y < (g_skybox.height / 2))

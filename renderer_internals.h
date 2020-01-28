@@ -18,7 +18,8 @@
 typedef struct s_mlx_img	t_mlx_img;
 struct s_mlx_img
 {
-	char			*content;
+	void			*ptr;
+	union u_color	*pixels;
 	unsigned int	width;
 	unsigned int	height;
 	int				bits_per_pixel;

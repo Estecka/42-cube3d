@@ -37,6 +37,7 @@ struct	s_rgba
 	unsigned int	a : 8;
 };
 
+typedef union u_color	t_color;
 union	u_color
 {
 	unsigned int	raw;
