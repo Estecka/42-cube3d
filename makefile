@@ -1,4 +1,4 @@
-SRCS	= main.c
+SRCS	= main.c renderer.c
 OBJS	= ${SRCS:.c=.o} ${MISC_OBJS} ${CUB_OBJS}
 
 MISC_SRCS = throw.c \

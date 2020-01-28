@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/28 15:03:13 by abaur            ###   ########.fr       */
+/*   Updated: 2020/01/28 16:40:34 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 #include "cube3d.h"
 #include "cub.h"
+#include "renderer.h"
 
 #include "minilibx/mlx.h"
 #include "keycode.h"
@@ -54,8 +55,10 @@ extern int	main(int argc, char **args)
 	parsefile(fd, &map);
 	if (!(g_mlx = mlx_init()))
 		throw(errno, "[FATAL] MinilibX init failed : %d", errno);
+	graphicinit(&map);
 	g_window = mlx_new_window(g_mlx, map.screenwdt, map.screenhgt, "Cube3D : The Reckoning");
 	mlx_key_hook(g_window, exitonesc, NULL);
+	mlx_expose_hook(g_window, graphhook, NULL);
 	mlx_hook(g_window, 17, 1<<17, exitonx, NULL);
 	mlx_loop(g_mlx);
 }
