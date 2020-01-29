@@ -1,8 +1,9 @@
-Let there be a figure (either a triangle or a parallepiped) ABC
+Let there be a figure (either a triangle or a parallelogram) ABC
+(In the case of a parallelogram, its axis of symmetry is BC).
 Let there be a pixel P
 
 _Does P land on ABC ?_
-_Is the triangle backfaced ?_
+_Is the figure backfaced ?_
 _How far away is P on the plane ABC ?_
 
 
@@ -30,8 +31,21 @@ The inverse of this matrix is M':
 
 Let P` be the position of P in figure space:
 `P' = M' * (P - A)`
-(Substracting A is required ahead of time, because M and M` does not handle translations.)
+(Substracting A is required ahead of time, because M and M` do not handle translations.)
 
 **If either Px or Py is negative, P does not land on ABC.**
-If ABC is a triangle:     **If the sum of Px and Py is greater than 1, P does not land on ABC.**
-If ABC is a parallepiped: **If Either Px or Py is greater than 1, P does not land on ABC.**
+If ABC is a triangle:      **If the sum of Px and Py is greater than 1, P does not land on ABC.**
+If ABC is a parallelogram: **If Either Px or Py is greater than 1, P does not land on ABC.**
+
+Let N be the normale of ABC
+`N = AB ⨯ AC = {ABy*ACz - ABz*ACy, ABz*ACx - ABx*ACz, ABx*ACy - ABy*ACx}`
+The plane equation of ABC is
+`Nx*x + Ny*y + Nz*z = d`
+`Nx*Ax + Ny*Ay + Nz*Az = d`
+
+**The distance from the camera to ABC in P is :**
+`Nx*x + Ny*y + Nz*z - d = 0`
+`Nx*x + Ny*y - d = - Nz*z`
+`-(Nx*x + Ny*y - d)/Nz = z`
+**Or, considering the right-hand rule of Z facing backward :**
+`(Nx*x + Ny*y - d)/Nz = z`
