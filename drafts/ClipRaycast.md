@@ -1,4 +1,4 @@
-Let there be a triangle ABC
+Let there be a figure (either a triangle or a parallepiped) ABC
 Let there be a pixel P
 
 _Does P land on ABC ?_
@@ -6,18 +6,16 @@ _Is the triangle backfaced ?_
 _How far away is P on the plane ABC ?_
 
 
-Let 3x3 affine matrix be presented as :
-`[Xx Yx Tx]`
-`[Xy Yy Ty]`
-`[ 0  0  1]`
+Let 2x2 linear matrices be presented as :
+`[Xx Yx]`
+`[Xy Yy]`
 With determinant:
 `Xx*Yy - Yx*Xy`
 
-Let there be a "triangle space", defined by ^X = A^B and ^Y = A^C
-The affine tranformation from triangle space to screen space is a 3x3 matrix : 
-`[ABx ACx Ax]`
-`[ABy ACy Ay]`
-`[ 0   0   1]`
+Let there be a "figure space", using A^B as its x axis, and A^C as its Y axis.
+Ignoring translation, the linear tranformation from figure space to screen space a 2x2 matrix M: 
+`[ABx ACx]`
+`[ABy ACy]`
 With determinant: 
 `d = ABx*ACy - ACx*ABy`
 
@@ -25,9 +23,15 @@ With determinant:
 
 [Source](https://www.mathsisfun.com/algebra/matrix-inverse.html)
 [Source](https://stackoverflow.com/questions/2624422/efficient-4x4-matrix-inverse-affine-transform)
-The inverse of this matrix is 
-`[ ACy/d -ACx/d    -Ax]`
-`[-ABy/d  ABx/d    -Ay]`
-`[     0      0      1]`
+The inverse of this matrix is M':
+`[ ACy/d -ACx/d]`
+`[-ABy/d  ABx/d]`
+[Test](Inverse2x2.md)
 
-[Test](Inverse3x3.md)
+Let P` be the position of P in figure space:
+`P' = M' * (P - A)`
+(Substracting A is required ahead of time, because M and M` does not handle translations.)
+
+**If either Px or Py is negative, P does not land on ABC.**
+If ABC is a triangle:     **If the sum of Px and Py is greater than 1, P does not land on ABC.**
+If ABC is a parallepiped: **If Either Px or Py is greater than 1, P does not land on ABC.**
