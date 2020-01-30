@@ -70,36 +70,25 @@ _Smaller in the case of a left-hand rule._
 
 --------
 
-For this section, we actually need to take a step back, right before the projection matrix was applied.
-Let A'B'C' be the figure before this transformation, and P' the pixel on this figure.
-`A'B'C' = C' * ABC`
-`P'     = C' * P  `
-In the case of a quadilater, it becomes a parallelogram, thus D' is not need.
-In theory, ABC were calculated from A'B'C'. So only P' actually needs to be calculated.
-The projected ABC is no longer required. From now on A'B'C' will be called ABC for short.
-
-let's forget the Z dimension from mow on.
-Let there be a "figure space", whose X and Y axes are A^B and A^C respectively.
-By ignoring translation from origin to A, the linear tranformation from figure space to clip can be represented with a simple 2x2 matrix, instead of a 4x4 one :
-`[ABx ACx]`
-`[ABy ACy]`
-Its determinant is : 
-`d = ABx*ACy - ACx*ABy`
-
 [Source](https://www.mathsisfun.com/algebra/matrix-inverse.html)
 [Source](https://stackoverflow.com/questions/2624422/efficient-4x4-matrix-inverse-affine-transform)
-The inverse of this matrix is M':
-`[ ACy/d -ACx/d]`
-`[-ABy/d  ABx/d]`
 [Test](Inverse2x2.md)
 
-Let P` be the position of P in figure space:
-`P' = M' * (P - A)`
-(Substracting A is required ahead of time, because M and M` do not handle translations.)
+For this section, we actually need to take a step back, right before the projection matrix was applied.
+Let A'B'C' be the figure before this transformation.
+`A'B'C' = C' * ABC`
+In the case of a quadilater, it becomes a parallelogram, thus D' is not need.
+In theory, ABC were calculated from A'B'C'.
+Let there be a "figure space", whose X and Y axes are A^B and A^C respectively, and whose Z axis is their cross product.
+`N' = A'^B' ⨯ A'^C'`
 
-**If either Px or Py is negative, P does not land on ABC.**
-If ABC is a triangle:      **If the sum of Px and Py is greater than 1, P does not land on ABC.**
-If ABC is a parallelogram: **If Either Px or Py is greater than 1, P does not land on ABC.**
+The 4x4 matrix F that transforms from figure space to unprojected clip space is:
+`[ABx ACx N'x Ax]`
+`[ABy ACy N'y Ay]`
+`[ABz ACz N'z Az]`
+`[  0   0   0  1]`
 
-**P' is the position of the pixel in UV space.**
-_This is only accurate _
+The inverse of this matrix is F`.
+
+**The UV of P is :**
+`UV = F' * C' * P `
