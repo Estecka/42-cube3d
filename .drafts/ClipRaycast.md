@@ -69,26 +69,43 @@ _Smaller in the case of a left-hand rule._
 
 --------
 
-[Source](https://www.mathsisfun.com/algebra/matrix-inverse.html)
-[Source](https://stackoverflow.com/questions/2624422/efficient-4x4-matrix-inverse-affine-transform)
-[Test](Inverse3x3.md)
+Let M be the perspective projection matrix.
+`[m00   0 m20 m30]`
+`[  0 m11 m21 m31]`
+`[  0   0 m22 m32]`
+`[  0   0 m23   0]`
 
-For this section, we actually need to take a step back, right before the projection matrix was applied.
-Let A'B'C' be the figure before this transformation.
-`A'B'C' = C' * ABC`
-_In the case of a quadrilater, it becomes a parallelogram, thus D' is not needed._
-In theory, ABC were calculated from A'B'C'.
-Let there be a "figure space", whose X and Y axes are B^A and B^C respectively, and whose Z axis is their cross product.
+For this section, we need to work using homogeneous coordinates instead of cartesian coordinates.
+We already know the homogeneous coordinates of ABC.
+[Cartesian to Homegeneous](Unproject.md)
+The homegeneous coordinates of P are:
+`P *= -m31*(m22/m23 - Pz)`
+
+Let there be a UV space, whose X and Y axes are B^A and B^C respectively.
+_B is used as origin so that it can be consistent with ABCD_
+We arbitrarily use their cross product as a Z axis, for it is guaranteed to be linearly independant from ABC.
+Their cross product needs to be recomputed.
 `N' = B'^A' ⨯ B'^C'`
-_B is used as origin so that he can be consistent with ABCD_
+`Nx = ABy*ACz - ABz*ACy`
+`Ny = ABz*ACx - ABx*ACz`
+`Nz = ABx*ACy - ABy*ACx`
 
-The 4x4 matrix F that transforms from figure space to unprojected clip space is:
-`[BAx BCx N'x Bx]`
-`[BAy BCy N'y By]`
-`[BAz BCz N'z Bz]`
-`[  0   0   0  1]`
+By ignoring the Z dimension and the translation, the transformation from UV space to homegeneous clip space can be represented with a linear 2x2 matrix, instead of an affine 4x4 one.
+Let F be this matrix :
+`[BAx BCx]`
+`[BAy BCy]`
 
-The inverse of this matrix is F`.
+[Test](Inverse2x2.md)
+The inverse F' of this matrix is :
+`[ BCy -BCx]`
+`[-BAy  BAx]`
 
-**The UV of P is :**
-`UV = F' * M' * P `
+**The coordinates of homegeneous P in UV space is :**
+`UV = F' * (P - B)`
+
+--------
+
+Unused sources
+[Inverse 3x3](https://www.mathsisfun.com/algebra/matrix-inverse.html)
+[Inverse 4x4](https://stackoverflow.com/questions/2624422/efficient-4x4-matrix-inverse-affine-transform)
+[Test](Inverse3x3.md)
