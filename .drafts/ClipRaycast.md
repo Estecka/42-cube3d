@@ -1,19 +1,19 @@
-We are in clip space.
-The projection matrix has been applied, thus the percieved picture is not hortognal.
-Let M and M` be the projection matrix and its inverse, respectively.
+We are in clip space, after the perspective matrix has been applied.
+We are working with the cartesian coordinates of the projection.
 
 Let there be a triangle ABC.
-We may instead want to work with a quadrilater, ABCD.
-Let there be a point P, whose XY coordinates match the current pixel.
+_Since all meshs are going to be squares, we may instead want to directly work with a quadrilater, ABCD._
+Let there be a point P, whose XY coordinates match the current pixel, and which lands on the plane ABC.
 
-_Is the figure backfaced ?_
-_Does P land on the figure ?_
-_What is the Z coordinate of P ?_
-_Where does P land on the UV map ?_
+**Is the figure backfaced ?**
+**Does P land on the figure ?**
+**What is the Z coordinate of P ?**
+**Where does P land on the UV map ?**
 
 -------
 
-Let N be the Normale of A^B and A^C *in clip space specifically*: _(Projection matrices are unable to properly transform Z components in a relevant fashion. Thus calculating the normal in world space ahead of time then appliying the matrix would yield a different result.)_
+Let N be the Normale of A^B and A^C *in clip space specifically*.
+_(Projection matrices are unable to properly transform Z components in a relevant fashion. Thus calculating the normal in world space ahead of time then applying the perspective matrix to it would yield a different, unnacurate result.)_
 `N = AB ⨯ AC`
 `Nx = ABy*ACz - ABz*ACy`
 `Ny = ABz*ACx - ABx*ACz`
@@ -35,8 +35,8 @@ Let's take the maximum and minimum coordinates of each points of ABC :
 `Txmax = max(Ax, Bx, Cx, Dx)`
 `Tymax = max(Ay, By, Cy, Dy)`
 
-**If both Ty's or both Tx's have the same sign, and are either are below -1 or above 1, the figure should be skipped.**
-**If P does not have both coordinate strictly included in these bounds, the pixel should be skipped.**
+**If both Ty's or both Tx's have the same sign, and are either below -1 or above 1, the figure should be skipped.**
+**If P does not have both coordinate included in these bounds, the pixel should be skipped.**
 
 --------
 
