@@ -83,29 +83,26 @@ The homegeneous coordinates of P are:
 
 Let there be a UV space, whose X and Y axes are B^A and B^C respectively.
 _B is used as origin so that it can be consistent with ABCD_
-We arbitrarily use their cross product as a Z axis, for it is guaranteed to be linearly independant from ABC.
-Their cross product needs to be recomputed.
-`N' = B'^A' ⨯ B'^C'`
-`Nx = ABy*ACz - ABz*ACy`
-`Ny = ABz*ACx - ABx*ACz`
-`Nz = ABx*ACy - ABy*ACx`
+We arbitrarily use O^P as the Z axis. (The exact Z axis does not matter, as long as it is linearly independ from ABC.)
 
-By ignoring the Z dimension and the translation, the transformation from UV space to homegeneous clip space can be represented with a linear 2x2 matrix, instead of an affine 4x4 one.
+The transformation from UV space to homegeneous clip space can be represented with a affine 4x4 matrix:
+`[BAx BCx OPx Bx]`
+`[BAy BCy OPy By]`
+`[BAz BCz OPz Bz]`
+`[  0   0   0  1]`
+But by ignoring translation, we can simplify computation and use a linear 3x3 matrix instead
 Let F be this matrix :
-`[BAx BCx]`
-`[BAy BCy]`
+`[BAx BCx OPx]`
+`[BAy BCy OPy]`
+`[BAz BCz OPz]`
+Let F' be the inverse of this matrix.
+[Source](https://www.mathsisfun.com/algebra/matrix-inverse.html)
+[Test](Inverse3x3.md)
 
-[Test](Inverse2x2.md)
-The inverse F' of this matrix is :
-`[ BCy -BCx]`
-`[-BAy  BAx]`
-
-**The coordinates of homegeneous P in UV space is :**
+**The coordinates of homegeneous P in UV space are :**
 `UV = F' * (P - B)`
 
 --------
 
 Unused sources
-[Inverse 3x3](https://www.mathsisfun.com/algebra/matrix-inverse.html)
 [Inverse 4x4](https://stackoverflow.com/questions/2624422/efficient-4x4-matrix-inverse-affine-transform)
-[Test](Inverse3x3.md)
