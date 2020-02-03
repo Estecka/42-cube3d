@@ -15,9 +15,13 @@ ${NAME}: ${OBJS}
 	ar rcs ${NAME} ${OBJS}
 
 test: ${TEST}
-${TEST}: ${NAME} ${MLX}
-	gcc .test/main.c -o ${TEST} \
+${TEST}: ${NAME} ${MLX} .test/main.c ../throw.c
+	make libft -C ../
+	make printf -C ../
+	gcc .test/main.c ../throw.c -o ${TEST} \
 	-L ./ -lmlx -lrenderer \
+	-L ../libft -lft \
+	-L ../ft_printf -lftprintf \
 	${CFLAGS} \
 
 ${MLX}: ../minilibx/${MLX}
