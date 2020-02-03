@@ -1,4 +1,6 @@
-SRCS = renderer.c \
+SRCS = \
+	renderinit.c \
+	rendertexture.c zbuffer.c \
 
 OBJS = ${SRCS:.c=.o}
 
