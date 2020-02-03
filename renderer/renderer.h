@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 16:36:29 by abaur             #+#    #+#             */
-/*   Updated: 2020/02/03 15:13:10 by abaur            ###   ########.fr       */
+/*   Updated: 2020/02/03 15:30:27 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ extern void	*g_window;
 void		renderinit(unsigned int width, unsigned int height);
 int			renderflush(void *mlx);
 
+void		renderclear(union u_color color);
 void		renderset(unsigned int x, unsigned int y, union u_color color);
 void		renderquad(t_quad quad);
 #endif

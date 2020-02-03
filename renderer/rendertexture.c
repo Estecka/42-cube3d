@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:19:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/02/03 15:20:33 by abaur            ###   ########.fr       */
+/*   Updated: 2020/02/03 15:31:13 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,29 @@ void		mlx_img_set(t_mlx_img *this, unsigned int x, unsigned int y,
 extern void	renderset(unsigned int x, unsigned int y, union u_color color)
 {
 	mlx_img_set(&g_rendertex, x, y, color);
+}
+
+/*
+** Fills the render texture using the given color.
+** @param union u_color color The filler color.
+*/
+
+extern void	renderclear(union u_color color)
+{
+	unsigned int x;
+	unsigned int y;
+
+	x = 0;
+	while (x < g_rendertex.width)
+	{
+		y = 0;
+		while (y < g_rendertex.height)
+		{
+			mlx_img_set(&g_rendertex, x, y, color);
+			y++;
+		}
+		x++;
+	}
 }
 
 /*
