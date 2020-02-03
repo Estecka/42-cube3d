@@ -12,6 +12,7 @@ CUB_OBJS = ${CUB_SRCS:.c=.o}
 
 NAME	= cube3d.out
 CUB		= cub_parser.out
+MATH	= ft_math/libftmat.a
 LIBFT	= libft/libft.a
 PRINTF	= ft_printf/libftprintf.a
 MINILIBX = libmlx.dylib
@@ -20,13 +21,14 @@ MINILIBX = libmlx.dylib
 CC		= gcc
 CFLAGS	= -Wall -Wextra #-Werror
 LIBFLAGS = \
+	-L ft_math -lftmath \
 	-L libft -lft \
 	-L ft_printf -lftprintf \
 	-L ./ -lmlx \
 
 
 
-${NAME}: ${OBJS} ${LIBFT} ${PRINTF} ${MINILIBX}
+${NAME}: ${OBJS} ${LIBFT} ${PRINTF} ${MINILIBX} ${MATH}
 	gcc ${OBJS} -o ${NAME} \
 	${LIBFLAGS} \
 	${CFLAGS} \
@@ -54,6 +56,10 @@ ${CUB}: .test/main_cub.o  ${CUB_OBJS} ${MISC_OBJS} ${PRINTF} ${LIBFT}
 	${LIBFLAGS} \
 	${CFLAGS} \
 
+math: ${MATH}
+${MATH}:
+	make -C ft_math
+
 
 
 clean:
@@ -64,6 +70,7 @@ fclean: clean
 	make fclean -C libft
 	make fclean -C ft_printf
 	make clean -C minilibx
+	rm -f ${MATH}
 	rm -f ${LIBFT}
 	rm -f ${PRINTF}
 	rm -f ${MINILIBX}
@@ -71,4 +78,4 @@ fclean: clean
 
 re: fclean ${NAME}
 
-.PHONY: all clean fclean re libft printf cub
+.PHONY: all clean fclean re libft printf cub math
