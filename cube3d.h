@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/28 16:42:35 by abaur            ###   ########.fr       */
+/*   Updated: 2020/02/03 12:55:19 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,31 +45,6 @@ union	u_color
 	struct s_rgba	rgba;
 };
 
-typedef struct s_vec2i	t_vec2i;
-struct	s_vec2i
-{
-	int	x;
-	int	y;
-};
-
-typedef struct s_vec3	t_vec3;
-struct	s_vec3
-{
-	float	x;
-	float	y;
-	float	z;
-};
-
-typedef struct s_vec4	t_vec4;
-struct	s_vec4
-{
-	float	x;
-	float	y;
-	float	z;
-	float	w;
-};
-
 void	*g_mlx;
-void	*g_window;
 
 #endif

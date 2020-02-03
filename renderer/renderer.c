@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 13:53:07 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/28 17:16:52 by abaur            ###   ########.fr       */
+/*   Updated: 2020/02/03 12:48:25 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 
 #include "minilibx/mlx.h"
 
-
-static t_mlx_img	g_skybox = { 0 };
 
 static void 		mlx_img_set(
 	t_mlx_img *img, int x, int y, union u_color color)
