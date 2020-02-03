@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:19:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/02/03 15:31:13 by abaur            ###   ########.fr       */
+/*   Updated: 2020/02/03 17:06:14 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 void		mlx_img_set(t_mlx_img *this, unsigned int x, unsigned int y,
 	union u_color color)
 {
-	this->pixels[(y * this->width) + x] = color;
+	this->pixels[(y * (this->pixel_line)) + x] = color;
 }
 
 /*

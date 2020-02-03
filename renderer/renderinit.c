@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:19:27 by abaur             #+#    #+#             */
-/*   Updated: 2020/02/03 15:20:09 by abaur            ###   ########.fr       */
+/*   Updated: 2020/02/03 17:17:31 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ extern void		renderinit(unsigned int x, unsigned int y)
 	g_rendertex.pixels = (union u_color*)mlx_get_data_addr(g_rendertex.ptr,
 		&g_rendertex.bits_per_pixel, &g_rendertex.size_line,
 		&g_rendertex.endian);
+	g_rendertex.pixel_line =
+		8 * g_rendertex.size_line / g_rendertex.bits_per_pixel;
 	if (!g_rendertex.ptr)
 		throw(errno, "[FATAL] Could not create render texture: %d", errno);
 	if (!zbuffinit(x, y))

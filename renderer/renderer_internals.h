@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:18:28 by abaur             #+#    #+#             */
-/*   Updated: 2020/02/03 15:17:02 by abaur            ###   ########.fr       */
+/*   Updated: 2020/02/03 17:02:00 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ struct			s_mlx_img
 	unsigned int	height;
 	int				bits_per_pixel;
 	int				size_line;
+	int				pixel_line;
 	int				endian;
 };
 
