@@ -1,10 +1,16 @@
-Rotation :
+We are using a right-handed system.
+Positive X goes from y to z. (look up)
+Positive Y goes from z to x. (look left)
+Positive Z goes from x to y. (tilt left)
+
+Rotation order :
 mZ * mY * mX
-with
+
+
+Let :
 c = cos( α)
 s = sin( α)
 a = sin(-α)
-(a and s might need to be swapped )
 
 Rotation X :
 [1      ]
@@ -19,7 +25,9 @@ Rotation Y :
 [      1]
 
 Rotation Z :
-[c s    ]
-[a c    ]
+[c a    ]
+[s c    ]
 [    1  ]
 [      1]
+
+To inverse any of these matrix, simply transpose them.
