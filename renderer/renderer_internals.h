@@ -38,9 +38,11 @@ struct			s_float_img
 	float			*content;
 };
 
+t_mx4			g_projmx
+const t_bbox	g_clipspace;
+
 t_float_img		g_zbuffer;
 t_mlx_img		g_rendertex[2];
-const t_bbox	g_clipspace;
 unsigned int	g_screenwdt;
 unsigned int	g_screenhgt;
 
