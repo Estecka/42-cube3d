@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:18:28 by abaur             #+#    #+#             */
-/*   Updated: 2020/02/03 17:02:00 by abaur            ###   ########.fr       */
+/*   Updated: 2020/02/05 14:59:59 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,10 @@ struct			s_float_img
 };
 
 t_float_img		g_zbuffer;
-t_mlx_img		g_rendertex;
+t_mlx_img		g_rendertex[2];
 const t_bbox	g_clipspace;
+unsigned int	g_screenwdt;
+unsigned int	g_screenhgt;
 
 void			mlx_img_set(t_mlx_img *this, unsigned int x, unsigned int y,
 	union u_color col);
@@ -50,5 +52,4 @@ void			zbuffclear();
 float			zbuffget(unsigned int x, unsigned int y);
 void			zbuffset(float value, unsigned int x, unsigned int y);
 short			zbuffcmp(float value, unsigned int x, unsigned int y);
-
 #endif

@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 15:32:44 by abaur             #+#    #+#             */
-/*   Updated: 2020/02/03 16:29:09 by abaur            ###   ########.fr       */
+/*   Updated: 2020/02/05 14:41:47 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,25 @@
 void *g_mlx;
 void *g_window;
 
-int	width, height;
+static int	width, height;
 
-int	loop(void* null)
+void rendercolor()
+{
+	union u_color color;
+	color.rgba.a = 0;
+	color.rgba.b = 255;
+	color.rgba.g = 0;
+	color.rgba.r = 255;
+
+	for (int x=0; x<width;  x++)
+	for (int y=0; y<height; y++)
+	{
+		renderset(x, y, color);
+	}
+}
+
+
+void renderuv()
 {
 	static int blue = 0;
 
@@ -31,13 +47,28 @@ int	loop(void* null)
 	for (int y=0; y<height; y++)
 	{
 		union u_color color;
-		color.rgba.a = 1;
+		color.rgba.a = 0;
 		color.rgba.b = blue;
 		color.rgba.g = (x * 255) / width;
 		color.rgba.r = (y * 255) / height;
 		renderset(x, y, color);
 	}
-	renderflush(null);
+}
+
+int	loop(void* null)
+{
+	t_quad quad = {
+		{-1, -1, 0},
+		{0, -1, 0},
+		{0, 0, 0},
+		{-1, 0, 0},
+	};
+
+	rendercolor();
+	renderuv();
+
+	//renderquad(quad);
+	renderflush(g_mlx);
 	return (0);
 }
 

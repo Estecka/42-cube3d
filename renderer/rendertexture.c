@@ -6,11 +6,13 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:19:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/02/03 17:06:14 by abaur            ###   ########.fr       */
+/*   Updated: 2020/02/05 15:08:45 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "renderer_internals.h"
+
+static short g_i;
 
 /*
 ** Sets a single texel on a mlx image.
@@ -33,7 +35,7 @@ void		mlx_img_set(t_mlx_img *this, unsigned int x, unsigned int y,
 
 extern void	renderset(unsigned int x, unsigned int y, union u_color color)
 {
-	mlx_img_set(&g_rendertex, x, y, color);
+	mlx_img_set(&g_rendertex[g_i], x, y, color);
 }
 
 /*
@@ -47,12 +49,12 @@ extern void	renderclear(union u_color color)
 	unsigned int y;
 
 	x = 0;
-	while (x < g_rendertex.width)
+	while (x < g_rendertex[g_i].width)
 	{
 		y = 0;
-		while (y < g_rendertex.height)
+		while (y < g_rendertex[g_i].height)
 		{
-			mlx_img_set(&g_rendertex, x, y, color);
+			mlx_img_set(&g_rendertex[g_i], x, y, color);
 			y++;
 		}
 		x++;
@@ -68,7 +70,8 @@ extern void	renderclear(union u_color color)
 
 extern int	renderflush(void *mlx)
 {
-	mlx_put_image_to_window(mlx, g_window, g_rendertex.ptr, 0, 0);
+	mlx_put_image_to_window(mlx, g_window, g_rendertex[g_i].ptr, 0, 0);
+	g_i = !g_i;
 	zbuffclear();
 	return (0);
 }
