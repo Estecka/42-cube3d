@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 14:19:27 by abaur             #+#    #+#             */
-/*   Updated: 2020/02/05 15:06:31 by abaur            ###   ########.fr       */
+/*   Updated: 2020/02/05 15:43:19 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ extern void		renderinit(unsigned int x, unsigned int y)
 {
 	int i;
 
+	g_screenwdt = x;
+	g_screenhgt = y;
 	i = -1;
 	while(++i < 2)
 	{

@@ -1,5 +1,6 @@
 SRCS = renderinit.c \
 	rendertexture.c zbuffer.c \
+	renderquad.c \
 
 OBJS = ${SRCS:.c=.o}
 
@@ -18,11 +19,13 @@ test: ${TEST}
 ${TEST}: ${NAME} ${MLX} .test/main.c ../throw.c
 	make libft -C ../
 	make printf -C ../
+	make math -C ../
 	gcc .test/main.c ../throw.c -o ${TEST} \
-	-L ./ -lmlx -lrenderer \
-	-L ../libft -lft \
-	-L ../ft_printf -lftprintf \
-	${CFLAGS} \
+		-L ./ -lmlx -lrenderer \
+		-L ../libft -lft \
+		-L ../ft_printf -lftprintf \
+		-L ../ft_math -lftmath \
+		${CFLAGS} \
 
 ${MLX}: ../minilibx/${MLX}
 	cp ../minilibx/${MLX} ./
