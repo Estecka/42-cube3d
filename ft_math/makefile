@@ -1,8 +1,10 @@
 SRCS = \
 	mxinit.c mxdet.c mxtrans.c mxadj.c mxinv.c mxm.c mxv.c \
+	mxproj.c \
 	addvec.c subvec.c crossp.c cartesian.c \
 	floatminmax.c \
 	figcontain.c \
+	plane.c \
 	boundingbox.c boundingbox2.c \
 
 OBJS = ${SRCS:.c=.o}
