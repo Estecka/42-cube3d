@@ -25,31 +25,40 @@ const t_bbox	g_clipspace = {
 	},
 };
 
+t_bbox	g_frustrum = {
+	.min = {
+		.x = -1,
+		.z = -1,
+	},
+	.max = {
+		.x = 1,
+		.z = -10,
+	},
+};
+
 static void		projmxinit()
 {
-	t_bbox frustrum;
 	float aspect;
 
 	aspect = g_screenhgt / (float)g_screenwdt;
-	frustrum.min.x = 1;
-	frustrum.max.x = -1;
-	frustrum.min.y =  aspect;
-	frustrum.max.y = -aspect;
-	frustrum.min.z = 1;
-	frustrum.max.z = 10;
-	mxfrust(g_projmx, &frustrum);
+	g_frustrum.min.y = -aspect;
+	g_frustrum.max.y = +aspect;
+	mxfrust(g_projmx, &g_frustrum);
 
-	//test
-	frustrum.max.x *= frustrum.max.z/frustrum.min.z;
-	frustrum.max.y *= frustrum.max.z/frustrum.min.z;
+
+	/* test
+	t_bbox f = g_frustrum;
+	f.max.x *= g_frustrum.max.z/g_frustrum.min.z;
+	f.max.y *= g_frustrum.max.z/g_frustrum.min.z;
 	union u_v4 min, max;
-	min = mx4v3(g_projmx, &frustrum.min);
-	max = mx4v3(g_projmx, &frustrum.max);
+	min = mx4v3(g_projmx, &f.min);
+	max = mx4v3(g_projmx, &f.max);
 	min.vec3 = cartesian(&min.vec4).vec3;
 	max.vec3 = cartesian(&max.vec4).vec3;
 	printf("Calculated clip space: \n %f %f %f \n %f %f %f \n", 
 		min.vec3.x, min.vec3.y, min.vec3.z,
 		max.vec3.x, max.vec3.y, max.vec3.z);
+	/**/
 }
 
 extern void		renderinit(unsigned int x, unsigned int y)

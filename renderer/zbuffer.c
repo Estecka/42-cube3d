@@ -71,7 +71,7 @@ void	zbuffclear(void)
 		y = 0;
 		while (y < g_zbuffer.height)
 		{
-			zbuffset(x, y, g_clipspace.min.z);
+			zbuffset(x, y, g_clipspace.max.z);
 			y++;
 		}
 		x++;
@@ -89,5 +89,5 @@ void	zbuffclear(void)
 
 short	zbuffcmp(unsigned int x, unsigned int y, float value)
 {
-	return (value > zbuffget(x, y));
+	return (value > g_clipspace.min.z && value < zbuffget(x, y));
 }

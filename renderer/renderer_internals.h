@@ -53,6 +53,7 @@ struct			s_renderenv
 	t_v4	plane;
 };
 
+t_bbox			g_frustrum;
 t_mx4			g_projmx;
 const t_bbox	g_clipspace;
 
@@ -69,4 +70,5 @@ void			zbuffclear();
 float			zbuffget(unsigned int x, unsigned int y);
 void			zbuffset(unsigned int x, unsigned int y, float value);
 short			zbuffcmp(unsigned int x, unsigned int y, float value);
+
 #endif
