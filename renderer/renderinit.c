@@ -21,7 +21,7 @@ const t_bbox	g_clipspace = {
 	.max = {
 		.x = 1,
 		.y = 1,
-		.z = 0,
+		.z = 1,
 	},
 };
 
@@ -40,6 +40,8 @@ static void		projmxinit()
 	mxfrust(g_projmx, &frustrum);
 
 	//test
+	frustrum.max.x *= frustrum.max.z/frustrum.min.z;
+	frustrum.max.y *= frustrum.max.z/frustrum.min.z;
 	union u_v4 min, max;
 	min = mx4v3(g_projmx, &frustrum.min);
 	max = mx4v3(g_projmx, &frustrum.max);
