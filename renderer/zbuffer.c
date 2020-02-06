@@ -71,7 +71,7 @@ void	zbuffclear(void)
 		y = 0;
 		while (y < g_zbuffer.height)
 		{
-			zbuffset(g_clipspace.min.z, x, y);
+			zbuffset(g_clipspace.max.z, x, y);
 			y++;
 		}
 		x++;

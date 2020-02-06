@@ -13,17 +13,22 @@
 #include "renderer_internals.h"
 
 /*
-** Convert a quad's point from clip space to screen space.
-** @param const t_quad src The quad's points in clip space.
+** Convert a quad's vertices from view space to screen space.
+** @param const t_quad src The quad's vertices in view space.
 ** @param t_quad dst Outputs the points pixel coordinates.
 */
 
-static void	cliptopix(const t_quad src, t_quad dst)
+static void	viewtopix(const t_quad src, t_quad dst)
 {
+	union u_v4 p;
+
 	for (int i=0; i<4; i++)
 	{
-		dst[i].x = (1 + src[i].x) * 0.5 * g_screenwdt;
-		dst[i].y = (1 + src[i].y) * 0.5 * g_screenhgt;
+		p = mx4v3(g_projmx, &src[i]);
+		p.vec3 = cartesian(&p.vec4).vec3;
+		p.vec3.x = (1 + p.vec3.x) * 0.5 * g_screenwdt;
+		p.vec3.y = (1 + p.vec3.y) * 0.5 * g_screenhgt;
+		dst[i] = p.vec3;
 	}
 }
 
@@ -47,7 +52,7 @@ extern void	renderquad(const t_quad quad)
 		}
 	};
 
-	cliptopix(quad, pixquad);
+	viewtopix(quad, pixquad);
 	for (unsigned int x=0; x<g_screenwdt; x++)
 	for (unsigned int y=0; y<g_screenhgt; y++)
 	{
