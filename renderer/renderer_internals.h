@@ -67,6 +67,6 @@ void			mlx_img_set(t_mlx_img *this, unsigned int x, unsigned int y,
 short			zbuffinit(unsigned int width, unsigned int height);
 void			zbuffclear();
 float			zbuffget(unsigned int x, unsigned int y);
-void			zbuffset(float value, unsigned int x, unsigned int y);
-short			zbuffcmp(float value, unsigned int x, unsigned int y);
+void			zbuffset(unsigned int x, unsigned int y, float value);
+short			zbuffcmp(unsigned int x, unsigned int y, float value);
 #endif

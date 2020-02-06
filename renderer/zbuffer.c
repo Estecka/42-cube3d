@@ -51,7 +51,7 @@ float	zbuffget(unsigned int x, unsigned int y)
 ** @pqrqm unsigned int x,y The coordinates of the texel.
 */
 
-void	zbuffset(float value, unsigned int x, unsigned int y)
+void	zbuffset(unsigned int x, unsigned int y, float value)
 {
 	g_zbuffer.content[x + (y * g_zbuffer.width)] = value;
 }
@@ -71,7 +71,7 @@ void	zbuffclear(void)
 		y = 0;
 		while (y < g_zbuffer.height)
 		{
-			zbuffset(g_clipspace.max.z, x, y);
+			zbuffset(x, y, g_clipspace.min.z);
 			y++;
 		}
 		x++;
@@ -87,7 +87,7 @@ void	zbuffclear(void)
 ** 	false The value appears behind the z-buffer.
 */
 
-short	zbufcmp(float value, unsigned int x, unsigned int y)
+short	zbuffcmp(unsigned int x, unsigned int y, float value)
 {
-	return (value < zbuffget(x, y));
+	return (value > zbuffget(x, y));
 }

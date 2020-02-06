@@ -58,12 +58,19 @@ extern void	renderquad(const t_quad quad)
 	for (unsigned int x=0; x<g_screenwdt; x++)
 	for (unsigned int y=0; y<g_screenhgt; y++)
 	{
+		float z;
+
 		p.vec2.x = (float)x;
 		p.vec2.y = (float)y;
 		if (quadcontain(&p.vec2, env.pixvert))
 		{
-			color.rgba.b = (planez(&env.plane, &p.vec3) + 1) * 128;
-			renderset(x, g_screenhgt - y, color);
+			z = planez(&env.plane, &p.vec3);
+			if (zbuffcmp(x, y, z))
+			{
+				zbuffset(x, y, z);
+				color.rgba.b = (int)(128 * (z +1));
+				renderset(x, g_screenhgt - y, color);
+			}
 		}
 	}
 }
