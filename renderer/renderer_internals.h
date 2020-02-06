@@ -38,6 +38,21 @@ struct			s_float_img
 	float			*content;
 };
 
+/*
+** A rendering environnement for a single quad.
+** @var t_quad pixvert	The pixel coordinates of the vertices.
+** @var t_v3 normale	The normale of the quad in screen space.
+** @var t_v4 plane	The plane equation of the figure in screen space.
+*/
+
+typedef struct s_renderenv	t_renderenv;
+struct			s_renderenv
+{
+	t_quad	pixvert;
+	t_v3	normale;
+	t_v4	plane;
+};
+
 t_mx4			g_projmx;
 const t_bbox	g_clipspace;
 

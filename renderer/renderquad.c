@@ -41,26 +41,29 @@ static void	viewtopix(const t_quad src, t_quad dst)
 
 extern void	renderquad(const t_quad quad)
 {
-	t_quad		pixquad;
-	struct s_v2	p;
-	union u_color magenta = 
+	t_renderenv		env;
+	union u_v3	p;
+	union u_color color = 
 	{
 		.rgb = {
-			.r = 255,
+			.r = 0,
 			.g = 0,
-			.b = 255,
+			.b = 0,
 		}
 	};
 
-	viewtopix(quad, pixquad);
+	viewtopix(quad, env.pixvert);
+	env.normale = normale(env.pixvert).vec3;
+	env.plane = planeeq(&env.normale, env.pixvert).vec4;
 	for (unsigned int x=0; x<g_screenwdt; x++)
 	for (unsigned int y=0; y<g_screenhgt; y++)
 	{
-		p.x = (float)x;
-		p.y = (float)y;
-		if (quadcontain(&p, pixquad))
+		p.vec2.x = (float)x;
+		p.vec2.y = (float)y;
+		if (quadcontain(&p.vec2, env.pixvert))
 		{
-			renderset(x, g_screenhgt - y, magenta);
+			color.rgba.b = (planez(&env.plane, &p.vec3) + 1) * 128;
+			renderset(x, g_screenhgt - y, color);
 		}
 	}
 }
