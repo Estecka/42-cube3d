@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:18:28 by abaur             #+#    #+#             */
-/*   Updated: 2020/02/05 14:59:59 by abaur            ###   ########.fr       */
+/*   Updated: 2020/02/06 10:41:42 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ struct			s_float_img
 	float			*content;
 };
 
-t_mx4			g_projmx
+t_mx4			g_projmx;
 const t_bbox	g_clipspace;
 
 t_float_img		g_zbuffer;

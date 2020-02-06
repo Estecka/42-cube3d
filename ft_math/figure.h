@@ -15,22 +15,22 @@
 
 # include "vector.h"
 
-typedef union u_v3	t_tri[3];
-typedef union u_v3	t_quad[4];
+typedef struct s_v3	t_tri[3];
+typedef struct s_v3	t_quad[4];
 
 struct	s_tri
 {
-	union u_v3	a;
-	union u_v3	b;
-	union u_v3	c;
+	struct s_v3	a;
+	struct s_v3	b;
+	struct s_v3	c;
 };
 
 struct	s_quad
 {
-	union u_v3	a;
-	union u_v3	b;
-	union u_v3	c;
-	union u_v3	d;
+	struct s_v3	a;
+	struct s_v3	b;
+	struct s_v3	c;
+	struct s_v3	d;
 };
 
 union	u_tri
@@ -45,13 +45,13 @@ union	u_quad
 	struct s_quad	points;
 };
 
-union u_v4	planeeq(const t_v3 normale, const t_v3 point);
-float		planex(const t_v4 equation, const t_v3 point);
-float		planey(const t_v4 equation, const t_v3 point);
-float		planez(const t_v4 equation, const t_v3 point);
+union u_v4	planeeq(const t_v3 *normale, const t_v3 *point);
+float		planex(const t_v4 *equation, const t_v3 *point);
+float		planey(const t_v4 *equation, const t_v3 *point);
+float		planez(const t_v4 *equation, const t_v3 *point);
 
-short		tricontain(const t_v2 point, const t_tri triangle);
-short		quadcontain(const t_v2 point, const t_quad quadrilater);
+short		tricontain(const t_v2 *point, const t_tri triangle);
+short		quadcontain(const t_v2 *point, const t_quad quadrilater);
 union u_v3	normale(const t_v3 *figure);
 
 #endif

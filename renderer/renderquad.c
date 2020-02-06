@@ -22,8 +22,8 @@ static void	cliptopix(const t_quad src, t_quad dst)
 {
 	for (int i=0; i<4; i++)
 	{
-		dst[i].vec2.x = (1 + src[i].vec2.x) * 0.5 * g_screenwdt;
-		dst[i].vec2.y = (1 + src[i].vec2.y) * 0.5 * g_screenhgt;
+		dst[i].x = (1 + src[i].x) * 0.5 * g_screenwdt;
+		dst[i].y = (1 + src[i].y) * 0.5 * g_screenhgt;
 	}
 }
 
@@ -37,7 +37,7 @@ static void	cliptopix(const t_quad src, t_quad dst)
 extern void	renderquad(const t_quad quad)
 {
 	t_quad		pixquad;
-	union u_v2	p;
+	struct s_v2	p;
 	union u_color magenta = 
 	{
 		.rgb = {
@@ -51,9 +51,9 @@ extern void	renderquad(const t_quad quad)
 	for (unsigned int x=0; x<g_screenwdt; x++)
 	for (unsigned int y=0; y<g_screenhgt; y++)
 	{
-		p.vec2.x = (float)x;
-		p.vec2.y = (float)y;
-		if (quadcontain(p.array, pixquad))
+		p.x = (float)x;
+		p.y = (float)y;
+		if (quadcontain(&p, pixquad))
 		{
 			renderset(x, g_screenhgt - y, magenta);
 		}

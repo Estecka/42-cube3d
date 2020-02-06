@@ -14,18 +14,14 @@
 
 const t_bbox	g_clipspace = {
 	.min = {
-		.vec3 = {
-			.x = -1,
-			.y = -1,
-			.z = -1,
-		}
+		.x = -1,
+		.y = -1,
+		.z = -1,
 	},
 	.max = {
-		.vec3 = {
-			.x = 1,
-			.y = 1,
-			.z = 0,
-		}
+		.x = 1,
+		.y = 1,
+		.z = 0,
 	},
 };
 
@@ -35,22 +31,22 @@ static void		projmxinit()
 	float aspect;
 
 	aspect = g_screenhgt / (float)g_screenwdt;
-	frustrum.min.vec3.x = 1;
-	frustrum.max.vec3.x = -1;
-	frustrum.min.vec3.y =  aspect;
-	frustrum.max.vec3.y = -aspect;
-	frustrum.min.vec3.z = 1;
-	frustrum.max.vec3.z = 10;
-	mxprojbb(g_projmx, &frustrum);
+	frustrum.min.x = 1;
+	frustrum.max.x = -1;
+	frustrum.min.y =  aspect;
+	frustrum.max.y = -aspect;
+	frustrum.min.z = 1;
+	frustrum.max.z = 10;
+	mxfrust(g_projmx, &frustrum);
 
 	//test
 	union u_v4 min, max;
-	min = mx4v3(g_projmx, (float*)&frustrum.min);
-	max = mx4v3(g_projmx, (float*)&frustrum.max);
-	min.vec3 = cartesian(min).vec3;
-	max.vec3 = cartesian(max).vec3;
+	min = mx4v3(g_projmx, &frustrum.min);
+	max = mx4v3(g_projmx, &frustrum.max);
+	min.vec3 = cartesian(&min.vec4).vec3;
+	max.vec3 = cartesian(&max.vec4).vec3;
 	printf("Calculated clip space: \n %f %f %f \n %f %f %f \n", 
-		min.vec3.x, min.vec3.y, min.vec3.z
+		min.vec3.x, min.vec3.y, min.vec3.z,
 		max.vec3.x, max.vec3.y, max.vec3.z);
 }
 
@@ -76,4 +72,5 @@ extern void		renderinit(unsigned int x, unsigned int y)
 	}
 	if (!zbuffinit(x, y))
 		throw(errno, "[FATAL] Could not initialize z-buffer: %d", errno);
+	projmxinit();
 }
