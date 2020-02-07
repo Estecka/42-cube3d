@@ -1,3 +1,5 @@
+
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -33,6 +35,17 @@ t_bbox	g_frustrum = {
 	.max = {
 		.x = 1,
 		.z = -10,
+	},
+};
+
+t_bbox	g_screenbb = {
+	.min = {
+		.x = 0,
+		.y = 0,
+		.z = -1,
+	},
+	.max = {
+		.z = 1,
 	},
 };
 
@@ -76,6 +89,8 @@ extern void		renderinit(unsigned int x, unsigned int y)
 
 	g_screenwdt = x;
 	g_screenhgt = y;
+	g_screenbb.max.x = x;
+	g_screenbb.max.y = y;
 	i = -1;
 	while(++i < 2)
 	{

@@ -75,6 +75,7 @@ union u_v4		g_cliporigin;
 
 t_float_img		g_zbuffer;
 t_mlx_img		g_rendertex[2];
+t_bbox			g_screenbb;
 unsigned int	g_screenwdt;
 unsigned int	g_screenhgt;
 
