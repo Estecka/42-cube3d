@@ -40,6 +40,10 @@ struct			s_float_img
 
 /*
 ** A rendering environnement for a single quad.
+** @var t_mx3 figspace	A linear matrix that transforms a point from homogeneou
+** s screen space to figure space. Translation is not accounted for.
+** @var t_v3 figoffset	The vector that transforms homogeneous screen space ori
+** gin into to figure space origin.
 ** @var t_quad pixvert	The pixel coordinates of the vertices.
 ** @var t_v3 normale	The normale of the quad in screen space.
 ** @var t_v4 plane	The plane equation of the figure in screen space.
@@ -48,14 +52,26 @@ struct			s_float_img
 typedef struct s_renderenv	t_renderenv;
 struct			s_renderenv
 {
+	t_mx3	figspace;
+	t_v3	figoffset;
 	t_quad	pixvert;
-	t_v3	normale;
+	t_v3	normale; // obselete ?
 	t_v4	plane;
 };
 
+/*
+** @var t_bbox g_frustrum	The dimensions of the frustrum in view space.
+** @var t_bbox g_viewbb	The bounding box of the frustrum in view space.
+** @var t_mx4 g_projmx	The projection matrix
+** @var const t_bbox	g_clipspace	The cartesian clip space dimensins.
+** @var union u_v4 g_cliporigin	The position of the camera in homogeneous clip space
+*/
+
 t_bbox			g_frustrum;
+t_bbox			g_viewbb;
 t_mx4			g_projmx;
 const t_bbox	g_clipspace;
+union u_v4		g_cliporigin;
 
 t_float_img		g_zbuffer;
 t_mlx_img		g_rendertex[2];

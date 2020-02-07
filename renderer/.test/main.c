@@ -42,6 +42,7 @@ void renderuv()
 
 int	loop(void* null)
 {
+	(void) null;
 	t_quad quads[] = {
 		{
 			{-1, -1 -1, -2},
@@ -67,7 +68,7 @@ int	loop(void* null)
 
 	for(int i=0; i<3; i++)
 		renderquad(quads[i]);
-	renderflush(g_mlx);
+	renderflush();
 	return (0);
 }
 

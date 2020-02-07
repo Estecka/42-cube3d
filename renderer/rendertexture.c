@@ -68,10 +68,9 @@ extern void	renderclear(union u_color color)
 ** @return int 0;
 */
 
-extern int	renderflush(void *mlx)
+extern void	renderflush(void)
 {
-	mlx_put_image_to_window(mlx, g_window, g_rendertex[g_i].ptr, 0, 0);
+	mlx_put_image_to_window(g_mlx, g_window, g_rendertex[g_i].ptr, 0, 0);
 	g_i = !g_i;
 	zbuffclear();
-	return (0);
 }

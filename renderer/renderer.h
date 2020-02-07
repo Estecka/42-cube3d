@@ -20,7 +20,7 @@ extern void	*g_mlx;
 extern void	*g_window;
 
 void		renderinit(unsigned int width, unsigned int height);
-int			renderflush(void *mlx);
+void		renderflush();
 
 void		renderclear(union u_color color);
 void		renderset(unsigned int x, unsigned int y, union u_color color);
