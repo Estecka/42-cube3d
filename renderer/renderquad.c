@@ -52,24 +52,25 @@ static void	viewtoscreen(t_renderenv *this, const t_quad src)
 ** Computes the pixels position in UV space.
 ** @param t_renderenv* this
 ** @param t_v2* uv Outputs the UV, wrapped around the [0; 1] range.
-** @param t_v2* p The pixel's coordinates in cartesian screen space.
-** 	The pixel coordinates are directly worked onto for optimization purpose.
+** @param const t_v3* p The pixel's coordinates in cartesian screen space.
 ** @return bool
 ** 	true  The pixels lands inside the unit square.
 **  false the pixel lands outside the unit square, and the uv were wrapped.
 */
 
-static short	getuv(t_renderenv *this, t_v2 *uv, t_v3 *p)
+static short	getuv(t_renderenv *this, t_v2 *uv, const t_v3 *pixel)
 {
 	short r;
+	t_v3 p;
 
-	p->x /= 0.5 * g_screenwdt;
-	p->y /= 0.5 * g_screenhgt;
-	p->x -= 1;
-	p->y -= 1;
-	*p = homegeneous(p, g_projmx).vec3;
-	*p = addvec3(p, &this->figoffset).vec3;
-	*uv = mx3v3(this->figspace, p).vec2;
+	p = *pixel;
+	p.x /= 0.5 * g_screenwdt;
+	p.y /= 0.5 * g_screenhgt;
+	p.x -= 1;
+	p.y -= 1;
+	p = homegeneous(&p, g_projmx).vec3;
+	p = addvec3(&p, &this->figoffset).vec3;
+	*uv = mx3v3(this->figspace, &p).vec2;
 	r = (uv->x <= 1) && (uv->y <= 1) && (uv->x >= 0) && (uv->y >= 0);
 	return (r);
 }
@@ -86,6 +87,10 @@ extern void	renderquad(const t_quad quad)
 	t_renderenv		env;
 
 	viewtoscreen(&env, quad);
+	bbquad(&env.bbox, env.pixvert);
+	bbclip(&env.bbox, &env.bbox, &g_screenbb);
+	if (!bbisvalid(&env.bbox))
+		return;
 	env.normale = normale(env.pixvert).vec3;
 	env.plane = planeeq(&env.normale, env.pixvert).vec4;
 
@@ -93,30 +98,28 @@ extern void	renderquad(const t_quad quad)
 	mx3cpy(env.figspace, mx);
 	mx3inv(mx, env.figspace);
 
-	union u_v3	p;
 	union u_color color = 
 	{
 		.rgba = {
 			.a = 0,
 		}
 	};
-	for (unsigned int x=0; x<g_screenwdt; x++)
-	for (unsigned int y=0; y<g_screenhgt; y++)
+	struct s_v3	p;
+	for (p.x=env.bbox.min.x; p.x<env.bbox.max.x; p.x++)
+	for (p.y=env.bbox.min.y; p.y<env.bbox.max.y; p.y++)
 	{
-		p.vec2.x = (float)x;
-		p.vec2.y = (float)y;
-		if (quadcontain(&p.vec2, env.pixvert))
+		if (quadcontain((t_v2*)&p, env.pixvert))
 		{
-			p.vec3.z = planez(&env.plane, &p.vec3);
-			if (zbuffcmp(x, y, p.vec3.z))
+			p.z = planez(&env.plane, &p);
+			if (zbuffcmp(p.x, p.y, p.z))
 			{
 				t_v2	uv;
-				zbuffset(x, y, p.vec3.z);
-				color.rgba.b = 255 - (int)(128 * (p.vec3.z +1));
-				getuv(&env, &uv, &p.vec3);
+				zbuffset(p.x, p.y, p.z);
+				color.rgba.b = 255 - (int)(128 * (p.z +1));
+				getuv(&env, &uv, &p);
 				color.rgba.r = (int)(255 * uv.y);
 				color.rgba.g = (int)(255 * uv.x);
-				renderset(x, g_screenhgt - y, color);
+				renderset(p.x, g_screenhgt - p.y, color);
 			}
 		}
 	}

@@ -40,6 +40,7 @@ struct			s_float_img
 
 /*
 ** A rendering environnement for a single quad.
+** @var t_bbox bbox	The bounding box of the quad in screen space.
 ** @var t_mx3 figspace	A linear matrix that transforms a point from homogeneou
 ** s screen space to figure space. Translation is not accounted for.
 ** @var t_v3 figoffset	The vector that transforms homogeneous screen space ori
@@ -52,6 +53,7 @@ struct			s_float_img
 typedef struct s_renderenv	t_renderenv;
 struct			s_renderenv
 {
+	t_bbox	bbox;
 	t_mx3	figspace;
 	t_v3	figoffset;
 	t_quad	pixvert;
