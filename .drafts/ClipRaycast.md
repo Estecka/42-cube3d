@@ -79,7 +79,7 @@ For this section, we need to work using homogeneous coordinates instead of carte
 We already know the homogeneous coordinates of ABC.
 [Cartesian to Homegeneous](Unproject.md)
 The homegeneous coordinates of P are:
-`P *= -m31*(m22/m23 - Pz)`
+`P *= -m32*m23 / (m22 - m23*Pz)`
 
 Let there be a UV space, whose X and Y axes are B^A and B^C respectively.
 _B is used as origin so that it can be consistent with ABCD_

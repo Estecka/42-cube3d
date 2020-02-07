@@ -28,5 +28,7 @@ We are looking for P".
 `-G/P'w =     E/F - P"z`
 `-P'w/G =  1/(E/F - P"z)`
 ` P'w   = -G/(E/F - P"z)`
+` P'w   = -G/((E - FP"z)/F)`
+` P'w   = -G*F/(E - FP"z)`
 
-`P' = P" * -G(E/F - P"z)`
+`P' = P" * -G*F / (E - FP"z)`
