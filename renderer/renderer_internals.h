@@ -57,7 +57,6 @@ struct			s_renderenv
 	t_mx3	figspace;
 	t_v3	figoffset;
 	t_quad	pixvert;
-	t_v3	normale; // obselete ?
 	t_v4	plane;
 };
 
@@ -66,7 +65,8 @@ struct			s_renderenv
 ** @var t_bbox g_viewbb	The bounding box of the frustrum in view space.
 ** @var t_mx4 g_projmx	The projection matrix
 ** @var const t_bbox	g_clipspace	The cartesian clip space dimensins.
-** @var union u_v4 g_cliporigin	The position of the camera in homogeneous clip space
+** @var union u_v4 g_cliporigin	The position of the camera in homogeneous clip
+**  space.
 */
 
 t_bbox			g_frustrum;
@@ -89,5 +89,7 @@ void			zbuffclear();
 float			zbuffget(unsigned int x, unsigned int y);
 void			zbuffset(unsigned int x, unsigned int y, float value);
 short			zbuffcmp(unsigned int x, unsigned int y, float value);
+
+void			rasterize(t_renderenv *env);
 
 #endif
