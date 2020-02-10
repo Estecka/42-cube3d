@@ -43,7 +43,7 @@ void renderuv()
 int	loop(void* null)
 {
 	(void) null;
-	t_quad quads[] = {
+	static t_quad quads[] = {
 		{
 			{-1, -1 -.25, -2},
 			{-1, -1 -.25, -6},

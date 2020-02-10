@@ -80,7 +80,7 @@ extern void	renderquad(const t_quad quad)
 	viewtoscreen(&env, quad);
 	bbquad(&env.bbox, env.pixvert);
 	bbclip(&env.bbox, &env.bbox, &g_screenbb);
-	if (!bbisvalid2d(&env.bbox))
+	if (!bbisvalid(&env.bbox))
 		return ;
 	normal = normale(env.pixvert).vec3;
 	env.plane = planeeq(&normal, env.pixvert).vec4;
