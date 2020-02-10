@@ -36,7 +36,7 @@ static void	viewtoscreen(t_renderenv *this, const t_quad src)
 	this->figspace[2][0] = g_cliporigin.vec4.x - p[1].vec4.x;
 	this->figspace[2][1] = g_cliporigin.vec4.y - p[1].vec4.y;
 	this->figspace[2][2] = g_cliporigin.vec4.z - p[1].vec4.z;
-	this->figoffset = subvec3(&p[1].vec3, &(t_v3){0, 0, 0 }).vec3;
+	subvec3(&this->figoffset, &p[1].vec3, &(t_v3){ 0 });
 	for (int i=0; i<4; i++)
 	{
 		p[i].vec3 = cartesian(&p[i].vec4).vec3;
@@ -69,7 +69,7 @@ static short	getuv(t_renderenv *this, t_v2 *uv, const t_v3 *pixel)
 	p.x -= 1;
 	p.y -= 1;
 	p = homegeneous(&p, g_projmx).vec3;
-	p = addvec3(&p, &this->figoffset).vec3;
+	addvec3(&p, &p, &this->figoffset);
 	*uv = mx3v3(this->figspace, &p).vec2;
 	r = (uv->x <= 1) && (uv->y <= 1) && (uv->x >= 0) && (uv->y >= 0);
 	return (r);
