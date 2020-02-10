@@ -50,19 +50,12 @@ t_bbox	g_screenbb = {
 static void		frustruminit(void)
 {
 	float aspect;
-	float farscale;
 
 	aspect = g_screenhgt / (float)g_screenwdt;
 	g_frustrum.min.y = -aspect;
 	g_frustrum.max.y = +aspect;
 	mxfrust(g_projmx, &g_frustrum);
 	g_cliporigin = mx4v3(g_projmx, &(t_v3){0, 0, 0});
-	farscale = g_frustrum.max.z / g_frustrum.min.z;
-	g_viewbb = g_frustrum;
-	g_viewbb.max.x *= farscale;
-	g_viewbb.max.y *= farscale;
-	g_viewbb.min.x *= farscale;
-	g_viewbb.min.y *= farscale;
 }
 
 extern void		renderinit(unsigned int x, unsigned int y)
