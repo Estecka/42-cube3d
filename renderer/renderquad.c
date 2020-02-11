@@ -76,7 +76,6 @@ extern void	renderquad(const t_quad quad)
 
 	if (!clipquad(quad))
 		return ;
-
 	viewtoscreen(&env, quad);
 	bbquad(&env.bbox, env.pixvert);
 	bbclip(&env.bbox, &env.bbox, &g_screenbb);

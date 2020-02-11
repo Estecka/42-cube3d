@@ -20,11 +20,11 @@
 **  true  The quad is frontfaced.
 */
 
-static short    isfrontfaced(const t_quad quad)
+static short	isfrontfaced(const t_quad quad)
 {
-    struct s_v3 n;
+	struct s_v3	n;
 
-    n = normale(quad).vec3;
+	n = normale(quad).vec3;
 	return (dotprod3(&n, &quad[1]) < 0);
 }
 
@@ -63,7 +63,7 @@ static short	frustrumculling(const t_quad quad)
 **  false The quad is definitely not visible.
 */
 
-extern short    clipquad(const t_quad quad)
+extern short	clipquad(const t_quad quad)
 {
 	if (!isfrontfaced(quad))
 		return (0);
