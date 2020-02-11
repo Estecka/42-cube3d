@@ -28,11 +28,11 @@ const t_bbox	g_clipspace = {
 t_bbox	g_frustrum = {
 	.min = {
 		.x = -1,
-		.z = -1,
+		.z = -10,
 	},
 	.max = {
 		.x = 1,
-		.z = -10,
+		.z = -1,
 	},
 };
 

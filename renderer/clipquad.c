@@ -29,8 +29,34 @@ static short    isfrontfaced(const t_quad quad)
 }
 
 /*
+** Checks whether the quad interects with the frustrum.
+** This is a fast approximation, and might yield false positives.
+** @param t_quad quad The quad to check.
+** @return bool
+** 	true  The quad likely intersects the frustrum.
+** 	false The quad definitely is outside the frustrum.
+*/
+
+static short	frustrumculling(const t_quad quad)
+{
+	union u_v3	horto[4];
+	t_bbox		bbox;
+	int			i;
+
+	i = -1;
+	while (++i < 4)
+	{
+		horto[i].vec3.z = quad[i].z;
+		scalevec2(&horto[i].vec2, &horto[i].vec2,
+			g_frustrum.max.z / quad[i].z);
+	}
+	bbquad(&bbox, (t_v3*)horto);
+	return (bbinter(&bbox, &g_frustrum));
+}
+
+/*
 ** Checks whether the quad is visible to the camera.
-** This might return false positives.
+** This might yield false positives.
 ** @param t_quad The quad to check.
 ** @return bool
 **  true  The quad is most likely visible.
@@ -40,6 +66,8 @@ static short    isfrontfaced(const t_quad quad)
 extern short    clipquad(const t_quad quad)
 {
 	if (!isfrontfaced(quad))
+		return (0);
+	if (!frustrumculling(quad))
 		return (0);
 	return (1);
 }
