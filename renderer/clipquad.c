@@ -39,18 +39,18 @@ static short    isfrontfaced(const t_quad quad)
 
 static short	frustrumculling(const t_quad quad)
 {
-	union u_v3	horto[4];
+	struct s_v3	horto[4];
 	t_bbox		bbox;
 	int			i;
 
 	i = -1;
 	while (++i < 4)
 	{
-		horto[i].vec3.z = quad[i].z;
-		scalevec2(&horto[i].vec2, &horto[i].vec2,
+		horto[i].z = quad[i].z;
+		scalevec2((t_v2*)&horto[i], (t_v2*)&quad[i],
 			g_frustrum.max.z / quad[i].z);
 	}
-	bbquad(&bbox, (t_v3*)horto);
+	bbquad(&bbox, horto);
 	return (bbinter(&bbox, &g_frustrum));
 }
 
