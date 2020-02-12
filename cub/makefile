@@ -1,4 +1,4 @@
-SRCS = cub.c cub1.c cub2.c
+SRCS = cubfile.c cubfield.c cubgrid.c
 OBJS = ${SRCS:.c=.o}
 
 TEST_SRCS = .test/main.c \
@@ -13,8 +13,9 @@ PRINTF	= ../ft_printf/libftprintf.a
 CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror
 LIBFLAGS = \
-	-L ../libft -lft \
+	-L ./ -lcub \
 	-L ../ft_printf -lftprintf \
+	-L ../libft -lft \
 
 
 
@@ -30,8 +31,7 @@ all: ${NAME} ${TEST}
 
 test: ${TEST}
 ${TEST}: ${NAME} ${PRINTF} ${LIBFT} ${MISC_SRCS}
-	gcc -o ${TEST} \
-		${OBJS} ${TEST_SRCS} \
+	gcc -o ${TEST} ${TEST_SRCS} \
 		${LIBFLAGS} \
 		${CFLAGS} \
 
