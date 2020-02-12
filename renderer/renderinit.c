@@ -58,14 +58,10 @@ static void		frustruminit(void)
 	g_cliporigin = mx4v3(g_projmx, &(t_v3){0, 0, 0});
 }
 
-extern void		renderinit(unsigned int x, unsigned int y)
+static void		textureinit(unsigned int x, unsigned int y)
 {
-	int i;
+	int	i;
 
-	g_screenwdt = x;
-	g_screenhgt = y;
-	g_screenbb.max.x = x;
-	g_screenbb.max.y = y;
 	i = -1;
 	while (++i < 2)
 	{
@@ -81,7 +77,17 @@ extern void		renderinit(unsigned int x, unsigned int y)
 		if (!g_rendertex[i].ptr)
 			throw(errno, "[FATAL] Could not create render texture: %d", errno);
 	}
+}
+
+extern void		renderinit(unsigned int x, unsigned int y)
+{
+	g_screenwdt = x;
+	g_screenhgt = y;
+	g_screenbb.max.x = x;
+	g_screenbb.max.y = y;
 	if (!zbuffinit(x, y))
 		throw(errno, "[FATAL] Could not initialize z-buffer: %d", errno);
+	renderqueueinit();
+	textureinit(x, y);
 	frustruminit();
 }

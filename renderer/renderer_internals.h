@@ -15,6 +15,7 @@
 
 # include "renderer.h"
 # include "../ft_math/ft_math.h"
+# include "../dynarray/dynarray.h"
 # include "../minilibx/mlx.h"
 
 typedef struct s_mlx_img	t_mlx_img;
@@ -79,6 +80,8 @@ t_bbox			g_screenbb;
 unsigned int	g_screenwdt;
 unsigned int	g_screenhgt;
 
+t_dynarray		g_renderqueue;
+
 void			mlx_img_set(t_mlx_img *this, unsigned int x, unsigned int y,
 	union u_color col);
 
@@ -87,6 +90,8 @@ void			zbuffclear();
 float			zbuffget(unsigned int x, unsigned int y);
 void			zbuffset(unsigned int x, unsigned int y, float value);
 short			zbuffcmp(unsigned int x, unsigned int y, float value);
+
+void			renderqueueinit();
 
 short			clipquad(const t_quad quad);
 void			rasterize(t_renderenv *env);

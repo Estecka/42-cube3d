@@ -25,4 +25,5 @@ void		renderflush();
 void		renderclear(union u_color color);
 void		renderset(unsigned int x, unsigned int y, union u_color color);
 void		renderquad(const t_quad quad);
+void		renderqueue(const t_quad quad);
 #endif
