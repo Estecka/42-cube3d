@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 15:38:42 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/28 16:40:34 by abaur            ###   ########.fr       */
+/*   Updated: 2020/02/12 17:27:54 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 #include "ft_printf/ft_printf.h"
 
 #include "cube3d.h"
-#include "cub.h"
-#include "renderer.h"
+#include "cub/cub.h"
+#include "renderer/renderer.h"
 
 #include "minilibx/mlx.h"
 #include "keycode.h"

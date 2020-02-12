@@ -14,9 +14,9 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <stdio.h>
-#include "../ft_printf/ft_printf.h"
+#include "../../ft_printf/ft_printf.h"
 
-#include "../cube3d.h"
+#include "../../cube3d.h"
 #include "../cub.h"
 
 
@@ -49,8 +49,8 @@ Map content: \n\
 		map.screenwdt, map.screenhgt,
 		map.north, map.south, map.west, map.east,
 		map.sprite,
-		map.floorcol.r, map.floorcol.g, map.floorcol.b,
-		map.ceilcol.r, map.ceilcol.g, map.ceilcol.b,
+		map.floorcol.rgb.r, map.floorcol.rgb.g, map.floorcol.rgb.b,
+		map.ceilcol.rgb.r, map.ceilcol.rgb.g, map.ceilcol.rgb.b,
 		map.mapwdt, map.maphgt
 		);
 

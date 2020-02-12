@@ -24,7 +24,7 @@
 # define MP	825307441
 
 # include "cub.h"
-# include "stringbuilder/stringbuilder.h"
+# include "../stringbuilder/stringbuilder.h"
 
 void	parseresolution(const char *line, int *width, int *height);
 char	*parsetexpath(const char *line);

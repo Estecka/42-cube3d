@@ -12,7 +12,6 @@
 
 #include <stdlib.h>
 #include "cub_util.h"
-#include "stringbuilder/stringbuilder.h"
 
 /*
 ** Allocates a two dimensional array in a single memory space.

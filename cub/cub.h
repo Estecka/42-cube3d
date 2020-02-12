@@ -13,7 +13,7 @@
 #ifndef CUB_H
 # define CUB_H
 
-# include "cube3d.h"
+# include "../cube3d.h"
 
 typedef struct s_mapfile	t_mapfile;
 

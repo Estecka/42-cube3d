@@ -6,12 +6,8 @@ MISC_SRCS = throw.c \
 	mallocspy/mallocspy.c mallocspy/mallocspy_internals.c
 MISC_OBJS = ${MISC_SRCS:.c=.o}
 
-CUB_SRCS = cub.c cub1.c cub2.c
-CUB_OBJS = ${CUB_SRCS:.c=.o}
-
-
 NAME	= cube3d.out
-CUB		= cub_parser.out
+CUB		= cub/libcub.a
 MATH	= ft_math/libftmath.a
 DYNARRAY = dynarray/libdynarray.a
 LIBFT	= libft/libft.a
@@ -20,8 +16,9 @@ MINILIBX = libmlx.dylib
 
 
 CC		= gcc
-CFLAGS	= -Wall -Wextra #-Werror
+CFLAGS	= -Wall -Wextra -Werror
 LIBFLAGS = \
+	-L cub -lcub \
 	-L ft_math -lftmath \
 	-L dynarray -ldynarray \
 	-L libft -lft \
@@ -30,7 +27,7 @@ LIBFLAGS = \
 
 
 
-${NAME}: ${OBJS} ${LIBFT} ${PRINTF} ${MINILIBX} ${MATH}
+${NAME}: ${OBJS} ${CUB} ${LIBFT} ${PRINTF} ${MINILIBX} ${MATH}
 	gcc ${OBJS} -o ${NAME} \
 	${LIBFLAGS} \
 	${CFLAGS} \
@@ -52,11 +49,8 @@ minilibx/${MINILIBX}:
 all: ${NAME} ${CUB}
 
 cub: ${CUB}
-${CUB}: .test/main_cub.o  ${CUB_OBJS} ${MISC_OBJS} ${PRINTF} ${LIBFT}
-	gcc .test/main_cub.o ${CUB_OBJS} ${MISC_OBJS} \
-	-o ${CUB} \
-	${LIBFLAGS} \
-	${CFLAGS} \
+${CUB}:
+	make -C cub/
 
 math: ${MATH}
 ${MATH}:
@@ -72,13 +66,6 @@ clean:
 	rm -f *.gch
 
 fclean: clean
-	make fclean -C libft
-	make fclean -C ft_printf
-	make clean -C minilibx
-	rm -f ${MATH}
-	rm -f ${LIBFT}
-	rm -f ${PRINTF}
-	rm -f ${MINILIBX}
 	rm -f ${NAME}
 
 re: fclean ${NAME}
