@@ -10,7 +10,12 @@ MLX = libmlx.dylib
 
 CC     = gcc
 CFLAGS = -Wall -Wextra #-Werror
-
+LIBFLAGS = \
+		-L ./ -lmlx -lrenderer \
+		-L ../libft -lft \
+		-L ../ft_printf -lftprintf \
+		-L ../ft_math -lftmath \
+		-L ../dynarray -ldynarray \
 
 ${NAME}: ${OBJS}
 	ar rcs ${NAME} ${OBJS}
@@ -20,11 +25,9 @@ ${TEST}: ${NAME} ${MLX} .test/main.c ../throw.c
 	make libft -C ../
 	make printf -C ../
 	make math -C ../
+	make dynarray -C ../
 	gcc .test/main.c ../throw.c -o ${TEST} \
-		-L ./ -lmlx -lrenderer \
-		-L ../libft -lft \
-		-L ../ft_printf -lftprintf \
-		-L ../ft_math -lftmath \
+		${LIBFLAGS} \
 		${CFLAGS} \
 
 ${MLX}: ../minilibx/${MLX}

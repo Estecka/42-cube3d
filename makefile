@@ -12,7 +12,8 @@ CUB_OBJS = ${CUB_SRCS:.c=.o}
 
 NAME	= cube3d.out
 CUB		= cub_parser.out
-MATH	= ft_math/libftmat.a
+MATH	= ft_math/libftmath.a
+DYNARRAY = dynarray/libdynarray.a
 LIBFT	= libft/libft.a
 PRINTF	= ft_printf/libftprintf.a
 MINILIBX = libmlx.dylib
@@ -22,6 +23,7 @@ CC		= gcc
 CFLAGS	= -Wall -Wextra #-Werror
 LIBFLAGS = \
 	-L ft_math -lftmath \
+	-L dynarray -ldynarray \
 	-L libft -lft \
 	-L ft_printf -lftprintf \
 	-L ./ -lmlx \
@@ -59,6 +61,9 @@ ${CUB}: .test/main_cub.o  ${CUB_OBJS} ${MISC_OBJS} ${PRINTF} ${LIBFT}
 math: ${MATH}
 ${MATH}:
 	make -C ft_math
+dynarray: ${DYNARRAY}
+${DYNARRAY}:
+	make -C dynarray
 
 
 
@@ -78,4 +83,5 @@ fclean: clean
 
 re: fclean ${NAME}
 
-.PHONY: all clean fclean re libft printf cub math
+.PHONY: all clean fclean re libft \
+	libft printf minilibx cub math dynarray
