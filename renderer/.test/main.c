@@ -67,7 +67,8 @@ int	loop(void* null)
 	renderuv();
 
 	for(int i=0; i<3; i++)
-		renderquad(quads[i]);
+		renderqueuestage(quads[i]);
+	renderqueueflush();
 	renderflush();
 	return (0);
 }

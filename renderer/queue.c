@@ -20,7 +20,7 @@ void		renderqueueinit(void)
 		throw(errno, "[FATAL] Renderqueue initialization failed: %d", errno);
 }
 
-void		renderqueueclear(void)
+static void		renderqueueclear(void)
 {
 	size_t	i;
 	void	**queue;
@@ -36,6 +36,25 @@ void		renderqueueclear(void)
 }
 
 /*
+** Renders all quads in the queue, then clears it.
+** This DOES NOT print the render texture on-screen.
+*/
+
+extern void	renderqueueflush(void)
+{
+	size_t	i;
+	t_v3	**queue;
+
+	queue = (t_v3**)g_renderqueue.content;
+	i = -1;
+	while (++i < g_renderqueue.length)
+	{
+		renderquad(queue[i]);
+	}
+	renderqueueclear();
+}
+
+/*
 ** Stages a quad to be renderered.
 ** Performs early culling on the quad, and roughly sorts the queue from closest
 **  to farthest.
@@ -46,12 +65,12 @@ void		renderqueueclear(void)
 
 extern void	renderqueuestage(const t_quad quad)
 {
-	t_quad	*queue;
+	t_v3	**queue;
 	size_t	i;
 
 	if (!clipquad(quad))
 		return ;
-	queue = (t_quad*)g_renderqueue.content;
+	queue = (t_v3**)g_renderqueue.content;
 	i = 0;
 	while (i < g_renderqueue.length)
 	{
@@ -59,6 +78,6 @@ extern void	renderqueuestage(const t_quad quad)
 			break ;
 		i++;
 	}
-	if (!dyninsert(&g_renderqueue, i, quad))
+	if (!dyninsert(&g_renderqueue, i, &quad))
 		throw(errno, "[FATAL] Renderqueue insertion failed: %d", errno);
 }
