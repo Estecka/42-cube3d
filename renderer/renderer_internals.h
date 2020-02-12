@@ -94,6 +94,7 @@ short			zbuffcmp(unsigned int x, unsigned int y, float value);
 void			renderqueueinit();
 
 short			clipquad(const t_quad quad);
+void			renderquad(const t_quad quad);
 void			rasterize(t_renderenv *env);
 
 #endif
