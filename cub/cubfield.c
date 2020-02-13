@@ -50,23 +50,16 @@ void	parseresolution(const char *line, int *width, int *height)
 }
 
 /*
-** Parse the path to a texture file.
-** Makes sure the file exists.
-** TODO: actually check that the file is a texture.
+** Parses a string.
+** Does not actually check any kind of format.
 ** @param const char* line
 ** @return An allocated copy of the path
 */
 
 char	*parsetexpath(const char *line)
 {
-	int		fd;
 	char	*dst;
 
-	fd = open(line, O_RDONLY);
-	if (fd < 0)
-		throw(errno, "Invalid texture path: %d \n%s", errno, line);
-	else
-		close(fd);
 	dst = ft_strdup(line);
 	if (!dst)
 		throw(errno, "Fatal: Malloc failed in ParseTexturePath: %d\n%s",
