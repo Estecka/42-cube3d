@@ -15,11 +15,24 @@
 
 # include "../cube3d.h"
 
+/*
+** @var t_v2i resolution	The defined resolution of the screen.
+** @var char[] north	The path to the northern texture.
+** @var char[] south	The path to the southern texture.
+** @var char[] east 	The path to the eastern  texture.
+** @var char[] west 	The path to the western  texture.
+** @var char[] sprite	The path to the spritern texture. :o)
+** @var union u_color floorcol	The colour of the floor.
+** @var union u_color ceilcol	The colour of the ceiling.
+** @var t_v2i mapsize	The maximum dimensions of the map.
+** @var char[][] tiles	The individual tiles of the map.
+** 	Each row of the array may still be SMALLER than the maximum width.
+*/
+
 typedef struct s_cubfile	t_cubfile;
 struct	s_cubfile
 {
-	int				screenwdt;
-	int				screenhgt;
+	struct s_v2i resolution;
 
 	char			*north;
 	char			*south;
@@ -31,9 +44,56 @@ struct	s_cubfile
 	union u_color	floorcol;
 	union u_color	ceilcol;
 
-	unsigned int	mapwdt;
-	unsigned int	maphgt;
+	struct s_v2i	mapsize;
 	char			**tiles;
+};
+
+
+/*
+** @var t_v2i resolution	The effective resolution of the screen.
+** @var t_mlx_img north	The northern texture.
+** @var t_mlx_img south	The southern texture.
+** @var t_mlx_img east 	The eastern  texture.
+** @var t_mlx_img west 	The western  texture.
+** @var t_mlx_img sprite	The sprite texture.
+** @var union u_color floorcol	The colour of the floor.
+** @var union u_color ceilcol	The colour of the ceiling.
+** @var t_v2i mapsize	The dimensions of the map.
+** @var char[][] tiles	The individual tiles of the map.
+** 	Blanks are filled in with \0.
+** 	The player is replaced with a '0'.
+**
+** @var t_v2i playerspawn	The original position of the player.
+** @var	float playerspanangle	The angle in degree the player is originaly rot
+** ated around the Z axis.
+*/
+
+typedef struct s_cubworld	t_cubworld;
+struct	s_cubworld
+{
+	struct s_v2i resolution;
+
+	void			*north;
+	void			*south;
+	void			*east;
+	void			*west;
+
+	void			*sprite;
+
+	union u_color	floorcol;
+	union u_color	ceilcol;
+
+	struct s_v2i	mapsize;
+	char			**tiles;
+
+	struct s_v2i	playerspawn;
+	float			playerspawnangle;
+};
+
+union	u_cub
+{
+	struct s_cubworld	world;
+	struct s_cubfile	file;
 };
 
 void	parsefile(t_cubfile *this, int fd);

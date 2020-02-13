@@ -31,7 +31,7 @@ static char		*parsefields(t_cubfile *this, int fd)
 		throw(errno, "[FATAL] GNL error: %d", errno);
 	if (gnl == 0)
 		throw(-1, "No map found in the file");
-	if (this->screenwdt == 0 || this->screenhgt == 0
+	if (this->resolution.x == 0 || this->resolution.y == 0
 		|| this->north == NULL || this->south == NULL || this->east == NULL
 		|| this->west == NULL || this->sprite == NULL
 		|| this->floorcol.rgba.a == 0 || this->ceilcol.rgba.a == 0)
@@ -74,7 +74,7 @@ static void		parsemap(t_cubfile *this, int fd, char *firstrow)
 	if (gnl < 0 )
 		throw(errno, "[FATAL] GNL error: %d", errno);
 	this->tiles = (char**)array.content;
-	if (this->maphgt == 0 || this->mapwdt == 0)
+	if (this->mapsize.x == 0 || this->mapsize.y == 0)
 		throw(-1, "Map is empty.");
 }
 

@@ -20,6 +20,13 @@
 typedef unsigned int	t_uint;
 typedef unsigned long	t_ulong;
 
+typedef struct s_v2i	t_v2i;
+struct	s_v2i
+{
+	signed int	x;
+	signed int	y;
+};
+
 typedef struct s_rgb	t_rgb;
 struct	s_rgb
 {

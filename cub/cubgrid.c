@@ -59,8 +59,8 @@ char*const	*gridmalloc(unsigned int width, unsigned int height, char value)
 
 void		parsegridrow(t_cubfile *this, char *line, t_dynarray *array)
 {
-	char			*src;
-	unsigned int	width;
+	char		*src;
+	signed int	width;
 
 	src = line;
 	width = 0;
@@ -78,7 +78,7 @@ void		parsegridrow(t_cubfile *this, char *line, t_dynarray *array)
 	src[width] = '\0';
 	if (!dynappend(array, &src))
 		throw(errno, "[FATAL] dynappend failed: %d", errno);
-	this->maphgt++;
-	if (width > this->mapwdt)
-		this->mapwdt = width;
+	this->mapsize.y++;
+	if (width > this->mapsize.x)
+		this->mapsize.x = width;
 }

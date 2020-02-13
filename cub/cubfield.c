@@ -78,8 +78,8 @@ void			parsefield(char *line, t_cubfile *dst)
 		dst->ceilcol.rgba = parsecolor(skip_id(line));
 	else if (id == F && dst->floorcol.rgba.a == 0)
 		dst->floorcol.rgba = parsecolor(skip_id(line));
-	else if (id == R && dst->screenwdt == 0 && dst->screenhgt == 0)
-		parseresolution(skip_id(line), &dst->screenwdt, &dst->screenhgt);
+	else if (id == R && dst->resolution.x == 0 && dst->resolution.y == 0)
+		parseresolution(skip_id(line), &dst->resolution.x, &dst->resolution.y);
 	else if (id == S && dst->sprite == NULL)
 		dst->sprite = parsetexpath(skip_id(line));
 	else if (id == NO && dst->north == NULL)

@@ -46,15 +46,15 @@ C  %d,%d,%d \n\
 Map size: %u %u \n\
 Map content: \n\
 ",
-		map.screenwdt, map.screenhgt,
+		map.resolution.x, map.resolution.y,
 		map.north, map.south, map.west, map.east,
 		map.sprite,
 		map.floorcol.rgb.r, map.floorcol.rgb.g, map.floorcol.rgb.b,
 		map.ceilcol.rgb.r, map.ceilcol.rgb.g, map.ceilcol.rgb.b,
-		map.mapwdt, map.maphgt
+		map.mapsize.x, map.mapsize.y
 		);
 
-	for (unsigned int y=0; y<map.maphgt; y++)
+	for (int y=0; y<map.mapsize.y; y++)
 	{
 		for(char* c=map.tiles[y]; *c != '\0'; c++)
 			printf("%c ", *c);
