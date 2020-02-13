@@ -62,13 +62,15 @@ static void		parsemap(t_cubfile *this, int fd, char *firstrow)
 	while (0 < (gnl = get_next_line(fd, &line)))
 	{
 		if(line[0] != '\0')
-			parsegridrow(this, line, &array);
-		else
 		{
-			free(line);
+			parsegridrow(this, line, &array);
+			line = NULL;
+		}
+		else
 			break ;
-		}		
-	} 
+	}
+	if (line)
+		free(line);
 	if (gnl < 0 )
 		throw(errno, "[FATAL] GNL error: %d", errno);
 	this->tiles = (char**)array.content;
