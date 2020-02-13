@@ -26,6 +26,7 @@
 # include "cub.h"
 # include "../stringbuilder/stringbuilder.h"
 
+void	parsefield(char *line, t_cubfile *dst);
 void	parseresolution(const char *line, int *width, int *height);
 char	*parsetexpath(const char *line);
 t_rgba	parsecolor(const char *line);

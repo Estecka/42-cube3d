@@ -7,3 +7,5 @@
 *.dylib
 *.swiftdoc
 *.swiftmodule
+
+.vscode

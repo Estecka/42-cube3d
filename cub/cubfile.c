@@ -13,86 +13,6 @@
 #include "cub_util.h"
 
 /*
-** Finds the first argument of the line and points to it.
-** This skips the line identifier and the following spaces.
-** @param const char* line The line to skip.
-** @return char* A pointer to the character in the source string.
-*/
-
-static char		*skip_id(const char *line)
-{
-	const char *src;
-
-	src = line;
-	while (*line && !ft_isspace(*line))
-		line++;
-	if (!*line)
-		throw(-1, "Line has no argument: \n%s", src);
-	while (*line && ft_isspace(*line))
-		line++;
-	if (!*line)
-		throw(-1, "Line has no argument: \n%s", src);
-	return ((char*)line);
-}
-
-/*
-** Computes the first few characters of a string into a single int value
-** to make comparison easier.
-** Evaluates up to 4 characters, and stops before the first white space.
-** @param char* line The line to compute.
-** @return The computed identifier.
-*/
-
-static t_uint	getidentifier(char *line)
-{
-	unsigned int	result;
-	unsigned int	i;
-
-	if (!line)
-		throw(-1, "Fatal: Passed null argument to GetIdentifier.");
-	result = 0;
-	i = 0;
-	while (i < 4 && line[i] && !ft_isspace(line[i]))
-	{
-		result |= line[i] << (i * 8);
-		i++;
-	}
-	return (result);
-}
-
-/*
-** Parse a single line to fill the given mapfile object.
-** Duplicate identifiers are considered an error.
-** @param char* line     Assumed non null and non-empty.
-** @param t_cubfile* dst The mapfile object to fill.
-*/
-
-static void		parseline(char *line, t_cubfile *dst)
-{
-	unsigned int	id;
-
-	id = getidentifier(line);
-	if (id == C && dst->ceilcol.rgba.a == 0)
-		dst->ceilcol.rgba = parsecolor(skip_id(line));
-	else if (id == F && dst->floorcol.rgba.a == 0)
-		dst->floorcol.rgba = parsecolor(skip_id(line));
-	else if (id == R && dst->screenwdt == 0 && dst->screenhgt == 0)
-		parseresolution(skip_id(line), &dst->screenwdt, &dst->screenhgt);
-	else if (id == S && dst->sprite == NULL)
-		dst->sprite = parsetexpath(skip_id(line));
-	else if (id == NO && dst->north == NULL)
-		dst->north = parsetexpath(skip_id(line));
-	else if (id == SO && dst->south == NULL)
-		dst->south = parsetexpath(skip_id(line));
-	else if (id == WE && dst->west == NULL)
-		dst->west = parsetexpath(skip_id(line));
-	else if (id == EA && dst->east == NULL)
-		dst->east = parsetexpath(skip_id(line));
-	else
-		throw(-1, "Unexpected identifier: \n%s", line);
-}
-
-/*
 ** Parse the map section of a cub file.
 ** The very first row is assumed to be already parsed.
 ** Checks that the file ends with the grid, empty lines are tolerated.
@@ -144,7 +64,7 @@ void			parsefile(int fd, t_cubfile *dst)
 	while (0 < (err = get_next_line(fd, &line)) && line[0] != '1')
 	{
 		if (line[0] != '\0')
-			parseline(line, dst);
+			parsefield(line, dst);
 		free(line);
 		line = NULL;
 	}
