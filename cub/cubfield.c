@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "cub_util.h"
 
 /*
@@ -92,5 +91,5 @@ void			parsefield(char *line, t_cubfile *dst)
 		dst->east = parsetexpath(skip_id(line));
 	else if (id != 0)
 		throw(-1, "Unexpected identifier: \n%s", line);
-	free (line);
+	free(line);
 }

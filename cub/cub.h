@@ -32,7 +32,7 @@
 typedef struct s_cubfile	t_cubfile;
 struct	s_cubfile
 {
-	struct s_v2i resolution;
+	struct s_v2i	resolution;
 
 	char			*north;
 	char			*south;
@@ -47,7 +47,6 @@ struct	s_cubfile
 	struct s_v2i	mapsize;
 	char			**tiles;
 };
-
 
 /*
 ** @var t_v2i resolution	The effective resolution of the screen.
@@ -71,7 +70,7 @@ struct	s_cubfile
 typedef struct s_cubworld	t_cubworld;
 struct	s_cubworld
 {
-	struct s_v2i resolution;
+	struct s_v2i	resolution;
 
 	void			*north;
 	void			*south;

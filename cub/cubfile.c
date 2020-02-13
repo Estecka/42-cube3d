@@ -61,7 +61,7 @@ static void		parsemap(t_cubfile *this, int fd, char *firstrow)
 	parsegridrow(this, firstrow, &array);
 	while (0 < (gnl = get_next_line(fd, &line)))
 	{
-		if(line[0] != '\0')
+		if (line[0] != '\0')
 		{
 			parsegridrow(this, line, &array);
 			line = NULL;
@@ -71,7 +71,7 @@ static void		parsemap(t_cubfile *this, int fd, char *firstrow)
 	}
 	if (line)
 		free(line);
-	if (gnl < 0 )
+	if (gnl < 0)
 		throw(errno, "[FATAL] GNL error: %d", errno);
 	this->tiles = (char**)array.content;
 	if (this->mapsize.x == 0 || this->mapsize.y == 0)
@@ -89,11 +89,11 @@ extern void		parsefile(t_cubfile *this, int fd)
 	char	*mapfirstrow;
 	short	gnl;
 	char	c;
-	
+
 	mapfirstrow = parsefields(this, fd);
 	parsemap(this, fd, mapfirstrow);
 	while (0 < (gnl = get_next_char(fd, &c)))
-		if (!ft_isspace(c) && c!= '\0' && c != EOF)
+		if (!ft_isspace(c) && c != '\0' && c != EOF)
 			throw(-1, "Garbage character after the map: %c", c);
 	if (gnl < 0)
 		throw(errno, "[FATAL] GNL error: %d", errno);
