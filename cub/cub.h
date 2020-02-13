@@ -33,9 +33,9 @@ struct	s_cubfile
 
 	unsigned int	mapwdt;
 	unsigned int	maphgt;
-	char			*tiles;
+	char			**tiles;
 };
 
-void	parsefile(int fd, t_cubfile *dst);
+void	parsefile(t_cubfile *this, int fd);
 
 #endif

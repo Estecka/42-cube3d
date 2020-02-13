@@ -63,9 +63,10 @@ static t_uint	getidentifier(char *line)
 
 /*
 ** Parse a single line to fill the given mapfile object.
+** Automatically frees the line.
 ** Duplicate identifiers are considered an error.
-** @param char* line     Assumed non null and non-empty.
-** @param t_cubfile* dst The mapfile object to fill.
+** @param t_cubfile* this	The mapfile object to fill.
+** @param char* line	Assumed non null. May be empty.
 */
 
 void			parsefield(char *line, t_cubfile *dst)
@@ -89,6 +90,7 @@ void			parsefield(char *line, t_cubfile *dst)
 		dst->west = parsetexpath(skip_id(line));
 	else if (id == EA && dst->east == NULL)
 		dst->east = parsetexpath(skip_id(line));
-	else
+	else if (id != 0)
 		throw(-1, "Unexpected identifier: \n%s", line);
+	free (line);
 }

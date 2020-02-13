@@ -10,74 +10,89 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "cub_util.h"
+
+/*
+** Parse the one-liner fields of the file.
+** @param t_cubfile* this	The cubfile to fill.
+** @param int fd	The file descriptor to read from.
+** @return char[]	The first line of the map.
+*/
+
+static char		*parsefields(t_cubfile *this, int fd)
+{
+	char	*line;
+	short	gnl;
+
+	while (0 < (gnl = get_next_line(fd, &line)) && line[0] != '1')
+		parsefield(line, this);
+	if (gnl < 0)
+		throw(errno, "[FATAL] GNL error: %d", errno);
+	if (gnl == 0)
+		throw(-1, "No map found in the file");
+	if (this->screenwdt == 0 || this->screenhgt == 0
+		|| this->north == NULL || this->south == NULL || this->east == NULL
+		|| this->west == NULL || this->sprite == NULL
+		|| this->floorcol.rgba.a == 0 || this->ceilcol.rgba.a == 0)
+		throw(-1, "Missing cub file fields.");
+	return (line);
+}
 
 /*
 ** Parse the map section of a cub file.
 ** The very first row is assumed to be already parsed.
 ** Checks that the file ends with the grid, empty lines are tolerated.
-** @param int fd The file descriptor to read from.
-** @param t_cubfile* file The object to fill.
-** @param t_strb* builder The stringbuilder to use.
+** @param t_cubfile* this	The object to fill.
+** @param int fd	The file descriptor to read from.
+** @param char[] firstrow	The first row of the map.
+** 	Has to be passed explicitely, because there's no fucking way to detect the
+** 	 map without taking off the first row beforehand.
 */
 
-static void		parsetiles(int fd, t_cubfile *file, t_strb *builder)
+static void		parsemap(t_cubfile *this, int fd, char *firstrow)
 {
-	char	*line;
-	char	c;
-	short	isvalidend;
-	int		playercount;
-	int		gnl;
+	t_dynarray	array;
+	char		*line;
+	short		gnl;
 
-	playercount = 0;
-	isvalidend = 0;
-	while (0 < (gnl = get_next_line(fd, &line)) && line[0])
+	if (!dyninit(&array, sizeof(char*), 16))
+		throw(errno, "[FATAL] Dyinit failed", errno);
+	parsegridrow(this, firstrow, &array);
+	while (0 < (gnl = get_next_line(fd, &line)))
 	{
-		isvalidend = validategridrow(line, file);
-		playercount += parsegridrow(line, file, builder);
-		free(line);
-		line = NULL;
-		file->maphgt++;
-	}
-	if (line)
-		free(line);
-	throwif(gnl < 0, errno, "[FATAL] GNL error: %d", errno);
-	throwif(playercount != 1, -1, "Invalid player count: %d", playercount);
-	throwif(!isvalidend, -1, "Invalid final row.");
-	while (0 < (gnl = get_next_char(fd, &c)))
-		throwif(!ft_isspace(c), -1, "Invalid end of file: %c", c);
-	throwif(gnl < 0, errno, "[FATAL] get_next_char error: %d", errno);
+		if(line[0] != '\0')
+			parsegridrow(this, line, &array);
+		else
+		{
+			free(line);
+			break ;
+		}		
+	} 
+	if (gnl < 0 )
+		throw(errno, "[FATAL] GNL error: %d", errno);
+	this->tiles = (char**)array.content;
+	if (this->maphgt == 0 || this->mapwdt == 0)
+		throw(-1, "Map is empty.");
 }
 
 /*
-** Parses a *.cub file into a mapfile object.
-** @param int fd     File descriptor of the cub file.
-** @param t_cubfile* The mapfile object to fill.
+** Parses a cub file into a mapfile object.
+** @param t_cubfile* this	The mapfile object to fill.
+** @param int fd	The file descriptor to read from.
 */
 
-void			parsefile(int fd, t_cubfile *dst)
+extern void		parsefile(t_cubfile *this, int fd)
 {
-	char	*line;
-	int		err;
-	t_strb	*strbuilder;
-
-	while (0 < (err = get_next_line(fd, &line)) && line[0] != '1')
-	{
-		if (line[0] != '\0')
-			parsefield(line, dst);
-		free(line);
-		line = NULL;
-	}
-	if (err < 0)
-		throw(errno, "Fatal: GNL error: %d", errno);
-	if (err == 0 || dst->screenwdt == 0 || dst->screenhgt == 0
-		|| dst->north == NULL || dst->south == NULL || dst->east == NULL
-		|| dst->west == NULL || dst->sprite == NULL
-		|| dst->floorcol.rgba.a == 0 || dst->ceilcol.rgba.a == 0)
-		throw(-1, "Incomplete cub file.");
-	strbuilder = parsegridwidth(line, dst);
-	if (line)
-		free(line);
-	parsetiles(fd, dst, strbuilder);
-	dst->tiles = strbflush(strbuilder);
+	char	*mapfirstrow;
+	short	gnl;
+	char	c;
+	
+	mapfirstrow = parsefields(this, fd);
+	parsemap(this, fd, mapfirstrow);
+	while (0 < (gnl = get_next_char(fd, &c)))
+		if (!ft_isspace(c) && c!= '\0' && c != EOF)
+			throw(-1, "Garbage character after the map: %c", c);
+	if (gnl < 0)
+		throw(errno, "[FATAL] GNL error: %d", errno);
 }

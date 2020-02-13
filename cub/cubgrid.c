@@ -49,101 +49,36 @@ char*const	*gridmalloc(unsigned int width, unsigned int height, char value)
 }
 
 /*
-** Parses and validates the first row of a cub map.
-** Fills the tiles into a new stringbuilder.
-** Sets `mapWidth` on the mapfile accordingly.
-** Sets `mapHeight` to 1.
-** @param const char* line The first map row from the cub file
-** @param t_cubfile* file The file to fill in.
-** @return t_strbd* A pointer to a new String Builder
+** Parses a row of the map.
+** Only invalid characters are being checked.
+** @param t_cubfile* this
+** @param char[] line	The line to parse.
+** 	The reference is stored away, and should not be modified or freed afterward.
+** @param t_dynarray* array	The array to where to store the lines.
 */
 
-t_strb		*parsegridwidth(const char *line, t_cubfile *file)
+void		parsegridrow(t_cubfile *this, char *line, t_dynarray *array)
 {
-	const char	*src;
-	t_strb		*builder;
-
-	src = line;
-	builder = createstrbuilder();
-	while (*line)
-	{
-		if (*line == '1')
-		{
-			file->mapwdt++;
-			strbappend(builder, '1');
-		}
-		else if (!ft_isspace(*line))
-			throw(-1, "Unexpected tile in first row: \n%s", src);
-		line++;
-	}
-	file->maphgt = 1;
-	return (builder);
-}
-
-/*
-** Validates the format of a middle row of a cub map.
-** Checks for walls on both sides, and width.
-** Does not check for duplicate player.
-** @param const char* line the string to parse
-** @return short
-** 	throw Invalid row
-** 	0 Valid middle row
-** 	1 Valid final row
-*/
-
-short		validategridrow(const char *line, t_cubfile *file)
-{
-	const char		*src;
-	short			islastrow;
-	char			lasttile;
+	char			*src;
 	unsigned int	width;
 
-	islastrow = 1;
-	lasttile = 0;
 	src = line;
 	width = 0;
-	if (*line != '1')
-		throw(-1, "Missing western wall:\n%s", src);
 	while (*line)
 	{
 		if (ft_strcontain("012NEWS", *line))
 		{
-			islastrow &= ('1' == (lasttile = *line));
+			src[width] = *line;
 			width++;
 		}
 		else if (!ft_isspace(*line))
-			throw(-1, "Invalide tile \"%c\" in:\n%s", *line, src);
+			throw(-1, "Invalid character in map: %c", *line);
 		line++;
 	}
-	if (lasttile != '1' || width != file->mapwdt)
-		throw(-1, "Missing eastern wall, or unexpected width :\n%s", src);
-	return (islastrow);
-}
-
-/*
-** Parses a middle row of a cube map. The format is assumed valid.
-** Fills the tiles into a stringbuilder.
-** @param const char* line The string to parse.
-** @param t_cubfile* file The mapfile to fill.
-** @param t_strb* builder The stringbuilder to use while building the grid.
-** @return int The amount of players found on this row.
-*/
-
-int			parsegridrow(const char *line, t_cubfile *file, t_strb *builder)
-{
-	int count;
-
-	(void)file;
-	count = 0;
-	while (*line)
-	{
-		if (!ft_isspace(*line))
-		{
-			strbappend(builder, *line);
-			if (ft_strcontain("NEWS", *line))
-				count++;
-		}
-		line++;
-	}
-	return (count);
+	src[width] = '\0';
+	if (!dynappend(array, &src))
+		throw(errno, "[FATAL] dynappend failed: %d", errno);
+	this->maphgt++;
+	if (width > this->mapwdt)
+		this->mapwdt = width;
 }

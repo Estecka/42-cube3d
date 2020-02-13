@@ -31,7 +31,7 @@ int		main(int argc, char **args)
 	if (fd < 0)
 		throw(errno, "Could not open file: %d", errno);
 	ft_bzero(&map, sizeof(t_cubfile));
-	parsefile(fd, &map);
+	parsefile(&map, fd);
 
 	printf("\
 R %d %d \n\
@@ -56,8 +56,8 @@ Map content: \n\
 
 	for (unsigned int y=0; y<map.maphgt; y++)
 	{
-		for (unsigned int x=0; x<map.mapwdt; x++)
-			printf("%c", map.tiles[(map.mapwdt * y) + x]);
+		for(char* c=map.tiles[y]; *c != '\0'; c++)
+			printf("%c ", *c);
 		printf("\n");
 	}
 }

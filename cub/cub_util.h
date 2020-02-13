@@ -24,14 +24,12 @@
 # define MP	825307441
 
 # include "cub.h"
-# include "../stringbuilder/stringbuilder.h"
+# include "../dynarray/dynarray.h"
 
 void	parsefield(char *line, t_cubfile *dst);
 void	parseresolution(const char *line, int *width, int *height);
 char	*parsetexpath(const char *line);
 t_rgba	parsecolor(const char *line);
-t_strb	*parsegridwidth(const char *line, t_cubfile *file);
-short	validategridrow(const char *line, t_cubfile *file);
-int		parsegridrow(const char *line, t_cubfile *file, t_strb *builder);
+void	parsegridrow(t_cubfile *this, char *line, t_dynarray *array);
 
 #endif

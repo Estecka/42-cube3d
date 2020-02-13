@@ -3,17 +3,18 @@ OBJS = ${SRCS:.c=.o}
 
 TEST_SRCS = .test/main.c \
 	../throw.c \
-	../stringbuilder/stringbuilder.c \
 
 NAME	= libcub.a
 TEST	= test.out
 LIBFT	= ../libft/libft.a
 PRINTF	= ../ft_printf/libftprintf.a
+DYNARRAY= ../dynarray/libdynarray.a
 
 CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror
 LIBFLAGS = \
 	-L ./ -lcub \
+	-L ../dynarray -ldynarray \
 	-L ../ft_printf -lftprintf \
 	-L ../libft -lft \
 
@@ -26,11 +27,13 @@ ${LIBFT}:
 	make -C ../libft
 ${PRINTF}:
 	make -C ../ft_printf
+${DYNARRAY}:
+	make -C ../dynarray
 
 all: ${NAME} ${TEST}
 
 test: ${TEST}
-${TEST}: ${NAME} ${PRINTF} ${LIBFT} ${MISC_SRCS}
+${TEST}: ${NAME} ${PRINTF} ${LIBFT} ${DYNARRAY} ${TEST_SRCS}
 	gcc -o ${TEST} ${TEST_SRCS} \
 		${LIBFLAGS} \
 		${CFLAGS} \
