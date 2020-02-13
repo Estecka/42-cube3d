@@ -64,10 +64,10 @@ static t_uint	getidentifier(char *line)
 ** Parse a single line to fill the given mapfile object.
 ** Duplicate identifiers are considered an error.
 ** @param char* line     Assumed non null and non-empty.
-** @param t_mapfile* dst The mapfile object to fill.
+** @param t_cubfile* dst The mapfile object to fill.
 */
 
-static void		parseline(char *line, t_mapfile *dst)
+static void		parseline(char *line, t_cubfile *dst)
 {
 	unsigned int	id;
 
@@ -97,11 +97,11 @@ static void		parseline(char *line, t_mapfile *dst)
 ** The very first row is assumed to be already parsed.
 ** Checks that the file ends with the grid, empty lines are tolerated.
 ** @param int fd The file descriptor to read from.
-** @param t_mapfile* file The object to fill.
+** @param t_cubfile* file The object to fill.
 ** @param t_strb* builder The stringbuilder to use.
 */
 
-static void		parsetiles(int fd, t_mapfile *file, t_strb *builder)
+static void		parsetiles(int fd, t_cubfile *file, t_strb *builder)
 {
 	char	*line;
 	char	c;
@@ -132,10 +132,10 @@ static void		parsetiles(int fd, t_mapfile *file, t_strb *builder)
 /*
 ** Parses a *.cub file into a mapfile object.
 ** @param int fd     File descriptor of the cub file.
-** @param t_mapfile* The mapfile object to fill.
+** @param t_cubfile* The mapfile object to fill.
 */
 
-void			parsefile(int fd, t_mapfile *dst)
+void			parsefile(int fd, t_cubfile *dst)
 {
 	char	*line;
 	int		err;

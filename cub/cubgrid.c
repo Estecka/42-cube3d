@@ -54,11 +54,11 @@ char*const	*gridmalloc(unsigned int width, unsigned int height, char value)
 ** Sets `mapWidth` on the mapfile accordingly.
 ** Sets `mapHeight` to 1.
 ** @param const char* line The first map row from the cub file
-** @param t_mapfile* file The file to fill in.
+** @param t_cubfile* file The file to fill in.
 ** @return t_strbd* A pointer to a new String Builder
 */
 
-t_strb		*parsegridwidth(const char *line, t_mapfile *file)
+t_strb		*parsegridwidth(const char *line, t_cubfile *file)
 {
 	const char	*src;
 	t_strb		*builder;
@@ -91,7 +91,7 @@ t_strb		*parsegridwidth(const char *line, t_mapfile *file)
 ** 	1 Valid final row
 */
 
-short		validategridrow(const char *line, t_mapfile *file)
+short		validategridrow(const char *line, t_cubfile *file)
 {
 	const char		*src;
 	short			islastrow;
@@ -124,12 +124,12 @@ short		validategridrow(const char *line, t_mapfile *file)
 ** Parses a middle row of a cube map. The format is assumed valid.
 ** Fills the tiles into a stringbuilder.
 ** @param const char* line The string to parse.
-** @param t_mapfile* file The mapfile to fill.
+** @param t_cubfile* file The mapfile to fill.
 ** @param t_strb* builder The stringbuilder to use while building the grid.
 ** @return int The amount of players found on this row.
 */
 
-int			parsegridrow(const char *line, t_mapfile *file, t_strb *builder)
+int			parsegridrow(const char *line, t_cubfile *file, t_strb *builder)
 {
 	int count;
 

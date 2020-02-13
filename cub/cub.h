@@ -15,9 +15,8 @@
 
 # include "../cube3d.h"
 
-typedef struct s_mapfile	t_mapfile;
-
-struct	s_mapfile
+typedef struct s_cubfile	t_cubfile;
+struct	s_cubfile
 {
 	int				screenwdt;
 	int				screenhgt;
@@ -37,6 +36,6 @@ struct	s_mapfile
 	char			*tiles;
 };
 
-void	parsefile(int fd, t_mapfile *dst);
+void	parsefile(int fd, t_cubfile *dst);
 
 #endif
