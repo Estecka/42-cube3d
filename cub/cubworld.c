@@ -14,6 +14,7 @@
 
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <math.h>
 #include "cub_util.h"
 
@@ -21,6 +22,36 @@
 #define HMAX 1440
 
 #define DEG2RAD 0.01745329251994329576923690768489
+
+/*
+** Allocates a two dimensional array in a single memory space.
+** The array's elements are accessible via `array[x][y]`
+** @param unsigned int width  The number of columns. (x)
+** @param unsigned int height The number of rows. (y)
+** @param char value The default value to initialize the array with.
+** @return char*const* A pointer to the grid, or NULL if allocation failed.
+*/
+
+char*const	*gridmalloc(unsigned int width, unsigned int height, char value)
+{
+	char			**result;
+	char			*values;
+	unsigned int	i;
+
+	result = malloc(
+		(sizeof(void*) * width)
+		+ (sizeof(char) * height * width));
+	if (!result)
+		return (NULL);
+	values = (char*)(result + (width * sizeof(void*)));
+	i = -1;
+	while (++i < (width * height))
+		values[i] = value;
+	i = -1;
+	while (++i < width)
+		result[i] = values + (i * height);
+	return (result);
+}
 
 /*
 ** Fetches the texture at the given path.

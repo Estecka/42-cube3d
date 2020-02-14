@@ -83,7 +83,7 @@ struct	s_cubworld
 	union u_color	ceilcol;
 
 	struct s_v2i	mapsize;
-	char			**tiles;
+	char*const		*tiles;
 
 	struct s_v2i	playerspawn;
 	float			playerspawnangle;
