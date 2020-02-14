@@ -89,10 +89,10 @@ Map content: \n\
 		map.world.mapsize.x, map.world.mapsize.y
 		);
 		
-	for (int y=0; y<map.file.mapsize.y; y++)
+	for (int y=map.world.mapsize.y-1; 0<=y; y--)
 	{
-		for(char* c=map.file.tiles[y]; *c != '\0'; c++)
-			printf("%c ", *c);
+		for (int x=0; x<map.world.mapsize.x; x++)
+			printf("%c ", map.world.tiles[x][y]);
 		printf("\n");
 	}
 }

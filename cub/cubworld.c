@@ -108,6 +108,34 @@ static void	findplayer(union u_cub *this)
 }
 
 /*
+** Converts the tile list from an array of string to a grid of char.
+** Empty spaces are filled with '\0'.
+** The source arrays are freed.
+** @param union u_cub* this
+*/
+
+static void	gridify(union u_cub *this)
+{
+	char*const		*grid;
+	signed int		x;
+	signed int		y;
+
+	grid = gridmalloc(this->file.mapsize.x, this->file.mapsize.y, '\0');
+	y = -1;
+	while (++y < this->file.mapsize.y)
+	{
+		x = -1;
+		while(this->file.tiles[y][++x] != '\0')
+		{
+			grid[x][this->file.mapsize.y - 1 - y] = this->file.tiles[y][x];
+		}
+		free(this->file.tiles[y]);
+	}
+	free(this->file.tiles);
+	this->world.tiles = grid;
+}
+
+/*
 ** Converts a cubfile to cubworld.
 ** @param union u_cub* this
 */
@@ -126,4 +154,5 @@ extern void	cubfile2world(union u_cub *this)
 	this->world.west = gettexture(this->file.west);
 	this->world.sprite = gettexture(this->file.sprite);
 	findplayer(this);
+	gridify(this);
 };
