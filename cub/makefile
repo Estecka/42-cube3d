@@ -1,4 +1,6 @@
-SRCS = cubfile.c cubfield.c cubfields.c cubgrid.c
+SRCS = cubfile.c cubfield.c cubfields.c cubgrid.c \
+	cubworld.c \
+
 OBJS = ${SRCS:.c=.o}
 
 TEST_SRCS = .test/main.c \

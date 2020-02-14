@@ -23,15 +23,15 @@
 int		main(int argc, char **args)
 {
 	int			fd;
-	t_cubfile	map;
+	union u_cub	map;
 
 	if (argc < 2)
 		throw(-1, "Not enough arguments.");
 	fd = open(args[1], O_RDONLY);
 	if (fd < 0)
 		throw(errno, "Could not open file: %d", errno);
-	ft_bzero(&map, sizeof(t_cubfile));
-	parsefile(&map, fd);
+	ft_bzero(&map.file, sizeof(t_cubfile));
+	parsefile(&map.file, fd);
 
 	printf("\
 R %d %d \n\
@@ -46,17 +46,52 @@ C  %d,%d,%d \n\
 Map size: %u %u \n\
 Map content: \n\
 ",
-		map.resolution.x, map.resolution.y,
-		map.north, map.south, map.west, map.east,
-		map.sprite,
-		map.floorcol.rgb.r, map.floorcol.rgb.g, map.floorcol.rgb.b,
-		map.ceilcol.rgb.r, map.ceilcol.rgb.g, map.ceilcol.rgb.b,
-		map.mapsize.x, map.mapsize.y
+		map.file.resolution.x, map.file.resolution.y,
+		map.file.north, map.file.south, map.file.west, map.file.east,
+		map.file.sprite,
+		map.file.floorcol.rgb.r, map.file.floorcol.rgb.g, map.file.floorcol.rgb.b,
+		map.file.ceilcol.rgb.r, map.file.ceilcol.rgb.g, map.file.ceilcol.rgb.b,
+		map.file.mapsize.x, map.file.mapsize.y
 		);
 
-	for (int y=0; y<map.mapsize.y; y++)
+	for (int y=0; y<map.file.mapsize.y; y++)
 	{
-		for(char* c=map.tiles[y]; *c != '\0'; c++)
+		for(char* c=map.file.tiles[y]; *c != '\0'; c++)
+			printf("%c ", *c);
+		printf("\n");
+	}
+
+
+	cubfile2world(&map);
+	printf("\
+R %d %d \n\
+NO %p \n\
+SO %p \n\
+WE %p \n\
+EA %p \n\
+S  %p \n\
+F  %d,%d,%d \n\
+C  %d,%d,%d \n\
+\n\
+Player pos: %d %d\n\
+Player dir: %f\n\
+\n\
+Map size: %u %u \n\
+Map content: \n\
+",
+		map.world.resolution.x, map.world.resolution.y,
+		map.world.north, map.world.south, map.world.west, map.world.east,
+		map.world.sprite,
+		map.world.floorcol.rgb.r, map.world.floorcol.rgb.g, map.world.floorcol.rgb.b,
+		map.world.ceilcol.rgb.r, map.world.ceilcol.rgb.g, map.world.ceilcol.rgb.b,
+		map.world.playerspawn.x, map.world.playerspawn.y,
+		map.world.playerspawnangle,
+		map.world.mapsize.x, map.world.mapsize.y
+		);
+		
+	for (int y=0; y<map.file.mapsize.y; y++)
+	{
+		for(char* c=map.file.tiles[y]; *c != '\0'; c++)
 			printf("%c ", *c);
 		printf("\n");
 	}

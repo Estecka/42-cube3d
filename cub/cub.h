@@ -96,5 +96,6 @@ union	u_cub
 };
 
 void	parsefile(t_cubfile *this, int fd);
+void	cubfile2world(union u_cub *this);
 
 #endif
