@@ -25,7 +25,7 @@
 ** @var union u_color floorcol	The colour of the floor.
 ** @var union u_color ceilcol	The colour of the ceiling.
 ** @var t_v2i mapsize	The maximum dimensions of the map.
-** @var char[height-y][x] tiles	The individual tiles of the map.
+** @var char[height-1-y][x] tiles	The individual tiles of the map.
 ** 	Each row of the array may still be SMALLER than the maximum width.
 */
 

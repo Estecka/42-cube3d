@@ -55,7 +55,7 @@ static void	findplayer(union u_cub *this)
 	int		y;
 	char	c;
 
-	this->world.playerspawnangle = NaN;
+	this->world.playerspawnangle = NAN;
 	y = -1;
 	while (++y < this->file.mapsize.y)
 	{
@@ -67,10 +67,11 @@ static void	findplayer(union u_cub *this)
 					-1, "Extraneous player at %d %d:\n%s",
 					x, y, this->file.tiles[y]);
 				this->file.tiles[y][x] = '0';
-				this->world.playerspawn = (t_v2i) {x, y};
+				this->world.playerspawn =
+					(t_v2i) {x, this->world.mapsize.y - 1 - y};
 				this->world.playerspawnangle = 
-					((c == 'N') * 1) + ((c == 'W') * 2) + ((c == 'S') * 3);
-				this->world.playerspawnangle *= 90; //* DEG2RAD;
+					((c == 'W') * 1) + ((c == 'S') * 2) + ((c == 'E') * 3);
+				this->world.playerspawnangle *= 90 * DEG2RAD;
 			}
 	}
 }
