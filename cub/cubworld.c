@@ -14,10 +14,13 @@
 
 #include <fcntl.h>
 #include <unistd.h>
+#include <math.h>
 #include "cub_util.h"
 
 #define WMAX 2560
 #define HMAX 1440
+
+#define DEG2RAD 0.01745329251994329576923690768489
 
 /*
 ** Fetches the texture at the given path.
@@ -41,6 +44,38 @@ static void *gettexture(char *path)
 }
 
 /*
+** Identify the player on the map, and replaces it with a 0.
+** Asserts that there is only one player.
+** @param union u_cub this	
+*/
+
+static void	findplayer(union u_cub *this)
+{
+	int		x;
+	int		y;
+	char	c;
+
+	this->world.playerspawnangle = NaN;
+	y = -1;
+	while (++y < this->file.mapsize.y)
+	{
+		x = -1;
+		while ((c = this->file.tiles[y][++x]))
+			if (ft_strcontain("NEWS", c))
+			{
+				throwif(!isnan(this->world.playerspawnangle),
+					-1, "Extraneous player at %d %d:\n%s",
+					x, y, this->file.tiles[y]);
+				this->file.tiles[y][x] = '0';
+				this->world.playerspawn = (t_v2i) {x, y};
+				this->world.playerspawnangle = 
+					((c == 'N') * 1) + ((c == 'W') * 2) + ((c == 'S') * 3);
+				this->world.playerspawnangle *= 90; //* DEG2RAD;
+			}
+	}
+}
+
+/*
 ** Converts a cubfile to cubworld.
 ** @param union u_cub* this
 */
@@ -58,4 +93,5 @@ extern void	cubfile2world(union u_cub *this)
 	this->world.east = gettexture(this->file.east);
 	this->world.west = gettexture(this->file.west);
 	this->world.sprite = gettexture(this->file.sprite);
+	findplayer(this);
 };

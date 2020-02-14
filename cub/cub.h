@@ -25,7 +25,7 @@
 ** @var union u_color floorcol	The colour of the floor.
 ** @var union u_color ceilcol	The colour of the ceiling.
 ** @var t_v2i mapsize	The maximum dimensions of the map.
-** @var char[][] tiles	The individual tiles of the map.
+** @var char[height-y][x] tiles	The individual tiles of the map.
 ** 	Each row of the array may still be SMALLER than the maximum width.
 */
 
@@ -58,7 +58,7 @@ struct	s_cubfile
 ** @var union u_color floorcol	The colour of the floor.
 ** @var union u_color ceilcol	The colour of the ceiling.
 ** @var t_v2i mapsize	The dimensions of the map.
-** @var char[][] tiles	The individual tiles of the map.
+** @var char[x][y] tiles	The individual tiles of the map.
 ** 	Blanks are filled in with \0.
 ** 	The player is replaced with a '0'.
 **
