@@ -63,11 +63,14 @@ typedef struct s_transform		t_transform;
 struct s_transform
 {
 	t_v3	position;
-	t_v3	euler;
-	t_mx4	
+	t_v3	rotation;
+	t_mx4	l2wmx;
+	t_mx4	w2lmx;
 };
 
 void	worldinit(t_cubworld *world);
 void	renderworld(t_v3 position, t_v4 rotation);
+
+void	retransform(t_transform *this);
 
 #endif
