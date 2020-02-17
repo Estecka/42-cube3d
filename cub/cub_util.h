@@ -31,5 +31,6 @@ void	parseresolution(const char *line, int *width, int *height);
 char	*parsetexpath(const char *line);
 t_rgba	parsecolor(const char *line);
 void	parsegridrow(t_cubfile *this, char *line, t_dynarray *array);
+void	escaperoom(t_cubworld *this, char*const *checklist);
 
 #endif

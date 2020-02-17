@@ -1,5 +1,5 @@
 SRCS = cubfile.c cubfield.c cubfields.c cubgrid.c \
-	cubworld.c \
+	cubworld.c pathfinder.c \
 
 OBJS = ${SRCS:.c=.o}
 

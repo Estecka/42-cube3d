@@ -142,6 +142,8 @@ static void	gridify(union u_cub *this)
 
 extern void	cubfile2world(union u_cub *this)
 {
+	char*const *pathfinder;
+
 	if (this->file.resolution.x > WMAX)
 		this->world.resolution.x = WMAX;
 	if (this->file.resolution.y > HMAX)
@@ -155,4 +157,8 @@ extern void	cubfile2world(union u_cub *this)
 	this->world.sprite = gettexture(this->file.sprite);
 	findplayer(this);
 	gridify(this);
+	if (!(pathfinder = gridmalloc(this->world.mapsize.x, this->world.mapsize.y,
+		0)))
+		throw(errno, "[FATAL] Grid malloc failed: %d", errno);
+	escaperoom(&this->world, pathfinder);
 }
