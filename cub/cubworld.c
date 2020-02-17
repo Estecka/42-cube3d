@@ -161,4 +161,5 @@ extern void	cubfile2world(union u_cub *this)
 		0)))
 		throw(errno, "[FATAL] Grid malloc failed: %d", errno);
 	escaperoom(&this->world, pathfinder);
+	free((void*)pathfinder);
 }
