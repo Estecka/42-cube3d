@@ -18,19 +18,6 @@
 # include "../dynarray/dynarray.h"
 # include "../minilibx/mlx.h"
 
-typedef struct s_mlx_img	t_mlx_img;
-struct			s_mlx_img
-{
-	void			*ptr;
-	union u_color	*pixels;
-	unsigned int	width;
-	unsigned int	height;
-	int				bits_per_pixel;
-	int				size_line;
-	int				pixel_line;
-	int				endian;
-};
-
 typedef struct s_float_img	t_float_img;
 struct			s_float_img
 {
