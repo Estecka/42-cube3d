@@ -6,7 +6,7 @@
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 13:55:08 by abaur             #+#    #+#             */
-/*   Updated: 2020/01/28 16:48:23 by abaur            ###   ########.fr       */
+/*   Updated: 2020/02/17 14:11:09 by abaur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 
 # include "cub.h"
 # include "../dynarray/dynarray.h"
+# include "../get_next_line/get_next_line.h"
 
 void	parsefield(char *line, t_cubfile *dst);
 void	parseresolution(const char *line, int *width, int *height);

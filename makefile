@@ -3,6 +3,7 @@ OBJS	= ${SRCS:.c=.o} ${MISC_OBJS} ${CUB_OBJS}
 
 MISC_SRCS = throw.c \
 	stringbuilder/stringbuilder.c \
+	get_next_line/get_next_line.c \
 	mallocspy/mallocspy.c mallocspy/mallocspy_internals.c
 MISC_OBJS = ${MISC_SRCS:.c=.o}
 

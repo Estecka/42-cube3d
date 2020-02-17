@@ -5,7 +5,6 @@ SRCS	= \
 	memory.c memory2.c \
 	put_things.c \
 	string.c string2.c string3.c \
-	get_next_line/get_next_line.c \
 
 SRCS_BONUS = list.c list2.c
 
@@ -17,7 +16,6 @@ NAME	= libft.a
 CC		= gcc
 
 CFLAGS	= -Wall -Wextra -Werror
-
 
 ${NAME}: ${OBJS}
 	ar rcs ${NAME} ${OBJS}
