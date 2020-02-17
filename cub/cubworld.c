@@ -24,36 +24,6 @@
 #define DEG2RAD 0.01745329251994329576923690768489
 
 /*
-** Allocates a two dimensional array in a single memory space.
-** The array's elements are accessible via `array[x][y]`
-** @param unsigned int width  The number of columns. (x)
-** @param unsigned int height The number of rows. (y)
-** @param char value The default value to initialize the array with.
-** @return char*const* A pointer to the grid, or NULL if allocation failed.
-*/
-
-char*const	*gridmalloc(unsigned int width, unsigned int height, char value)
-{
-	char			**result;
-	char			*values;
-	unsigned int	i;
-
-	result = malloc(
-		(sizeof(void*) * width)
-		+ (sizeof(char) * height * width));
-	if (!result)
-		return (NULL);
-	values = (char*)(result + (width * sizeof(void*)));
-	i = -1;
-	while (++i < (width * height))
-		values[i] = value;
-	i = -1;
-	while (++i < width)
-		result[i] = values + (i * height);
-	return (result);
-}
-
-/*
 ** Fetches the texture at the given path.
 ** The reference to the path is automatically free.
 ** TODO This a dummy, and for now and only checks that the file exists.
@@ -120,7 +90,7 @@ static void	gridify(union u_cub *this)
 	signed int		x;
 	signed int		y;
 
-	grid = gridmalloc(this->file.mapsize.x, this->file.mapsize.y, '\0');
+	grid = (char*const*)malloc2d(this->file.mapsize.x, this->file.mapsize.y, sizeof(char));
 	y = -1;
 	while (++y < this->file.mapsize.y)
 	{
@@ -157,9 +127,26 @@ extern void	cubfile2world(union u_cub *this)
 	this->world.sprite = gettexture(this->file.sprite);
 	findplayer(this);
 	gridify(this);
-	if (!(pathfinder = gridmalloc(this->world.mapsize.x, this->world.mapsize.y,
-		0)))
+	if (!(pathfinder = 
+		(char*const*)malloc2d(this->world.mapsize.x, this->world.mapsize.y,
+		sizeof(char))))
 		throw(errno, "[FATAL] Grid malloc failed: %d", errno);
 	escaperoom(&this->world, pathfinder);
 	free((void*)pathfinder);
+}
+
+/*
+** Get a tile at the given coordinates.
+** This can safely fetch out of bound.
+** @param t_cubworld* this
+** @param int x,y	The coordinates to fetch.
+** @return	The tile, or '\0' if out of bound.
+*/
+
+extern char	tile(t_cubworld *this, int x, int y)
+{
+	if (x < 0 || y < 0 || x >= this->mapsize.x || y >= this->mapsize.y)
+		return (0);
+	else
+		return (this->tiles[x][y]);
 }

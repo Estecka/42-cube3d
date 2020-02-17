@@ -46,19 +46,3 @@ void		parsegridrow(t_cubfile *this, char *line, t_dynarray *array)
 	if (width > this->mapsize.x)
 		this->mapsize.x = width;
 }
-
-/*
-** Get a tile at the given coordinates.
-** This can safely fetch out of bound.
-** @param t_cubworld* this
-** @param int x,y	The coordinates to fetch.
-** @return	The tile, or '\0' if out of bound.
-*/
-
-extern char	tile(t_cubworld *this, int x, int y)
-{
-	if (x < 0 || y < 0 || x >= this->mapsize.x || y >= this->mapsize.y)
-		return (0);
-	else
-		return (this->tiles[x][y]);
-}
