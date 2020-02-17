@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "worldbuilder.h"
 
 t_staticmesh	*g_walls;
 t_billboardmesh	*g_sprites;
+t_transform		g_player;

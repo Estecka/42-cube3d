@@ -59,6 +59,14 @@ struct s_billboardmesh
 	struct s_rendermesh renderinfo;
 };
 
+typedef struct s_transform		t_transform;
+struct s_transform
+{
+	t_v3	position;
+	t_v3	euler;
+	t_mx4	
+};
+
 void	worldinit(t_cubworld *world);
 void	renderworld(t_v3 position, t_v4 rotation);
 
