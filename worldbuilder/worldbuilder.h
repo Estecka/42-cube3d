@@ -39,7 +39,7 @@ struct	s_rendermesh
 */
 
 typedef struct s_staticmesh	t_staticmesh;
-struct s_staticmesh
+struct	s_staticmesh
 {
 	t_quad				vertices;
 	struct s_rendermesh renderinfo;
@@ -53,14 +53,14 @@ struct s_staticmesh
 */
 
 typedef struct s_billboardmesh	t_billboardmesh;
-struct s_billboardmesh
+struct	s_billboardmesh
 {
 	struct s_v3			position;
 	struct s_rendermesh renderinfo;
 };
 
 typedef struct s_transform		t_transform;
-struct s_transform
+struct	s_transform
 {
 	t_v3	position;
 	t_v3	rotation;
@@ -69,7 +69,7 @@ struct s_transform
 };
 
 typedef struct s_worldmesh		t_worldmesh;
-struct s_worldmesh
+struct	s_worldmesh
 {
 	int				wallcount;
 	t_staticmesh	*walls;

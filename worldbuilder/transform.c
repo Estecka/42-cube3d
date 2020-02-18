@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   transform.h                                     :+:      :+:    :+:   */
+/*   transform.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -23,4 +23,3 @@ void	retransform(t_transform *this)
 	mx4euler(this->l2wmx, &this->rotation);
 	mx4invaff(this->l2wmx, &this->w2lmx);
 }
-

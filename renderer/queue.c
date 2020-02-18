@@ -12,7 +12,7 @@
 
 #include "renderer_internals.h"
 
-t_dynarray g_renderqueue;
+t_dynarray	g_renderqueue;
 
 void		renderqueueinit(void)
 {
@@ -24,7 +24,7 @@ static void		renderqueueclear(void)
 {
 	size_t	i;
 	void	**queue;
-	
+
 	queue = (void**)g_renderqueue.content;
 	i = 0;
 	while (i < g_renderqueue.capacity)

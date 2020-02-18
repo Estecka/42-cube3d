@@ -17,7 +17,7 @@
 # include "../ft_math/ft_math.h"
 
 typedef struct s_mlx_img	t_mlx_img;
-struct			s_mlx_img
+struct		s_mlx_img
 {
 	void			*ptr;
 	union u_color	*pixels;

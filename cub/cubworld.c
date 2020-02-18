@@ -89,7 +89,8 @@ static void	gridify(union u_cub *this)
 	signed int		x;
 	signed int		y;
 
-	grid = (char*const*)malloc2d(this->file.mapsize.x, this->file.mapsize.y, sizeof(char));
+	grid = (char*const*)malloc2d(this->file.mapsize.x, this->file.mapsize.y,
+	sizeof(char));
 	y = -1;
 	while (++y < this->file.mapsize.y)
 	{
@@ -126,7 +127,7 @@ extern void	cubfile2world(union u_cub *this)
 	this->world.sprite = gettexture(this->file.sprite);
 	findplayer(this);
 	gridify(this);
-	if (!(pathfinder = 
+	if (!(pathfinder =
 		(char*const*)malloc2d(this->world.mapsize.x, this->world.mapsize.y,
 		sizeof(char))))
 		throw(errno, "[FATAL] Grid malloc failed: %d", errno);

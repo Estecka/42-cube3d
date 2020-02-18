@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   worlbuilderd_internals.h                            :+:      :+:    :+:  */
+/*   worldbuilder_internals.h                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "worldbuilder.h"
-#include "../ft_math/ft_math.h"
-#include "../dynarray/dynarray.h"
+#ifndef WORLDBUILDER_INTERNALS_H
+# define WORLDBUILDER_INTERNALS_H
+
+# include "worldbuilder.h"
+# include "../ft_math/ft_math.h"
+# include "../dynarray/dynarray.h"
 
 t_worldmesh	g_world;
+
+#endif

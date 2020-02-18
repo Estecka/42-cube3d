@@ -63,7 +63,7 @@ static t_mx4	g_west = {
 	{0, +0, 0, 1},
 };
 
-static void		wallinitone(t_dynarray *array, unsigned int x, unsigned int y,
+static void		wallinitone(t_dynarray *array, t_v2i pos,
 t_mx4 mx, void *texture)
 {
 	t_staticmesh	*values;
@@ -72,42 +72,44 @@ t_mx4 mx, void *texture)
 	if (!dynexpand(array, +1))
 		throw(errno, "[FATAL] Wall array expansion failed.");
 	values = (t_staticmesh*)array->content;
-	position = (t_v3){x, y, 0};
+	position = (t_v3){pos.x, pos.y, 0};
 	mx4pos(mx, &position);
 	mxquad3(g_wallmesh, values[array->length].vertices, mx);
 	values[array->length].renderinfo.texture = texture;
 	array->length++;
 }
 
-static void wallinit(t_cubworld *info)
+static void		wallinitfour(t_cubworld *info, t_dynarray *array, t_v2i i)
+{
+	if (tiles(info, i.x + 1, i.y) != '1' && tiles(info, i.x + 1, i.y) != '\0')
+		wallinitone(&array, i, g_east, info->east);
+	if (tiles(info, i.x - 1, i.y) != '1' && tiles(info, i.x - 1, i.y) != '\0')
+		wallinitone(&array, i, g_west, info->west);
+	if (tiles(info, i.x, i.y + 1) != '1' && tiles(info, i.x, i.y + 1) != '\0')
+		wallinitone(&array, i, g_north, info->north);
+	if (tiles(info, i.x, i.y - 1) != '1' && tiles(info, i.x, i.y - 1) != '\0')
+		wallinitone(&array, i, g_south, info->south);
+}
+
+static void		wallinit(t_cubworld *info)
 {
 	t_dynarray		array;
-	unsigned int	x;
-	unsigned int	y;
+	t_v2i			i;
 
 	dyninit(&array, sizeof(t_staticmesh), 256);
-	y = -1;
-	while (++y < info->mapsize.y)
+	i.y = -1;
+	while (++i.y < info->mapsize.y)
 	{
-		x = -1;
-		while (++x < info->mapsize.x)
-			if (info->tiles[x][y] == '1')
-			{
-				if(tiles(info, x + 1, y) != '1' && tiles(info, x + 1, y) != 0)
-					wallinitone(&array, x, y, g_east, info->east);
-				if(tiles(info, x - 1, y) != '1' && tiles(info, x - 1, y) != 0)
-					wallinitone(&array, x, y, g_west, info->west);
-				if(tiles(info, x, y + 1) != '1' && tiles(info, x, y + 1) != 0)
-					wallinitone(&array, x, y, g_north, info->north);
-				if(tiles(info, x, y - 1) != '1' && tiles(info, x, y - 1) != 0)
-					wallinitone(&array, x, y, g_south, info->south);
-			}
+		i.x = -1;
+		while (++i.x < info->mapsize.x)
+			if (info->tiles[i.x][i.y] == '1')
+				wallinitfour(info, &array, i);
 	}
 	g_world.wallcount = array.length;
 	g_world.walls = (t_staticmesh*)array.content;
 }
 
-static void 	spriteinit(t_cubworld *info)
+static void		spriteinit(t_cubworld *info)
 {
 	t_dynarray		array;
 	t_billboardmesh	*values;

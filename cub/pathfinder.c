@@ -20,7 +20,7 @@
 ** 	false The area leaks into the abyss.
 */
 
-static short explore(t_cubworld *this, int x, int y, char*const *list)
+static short	explore(t_cubworld *this, int x, int y, char*const *list)
 {
 	if (x < 0 || y < 0 || x >= this->mapsize.x || y >= this->mapsize.y)
 		return (0);
@@ -31,13 +31,13 @@ static short explore(t_cubworld *this, int x, int y, char*const *list)
 		return (0);
 	if (this->tiles[x][y] == '1')
 		return (1);
-	if(!explore(this, x + 1, y, list))
+	if (!explore(this, x + 1, y, list))
 		return (0);
-	if(!explore(this, x - 1, y, list))
+	if (!explore(this, x - 1, y, list))
 		return (0);
-	if(!explore(this, x, y + 1, list))
+	if (!explore(this, x, y + 1, list))
 		return (0);
-	if(!explore(this, x, y - 1, list))
+	if (!explore(this, x, y - 1, list))
 		return (0);
 	return (1);
 }
@@ -45,10 +45,11 @@ static short explore(t_cubworld *this, int x, int y, char*const *list)
 /*
 ** Checks whether the player is able to escape the map.
 ** @param t_cubworld* this
-** @param char[][] checklist	A empty pre-allocated grid the same size of the map, used as a draft.
+** @param char[][] checklist	A empty pre-allocated grid the same size of the
+**  map, used as a draft.
 */
 
-void	escaperoom(t_cubworld *this, char*const *checklist)
+void			escaperoom(t_cubworld *this, char*const *checklist)
 {
 	if (!explore(this, this->playerspawn.x, this->playerspawn.y, checklist))
 		throw(-1, "The map is not closed.");
