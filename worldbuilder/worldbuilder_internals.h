@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "worldbuilder.h"
+#include "../ft_math/ft_math.h"
+#include "../dynarray/dynarray.h"
 
-t_staticmesh	*g_walls;
-t_billboardmesh	*g_sprites;
-t_transform		g_player;
+t_worldmesh	g_world;

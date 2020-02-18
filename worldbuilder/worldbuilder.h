@@ -68,6 +68,16 @@ struct s_transform
 	t_mx4	w2lmx;
 };
 
+typedef struct s_worldmesh		t_worldmesh;
+struct s_worldmesh
+{
+	int				wallcount;
+	t_staticmesh	*walls;
+	int				spritecount;
+	t_billboardmesh	*sprites;
+	t_transform		player;
+};
+
 void	worldinit(t_cubworld *world);
 void	renderworld(t_v3 position, t_v4 rotation);
 
