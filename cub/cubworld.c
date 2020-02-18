@@ -16,12 +16,11 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <math.h>
+#include "../ft_math/ft_math.h"
 #include "cub_util.h"
 
 #define WMAX 2560
 #define HMAX 1440
-
-#define DEG2RAD 0.01745329251994329576923690768489
 
 /*
 ** Fetches the texture at the given path.
