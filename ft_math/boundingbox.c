@@ -12,6 +12,7 @@
 
 #include "vector.h"
 #include "boundingbox.h"
+#include "figure.h"
 
 /*
 ** Initializes a bounding box with a point.

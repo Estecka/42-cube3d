@@ -81,14 +81,14 @@ t_mx4 mx, void *texture)
 
 static void		wallinitfour(t_cubworld *info, t_dynarray *array, t_v2i i)
 {
-	if (tiles(info, i.x + 1, i.y) != '1' && tiles(info, i.x + 1, i.y) != '\0')
-		wallinitone(&array, i, g_east, info->east);
-	if (tiles(info, i.x - 1, i.y) != '1' && tiles(info, i.x - 1, i.y) != '\0')
-		wallinitone(&array, i, g_west, info->west);
-	if (tiles(info, i.x, i.y + 1) != '1' && tiles(info, i.x, i.y + 1) != '\0')
-		wallinitone(&array, i, g_north, info->north);
-	if (tiles(info, i.x, i.y - 1) != '1' && tiles(info, i.x, i.y - 1) != '\0')
-		wallinitone(&array, i, g_south, info->south);
+	if (tile(info, i.x + 1, i.y) != '1' && tile(info, i.x + 1, i.y) != '\0')
+		wallinitone(array, i, g_east, info->east);
+	if (tile(info, i.x - 1, i.y) != '1' && tile(info, i.x - 1, i.y) != '\0')
+		wallinitone(array, i, g_west, info->west);
+	if (tile(info, i.x, i.y + 1) != '1' && tile(info, i.x, i.y + 1) != '\0')
+		wallinitone(array, i, g_north, info->north);
+	if (tile(info, i.x, i.y - 1) != '1' && tile(info, i.x, i.y - 1) != '\0')
+		wallinitone(array, i, g_south, info->south);
 }
 
 static void		wallinit(t_cubworld *info)
@@ -113,8 +113,8 @@ static void		spriteinit(t_cubworld *info)
 {
 	t_dynarray		array;
 	t_billboardmesh	*values;
-	unsigned int	x;
-	unsigned int	y;
+	signed int		x;
+	signed int		y;
 
 	dyninit(&array, sizeof(t_billboardmesh), 32);
 	y = -1;
