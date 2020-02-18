@@ -2,7 +2,7 @@ SRCS	= main.c \
 	throw.c \
 	stringbuilder/stringbuilder.c \
 	get_next_line/get_next_line.c \
-	worldbuilder/worldbuilder.c worldbuilder/transform.c \
+	worldbuilder/worldbuilder.c worldbuilder/transform.c worldbuilder/renderworld.c \
 
 OBJS	= ${SRCS:.c=.o}
 
@@ -13,6 +13,7 @@ CC		= gcc
 CFLAGS	= -Wall -Wextra #-Werror
 LIBFLAGS = \
 	-L cub -lcub \
+	-L renderer -lrenderer \
 	-L ft_math -lftmath \
 	-L dynarray -ldynarray \
 	-L libft -lft \
@@ -32,6 +33,7 @@ libs:
 	make -C ft_math
 	make -C dynarray
 	make -C cub
+	make -C renderer
 
 minilibx: ${MINILIBX}
 ${MINILIBX}:

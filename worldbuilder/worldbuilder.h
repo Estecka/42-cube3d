@@ -71,15 +71,15 @@ struct	s_transform
 typedef struct s_worldmesh		t_worldmesh;
 struct	s_worldmesh
 {
-	int				wallcount;
+	unsigned int	wallcount;
 	t_staticmesh	*walls;
-	int				spritecount;
+	unsigned int	spritecount;
 	t_billboardmesh	*sprites;
 	t_transform		player;
 };
 
 void	worldinit(t_cubworld *world);
-void	renderworld(t_v3 position, t_v4 rotation);
+void	renderworld(t_transform *camera);
 
 void	retransform(t_transform *this);
 
