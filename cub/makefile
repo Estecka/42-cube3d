@@ -5,6 +5,7 @@ OBJS = ${SRCS:.c=.o}
 
 TEST_SRCS = .test/main.c \
 	../throw.c \
+	../get_next_line/get_next_line.c \
 
 NAME	= libcub.a
 TEST	= test.out

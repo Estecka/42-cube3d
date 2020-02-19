@@ -91,6 +91,8 @@ static void	gridify(union u_cub *this)
 
 	grid = (char*const*)malloc2d(this->file.mapsize.x, this->file.mapsize.y,
 	sizeof(char));
+	if (!grid)
+		throw(errno, "[FATAL] Grid allocation failed.");
 	y = -1;
 	while (++y < this->file.mapsize.y)
 	{

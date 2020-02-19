@@ -15,11 +15,11 @@
 /*
 ** Allocates a two dimensional array in a single memory space.
 ** The array's elements are accessible via `array[x][y]`.
-** The array is initialized with 0;
+** The array's elements are initialized with 0's;
 ** @param size_t width	The number of columns. (x)
 ** @param size_t height	The number of rows. (y)
-** @param size_t type	The size of the element's type. (sizeof)
-** @return void*const* A pointer to the grid, or NULL if allocation failed.
+** @param size_t type	The size of the elements' type. (sizeof(type))
+** @return void*const*	A pointer to the grid, or NULL if allocation failed.
 */
 
 extern void*const	*malloc2d(size_t width, size_t height, size_t type)
@@ -33,7 +33,7 @@ extern void*const	*malloc2d(size_t width, size_t height, size_t type)
 		+ (type * height * width));
 	if (!result)
 		return (NULL);
-	values = (char*)(result + (width * sizeof(void*)));
+	values = (char*)(result + width);
 	i = -1;
 	while (++i < (width * height * type))
 		values[i] = 0;

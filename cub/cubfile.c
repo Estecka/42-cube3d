@@ -59,7 +59,7 @@ static void		parsemap(t_cubfile *this, int fd, char *firstrow)
 	if (!dyninit(&array, sizeof(char*), 16))
 		throw(errno, "[FATAL] Dyinit failed", errno);
 	parsegridrow(this, firstrow, &array);
-	while (0 < (gnl = get_next_line(fd, &line)))
+	while (0 <= (gnl = get_next_line(fd, &line)))
 	{
 		if (line[0] != '\0')
 		{
