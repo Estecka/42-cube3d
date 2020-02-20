@@ -53,6 +53,8 @@ static void	viewtoscreen(t_renderenv *this, const t_quad src)
 	i = -1;
 	while (++i < 4)
 	{
+		if (p[i].vec4.w < 0.001)
+			p[i].vec4.w = 0.001;
 		p[i].vec3 = cartesian(&p[i].vec4).vec3;
 		p[i].vec3.x += 1;
 		p[i].vec3.y += 1;
