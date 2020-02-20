@@ -22,12 +22,13 @@ extern void	renderworld(t_transform *camera)
 	size_t			i;
 	t_staticmesh	*wall;
 
+	camera = &g_world.player;
 	i = -1;
-	while (i < g_world.wallcount)
+	while (++i < g_world.wallcount)
 	{
 		wall = g_world.walls + i;
 		mxquad3(wall->vertices, wall->renderinfo.vertices, camera->w2lmx);
 		renderqueuestage(wall->renderinfo.vertices);
 	}
-	renderflush();
+	renderqueueflush();
 }

@@ -15,17 +15,17 @@
 #include "../cub/cub.h"
 
 const t_quad	g_wallmesh = {
-	{-0.5, -0.5, 0.25},
-	{-0.5, -0.5, 0},
-	{+0.5, -0.5, 0},
-	{+0.5, -0.5, 0.25},
+	{-0.5, 1, 0.5},
+	{-0.5, 0, 0.5},
+	{+0.5, 0, 0.5},
+	{+0.5, 1, 0.5},
 };
 
 t_quad	g_spritemesh = {
-	{-1, 0, 1},
+	{-1, 1, 0},
 	{-1, 0, 0},
 	{+1, 0, 0},
-	{+1, 0, 1},
+	{+1, 1, 0},
 };
 
 /*
@@ -44,23 +44,23 @@ static t_mx4	g_south = {
 };
 
 static t_mx4	g_east = {
+	{ 0, 0, 1, 0},
 	{ 0, 1, 0, 0},
 	{-1, 0, 0, 0},
-	{ 0, 0, 1, 0},
 	{ 0, 0, 0, 1},
 };
 
 static t_mx4	g_north = {
-	{-1, +0, 0, 0},
-	{ 0, -1, 0, 0},
-	{ 0, +0, 1, 0},
-	{ 0, +0, 0, 1},
+	{-1, 0, +0, 0},
+	{ 0, 1, +0, 0},
+	{ 0, 0, -1, 0},
+	{ 0, 0, +0, 1},
 };
 static t_mx4	g_west = {
-	{0, -1, 0, 0},
-	{1, +0, 0, 0},
-	{0, +0, 1, 0},
-	{0, +0, 0, 1},
+	{0, 0, -1, 0},
+	{0, 1, +0, 0},
+	{1, 0, +0, 0},
+	{0, 0, +0, 1},
 };
 
 static void		wallinitone(t_dynarray *array, t_v2i pos,
@@ -72,7 +72,7 @@ t_mx4 mx, void *texture)
 	if (!dynexpand(array, +1))
 		throw(errno, "[FATAL] Wall array expansion failed.");
 	values = (t_staticmesh*)array->content;
-	position = (t_v3){pos.x, pos.y, 0};
+	position = (t_v3){pos.x, 0, pos.y};
 	mx4pos(mx, &position);
 	mxquad3(g_wallmesh, values[array->length].vertices, mx);
 	values[array->length].renderinfo.texture = texture;
@@ -82,13 +82,13 @@ t_mx4 mx, void *texture)
 static void		wallinitfour(t_cubworld *info, t_dynarray *array, t_v2i i)
 {
 	if (tile(info, i.x + 1, i.y) != '1' && tile(info, i.x + 1, i.y) != '\0')
-		wallinitone(array, i, g_east, info->east);
-	if (tile(info, i.x - 1, i.y) != '1' && tile(info, i.x - 1, i.y) != '\0')
 		wallinitone(array, i, g_west, info->west);
+	if (tile(info, i.x - 1, i.y) != '1' && tile(info, i.x - 1, i.y) != '\0')
+		wallinitone(array, i, g_east, info->east);
 	if (tile(info, i.x, i.y + 1) != '1' && tile(info, i.x, i.y + 1) != '\0')
-		wallinitone(array, i, g_north, info->north);
-	if (tile(info, i.x, i.y - 1) != '1' && tile(info, i.x, i.y - 1) != '\0')
 		wallinitone(array, i, g_south, info->south);
+	if (tile(info, i.x, i.y - 1) != '1' && tile(info, i.x, i.y - 1) != '\0')
+		wallinitone(array, i, g_north, info->north);
 }
 
 static void		wallinit(t_cubworld *info)
@@ -128,20 +128,19 @@ static void		spriteinit(t_cubworld *info)
 					throw(errno, "[FATAL] Sprite array expansion failed");
 				values = (t_billboardmesh*)array.content;
 				values[array.length].renderinfo.texture = info->sprite;
-				values[array.length].position = (t_v3){x, y, 0};
+				values[array.length].position = (t_v3){x, 0, y};
 				array.length += 1;
 			}
 	}
 	g_world.spritecount = array.length;
 	g_world.sprites = (t_billboardmesh*)array.content;
 }
-
 extern void		worldinit(t_cubworld *info)
 {
 	g_world.player.position.x = info->playerspawn.x;
-	g_world.player.position.y = info->playerspawn.y;
-	g_world.player.position.z = 0.5;
-	g_world.player.rotation.x = 90 * DEG2RAD;
+	g_world.player.position.z = info->playerspawn.y;
+	g_world.player.position.y = 0.5;
+	g_world.player.rotation.x = 0;
 	g_world.player.rotation.y = info->playerspawnangle;
 	g_world.player.rotation.z = 0;
 	retransform(&g_world.player);

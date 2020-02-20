@@ -67,8 +67,7 @@ static void	findplayer(union u_cub *this)
 					-1, "Extraneous player at %d %d:\n%s",
 					x, y, this->file.tiles[y]);
 				this->file.tiles[y][x] = '0';
-				this->world.playerspawn =
-					(t_v2i) {x, this->world.mapsize.y - 1 - y};
+				this->world.playerspawn = (t_v2i) {x, y};
 				this->world.playerspawnangle =
 					((c == 'W') * 1) + ((c == 'S') * 2) + ((c == 'E') * 3);
 				this->world.playerspawnangle *= 90 * DEG2RAD;
@@ -99,7 +98,7 @@ static void	gridify(union u_cub *this)
 		x = -1;
 		while (this->file.tiles[y][++x] != '\0')
 		{
-			grid[x][this->file.mapsize.y - 1 - y] = this->file.tiles[y][x];
+			grid[x][y] = this->file.tiles[y][x];
 		}
 		free(this->file.tiles[y]);
 	}

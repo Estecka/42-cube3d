@@ -13,11 +13,11 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <errno.h>
-#include "ft_printf/ft_printf.h"
 
 #include "cube3d.h"
 #include "cub/cub.h"
 #include "renderer/renderer.h"
+#include "worldbuilder/worldbuilder.h"
 
 #include "minilibx/mlx.h"
 #include "keycode.h"
@@ -40,25 +40,34 @@ static int	exitonesc(int keycode, void *null)
 	return (0);
 }
 
+static int	update(void *null)
+{
+	(void)null;
+	renderworld(NULL);
+	renderflush();
+	return (0);
+}
 
 extern int	main(int argc, char **args)
 {
 	int			fd;
-	t_cubfile	map;
+	union u_cub	cub;
 
 	if (argc < 2)
 		throw(-1, "Not enough arguments.");
 	fd = open(args[1], O_RDONLY);
 	if (fd < 0)
 		throw(errno, "Could not open file: %d", errno);
-	ft_bzero(&map, sizeof(t_cubfile));
-	parsefile(fd, &map);
+	cub.world = (t_cubworld){0};
+	parsefile(&cub.file, fd);
+	cubfile2world(&cub);
 	if (!(g_mlx = mlx_init()))
 		throw(errno, "[FATAL] MinilibX init failed : %d", errno);
-	graphicinit(&map);
-	g_window = mlx_new_window(g_mlx, map.screenwdt, map.screenhgt, "Cube3D : The Reckoning");
+	renderinit(cub.world.resolution.x, cub.world.resolution.y);
+	worldinit(&cub.world);
+	g_window = mlx_new_window(g_mlx, cub.world.resolution.x, cub.world.resolution.y, "Cube3D : The Reckoning");
 	mlx_key_hook(g_window, exitonesc, NULL);
-	mlx_expose_hook(g_window, graphhook, NULL);
 	mlx_hook(g_window, 17, 1<<17, exitonx, NULL);
+	mlx_loop_hook(g_mlx, update, NULL);
 	mlx_loop(g_mlx);
 }
