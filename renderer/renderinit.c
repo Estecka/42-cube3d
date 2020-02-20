@@ -14,24 +14,24 @@
 
 const t_bbox	g_clipspace = {
 	.min = {
-		.x = -0.1,
-		.y = -0.1,
+		.x = -1,
+		.y = -1,
 		.z = -1,
 	},
 	.max = {
-		.x = 0.1,
-		.y = 0.1,
-		.z = 10,
+		.x = 1,
+		.y = 1,
+		.z = 1,
 	},
 };
 
 t_bbox	g_frustrum = {
 	.min = {
-		.x = -1,
+		.x = -0.1,
 		.z = -10,
 	},
 	.max = {
-		.x = 1,
+		.x = 0.1,
 		.z = -0.1,
 	},
 };
@@ -52,8 +52,8 @@ static void		frustruminit(void)
 	float aspect;
 
 	aspect = g_screenhgt / (float)g_screenwdt;
-	g_frustrum.min.y = -aspect;
-	g_frustrum.max.y = +aspect;
+	g_frustrum.min.y = g_frustrum.min.x * aspect;
+	g_frustrum.max.y = g_frustrum.max.x * aspect;
 	mxfrust(g_projmx, &g_frustrum);
 	g_cliporigin = mx4v3(g_projmx, &(t_v3){0, 0, 0});
 }
