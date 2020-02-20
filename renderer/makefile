@@ -22,10 +22,7 @@ ${NAME}: ${OBJS}
 
 test: ${TEST}
 ${TEST}: ${NAME} ${MLX} .test/main.c ../throw.c
-	make libft -C ../
-	make printf -C ../
-	make math -C ../
-	make dynarray -C ../
+	make libs -C ../
 	gcc .test/main.c ../throw.c -o ${TEST} \
 		${LIBFLAGS} \
 		${CFLAGS} \

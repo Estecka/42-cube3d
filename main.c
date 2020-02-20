@@ -18,6 +18,7 @@
 #include "cub/cub.h"
 #include "renderer/renderer.h"
 #include "worldbuilder/worldbuilder.h"
+#include "controller/controller.h"
 
 #include "minilibx/mlx.h"
 #include "keycode.h"
@@ -37,13 +38,15 @@ static int	exitonesc(int keycode, void *null)
 	(void)null;
 	if (keycode == KCESC)
 		exit(0);
+	onkeypress(keycode);
 	return (0);
 }
 
 static int	update(void *null)
 {
 	(void)null;
-	renderworld(NULL);
+	renderclear((union u_color){.raw = 0});
+	renderworld();
 	renderflush();
 	return (0);
 }

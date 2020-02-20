@@ -75,11 +75,12 @@ struct	s_worldmesh
 	t_staticmesh	*walls;
 	unsigned int	spritecount;
 	t_billboardmesh	*sprites;
-	t_transform		player;
 };
 
+t_transform		g_player;
+
 void	worldinit(t_cubworld *world);
-void	renderworld(t_transform *camera);
+void	renderworld();
 
 void	retransform(t_transform *this);
 

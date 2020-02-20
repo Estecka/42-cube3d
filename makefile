@@ -3,6 +3,7 @@ SRCS	= main.c \
 	stringbuilder/stringbuilder.c \
 	get_next_line/get_next_line.c \
 	worldbuilder/worldbuilder.c worldbuilder/transform.c worldbuilder/renderworld.c \
+	controller/controller.c \
 
 OBJS	= ${SRCS:.c=.o}
 

@@ -17,17 +17,17 @@
 ** @param t_transform* camera	The position of the camera in the world.
 */
 
-extern void	renderworld(t_transform *camera)
+extern void	renderworld()
 {
 	size_t			i;
 	t_staticmesh	*wall;
 
-	camera = &g_world.player;
+	retransform(&g_player);
 	i = -1;
 	while (++i < g_world.wallcount)
 	{
 		wall = g_world.walls + i;
-		mxquad3(wall->vertices, wall->renderinfo.vertices, camera->w2lmx);
+		mxquad3(wall->vertices, wall->renderinfo.vertices, g_player.w2lmx);
 		renderqueuestage(wall->renderinfo.vertices);
 	}
 	renderqueueflush();

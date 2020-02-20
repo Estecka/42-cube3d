@@ -137,13 +137,13 @@ static void		spriteinit(t_cubworld *info)
 }
 extern void		worldinit(t_cubworld *info)
 {
-	g_world.player.position.x = info->playerspawn.x;
-	g_world.player.position.z = info->playerspawn.y;
-	g_world.player.position.y = 0.5;
-	g_world.player.rotation.x = 0;
-	g_world.player.rotation.y = info->playerspawnangle;
-	g_world.player.rotation.z = 0;
-	retransform(&g_world.player);
+	g_player.position.x = info->playerspawn.x;
+	g_player.position.z = info->playerspawn.y;
+	g_player.position.y = 0.5;
+	g_player.rotation.x = 0;
+	g_player.rotation.y = info->playerspawnangle;
+	g_player.rotation.z = 0;
+	retransform(&g_player);
 	spriteinit(info);
 	wallinit(info);
 }
