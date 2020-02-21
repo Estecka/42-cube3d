@@ -11,7 +11,7 @@ NAME	= cube3d.out
 MINILIBX = libmlx.dylib
 
 CC		= gcc
-CFLAGS	= -Wall -Wextra #-Werror
+CFLAGS	= -Wall -Wextra -Ofast #-Werror
 LIBFLAGS = \
 	-L cub -lcub \
 	-L renderer -lrenderer \

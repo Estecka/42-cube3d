@@ -9,7 +9,7 @@ TEST = renderer.out
 MLX = libmlx.dylib
 
 CC     = gcc
-CFLAGS = -Wall -Wextra #-Werror
+CFLAGS = -Wall -Wextra -Ofast #-Werror
 LIBFLAGS = \
 		-L ./ -lmlx -lrenderer \
 		-L ../libft -lft \

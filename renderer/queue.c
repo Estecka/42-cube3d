@@ -63,7 +63,8 @@ extern void	renderqueueflush(void)
 ** 	as rendered.
 */
 
-extern void	renderqueuestage(const t_quad quad)
+extern void __attribute__((hot))
+			renderqueuestage(const t_quad quad)
 {
 	t_v3	**queue;
 	size_t	i;

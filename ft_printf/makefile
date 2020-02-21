@@ -14,7 +14,7 @@ NAME = libftprintf.a
 LIBFTDIR = ../libft/
 
 CC   = gcc
-CFLAGS = -Wall -Wextra -Werror -I${LIBFTDIR}
+CFLAGS = -Wall -Wextra -Werror -O3 -I${LIBFTDIR}
 
 
 printf: ${NAME}

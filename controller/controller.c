@@ -18,7 +18,7 @@
 #include "../ft_math/ft_math.h"
 
 #define MOVSPEED 0.1
-#define ROTSPEED 0.1
+#define ROTSPEED 0.05
 
 extern void	onkeypress(int keycode)
 {
@@ -26,9 +26,9 @@ extern void	onkeypress(int keycode)
 
 	movement.vec4 = (t_v4){ 0, 0, 0, 0};
 	if (keycode == KCLEFT)
-		g_player.rotation.y -= ROTSPEED;
-	else if (keycode == KCRIGHT)
 		g_player.rotation.y += ROTSPEED;
+	else if (keycode == KCRIGHT)
+		g_player.rotation.y -= ROTSPEED;
 
 	else if (keycode == KCW)
 		movement.vec3.z -= MOVSPEED;

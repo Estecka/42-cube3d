@@ -70,7 +70,8 @@ static void	viewtoscreen(t_renderenv *this, const t_quad src)
 ** @var t_quad pixquad the quad's vectors in screenspace.
 */
 
-extern void	renderquad(const t_quad quad)
+extern void __attribute__((hot))
+			renderquad(const t_quad quad)
 {
 	t_renderenv		env;
 	t_mx3			tmpmx;

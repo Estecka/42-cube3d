@@ -15,7 +15,7 @@ OBJS = ${SRCS:.c=.o}
 NAME = libftmath.a
 
 CC     = gcc
-CFLAGS = -Wall -Wextra #-Werror
+CFLAGS = -Wall -Wextra -O3 -Werror
 
 
 ${NAME}: ${OBJS}

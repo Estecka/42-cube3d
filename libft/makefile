@@ -15,7 +15,7 @@ NAME	= libft.a
 
 CC		= gcc
 
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -O3
 
 ${NAME}: ${OBJS}
 	ar rcs ${NAME} ${OBJS}
