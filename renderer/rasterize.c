@@ -60,7 +60,7 @@ static void		rasterizep(t_renderenv *this, unsigned int x, unsigned int y)
 		color.rgba.b = 255 - (int)(128 * (p.z + 1));
 		color.rgba.r = (int)(255 * uv.y);
 		color.rgba.g = (int)(255 * uv.x);
-		renderset(x, g_screenhgt - y, color);
+		renderset(x, g_screenhgt - 1 - y, color);
 	}
 }
 

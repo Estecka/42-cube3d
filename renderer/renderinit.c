@@ -28,7 +28,7 @@ const t_bbox	g_clipspace = {
 t_bbox	g_frustrum = {
 	.min = {
 		.x = -0.1,
-		.z = -10,
+		.z = -100,
 	},
 	.max = {
 		.x = 0.1,
@@ -83,8 +83,8 @@ extern void		renderinit(unsigned int x, unsigned int y)
 {
 	g_screenwdt = x;
 	g_screenhgt = y;
-	g_screenbb.max.x = x;
-	g_screenbb.max.y = y;
+	g_screenbb.max.x = x - 1;
+	g_screenbb.max.y = y - 1;
 	if (!zbuffinit(x, y))
 		throw(errno, "[FATAL] Could not initialize z-buffer: %d", errno);
 	renderqueueinit();
