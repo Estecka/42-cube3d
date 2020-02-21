@@ -43,9 +43,9 @@ static void		renderqueueclear(void)
 extern void	renderqueueflush(void)
 {
 	size_t	i;
-	t_v3	**queue;
+	t_v2	**queue;
 
-	queue = (t_v3**)g_renderqueue.content;
+	queue = (t_v2**)g_renderqueue.content;
 	i = -1;
 	while (++i < g_renderqueue.length)
 	{
@@ -58,24 +58,24 @@ extern void	renderqueueflush(void)
 ** Stages a quad to be renderered.
 ** Performs early culling on the quad, and roughly sorts the queue from closest
 **  to farthest.
-** @param const t_quad quad	The quad to queue in view space.
+** @param const t_seg2 quad	The quad to queue in view space.
 ** 	The reference should not be modified or deallocated until after the queue w
 ** 	as rendered.
 */
 
 extern void __attribute__((hot))
-			renderqueuestage(const t_quad quad)
+			renderqueuestage(const t_seg2 quad)
 {
-	t_v3	**queue;
+	t_v2	**queue;
 	size_t	i;
 
 	if (!clipquad(quad))
 		return ;
-	queue = (t_v3**)g_renderqueue.content;
+	queue = (t_v2**)g_renderqueue.content;
 	i = 0;
 	while (i < g_renderqueue.length)
 	{
-		if (queue[i][1].z > quad[1].z)
+		if (queue[i][1].y > quad[1].y)
 			break ;
 		i++;
 	}

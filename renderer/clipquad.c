@@ -13,60 +13,56 @@
 #include "renderer_internals.h"
 
 /*
-** Checks whether the quad is backfaced.
-** @param t_quad The quad to check.
+** Checks whether the segment is backfaced.
+** @param t_seg2 seg	The segment to check in hotorrmal pace.
 ** @return bool
-**  false The quad is either backfaced or sidefaced.
-**  true  The quad is frontfaced.
+**  false The segment is either backfaced or sidefaced.
+**  true  The segment is frontfaced.
 */
 
-static short	isfrontfaced(const t_quad quad)
+static short	isfrontfaced(const t_seg2 seg)
 {
-	struct s_v3	n;
-
-	n = normale(quad).vec3;
-	return (dotprod3(&n, &quad[1]) < 0);
+	return (seg[0].x < seg[1].x);
 }
 
 /*
-** Checks whether the quad interects with the frustrum.
+** Checks whether the segment is visible to the frustrum.
 ** This is a fast approximation, and might yield false positives.
-** @param t_quad quad The quad to check.
+** @param t_seg2 seg	The segment to check.
 ** @return bool
-** 	true  The quad likely intersects the frustrum.
-** 	false The quad definitely is outside the frustrum.
+** 	true  The segment is most likely visible.
+** 	false The segment is definitely invisible.
 */
 
-static short	frustrumculling(const t_quad quad)
+static short	frustrumculling(const t_seg2 seg)
 {
-	struct s_v3	horto[4];
-	t_bbox		bbox;
+	struct s_v2	horto[2];
+	t_bbox2		bbox;
 	int			i;
 
 	i = -1;
-	while (++i < 4)
+	while (++i < 2)
 	{
-		horto[i].z = quad[i].z;
-		scalevec2((t_v2*)&horto[i], (t_v2*)&quad[i],
-			g_frustrum.max.z / quad[i].z);
+		horto[i].y = seg[i].y;
+		horto[i].x = seg[i].x * g_frustrum.max.y / seg[i].y;
 	}
-	bbquad(&bbox, horto);
-	return (bbinter(&bbox, &g_frustrum));
+	if (!isfrontfaced(horto))
+		return (0);
+	bb2seg(&bbox, horto);
+	return (bb2inter(&bbox, &g_frustrum));
 }
 
 /*
 ** Checks whether the quad is visible to the camera.
 ** This might yield false positives.
-** @param t_quad The quad to check.
+** @param t_seg2 The quad to check.
 ** @return bool
 **  true  The quad is most likely visible.
 **  false The quad is definitely not visible.
 */
 
-extern short	clipquad(const t_quad quad)
+extern short	clipquad(const t_seg2 quad)
 {
-	if (!isfrontfaced(quad))
-		return (0);
 	if (!frustrumculling(quad))
 		return (0);
 	return (1);

@@ -28,60 +28,54 @@ struct			s_float_img
 
 /*
 ** A rendering environnement for a single quad.
-** @var t_bbox bbox	The bounding box of the quad in screen space.
-** @var t_mx3 figspace	A linear matrix that transforms a point from homogeneou
-** s screen space to figure space. Translation is not accounted for.
-** @var t_v3 figoffset	The vector that transforms homogeneous screen space ori
-** gin into to figure space origin.
-** @var t_quad pixvert	The pixel coordinates of the vertices.
-** @var t_v3 normale	The normale of the quad in screen space.
-** @var t_v4 plane	The plane equation of the figure in screen space.
+** @var t_seg2 pixvert	The pixel coordinates of the vertices.
+** @var t_m2x1 figspace	A 2x1 matrix that transforms a pixel from screen space
+**  to figure space.
+** @var	linefloat	The scalar of the segment's line equation.
+** @var	lineoffset	The offset of the segment's line equation.
 */
 
 typedef struct s_renderenv	t_renderenv;
 struct			s_renderenv
 {
-	t_bbox	bbox;
-	t_mx3	figspace;
-	t_v3	figoffset;
-	t_quad	pixvert;
-	t_v4	plane;
+	t_seg2	pixvert;
+	float	figspace[2][1];
+	float	linescalar;
+	float	lineoffset;
 };
 
 /*
-** @var t_bbox g_frustrum	The dimensions of the frustrum in view space.
-** @var t_mx4 g_projmx	The projection matrix
-** @var const t_bbox	g_clipspace	The cartesian clip space dimensins.
-** @var union u_v4 g_cliporigin	The position of the camera in homogeneous clip
-**  space.
+** @var t_bbox2 g_frustrum	The dimensions of the frustrum.
+** @var t_mx3 g_projmx	A matrix that transform the frustrum cube into clip space.
+** @var const t_bbox2	g_clipspace	The dimensions of the clip space.
 */
 
-t_bbox			g_frustrum;
-t_mx4			g_projmx;
-const t_bbox	g_clipspace;
-union u_v4		g_cliporigin;
+t_bbox2			g_frustrum;
+t_mx3			g_projmx;
+const t_bbox2	g_clipspace;
 
-t_float_img		g_zbuffer;
+float			*g_zbuffer;
 t_mlx_img		g_rendertex[2];
-t_bbox			g_screenbb;
+t_bbox2			g_screenbb;
 unsigned int	g_screenwdt;
 unsigned int	g_screenhgt;
+float			g_aspect;
 
 t_dynarray		g_renderqueue;
 
 void			mlx_img_set(t_mlx_img *this, unsigned int x, unsigned int y,
 	union u_color col);
 
-short			zbuffinit(unsigned int width, unsigned int height);
+short			zbuffinit(unsigned int width);
 void			zbuffclear();
-float			zbuffget(unsigned int x, unsigned int y);
-void			zbuffset(unsigned int x, unsigned int y, float value);
-short			zbuffcmp(unsigned int x, unsigned int y, float value);
+float			zbuffget(unsigned int x);
+void			zbuffset(unsigned int x, float value);
+short			zbuffcmp(unsigned int x, float value);
 
 void			renderqueueinit();
 
-short			clipquad(const t_quad quad);
-void			renderquad(const t_quad quad);
+short			clipquad(const t_seg2 segment);
+void			renderquad(const t_seg2 segment);
 void			rasterize(t_renderenv *env);
 
 #endif

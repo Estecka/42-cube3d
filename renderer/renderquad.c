@@ -13,78 +13,57 @@
 #include "renderer_internals.h"
 
 /*
-** Computes the matrix that transforms a point from figure space to world space
+** Computes the matrix that transforms from screenspace to figure space.
 ** @param t_renderenv* this The renderenv whose matrix to initialise.
 ** @param union u_v4* quad The pooints of the figure.
 */
 
-static void	getfigmx(t_renderenv *this, union u_v4 *quad)
+static void	getfigmx(t_renderenv *this)
 {
-	this->figspace[0][0] = quad[2].vec3.x - quad[1].vec3.x;
-	this->figspace[0][1] = quad[2].vec3.y - quad[1].vec3.y;
-	this->figspace[0][2] = quad[2].vec3.z - quad[1].vec3.z;
-	this->figspace[1][0] = quad[0].vec3.x - quad[1].vec3.x;
-	this->figspace[1][1] = quad[0].vec3.y - quad[1].vec3.y;
-	this->figspace[1][2] = quad[0].vec3.z - quad[1].vec3.z;
-	this->figspace[2][0] = g_cliporigin.vec4.x - quad[1].vec3.x;
-	this->figspace[2][1] = g_cliporigin.vec4.y - quad[1].vec3.y;
-	this->figspace[2][2] = g_cliporigin.vec4.z - quad[1].vec3.z;
-	subvec3(&this->figoffset, &quad[1].vec3, &(t_v3){ 0 });
+	this->figspace[0][0] = 1 / (this->pixvert[1].x - this->pixvert[0].x);
+	this->figspace[1][0] = -this->pixvert[0].x * this->figspace[0][0];
 }
 
 /*
-** Convert a quad's vertices from view space to cartesian screen space.
-** In the process, the matrix from UV to homegeneous screen is computed.
+** Convert a segment's vertices from view space to cartesian screen space.
+** The screen to UV matrix is computed in the process.
 ** @param t_renderenv* this	The current rendering environnement.
-** @param const t_quad src The quad's vertices in view space.
+** @param const t_seg2 src The quad's vertices in view space.
 */
 
-static void	viewtoscreen(t_renderenv *this, const t_quad src)
+static void	viewtoscreen(t_renderenv *this, const t_seg2 src)
 {
-	union u_v4	p[4];
-	int			i;
+	t_seg2	p;
+	int		i;
+	float	perspective;
 
 	i = -1;
-	while (++i < 4)
+	while (++i < 2)
 	{
-		p[i] = mx4v3(g_projmx, &src[i]);
+		p[i].y = src[i].y;
+		perspective = g_frustrum.max.y / p[i].y;
+		p[i].x = perspective * src[i].x;
+		p[i] = mx3v2(g_projmx, &p[i]).vec2;
+		p[i].x += 1;
+		p[i].x *= 0.5 * g_screenwdt;
+		this->pixvert[i] = p[i];
 	}
-	getfigmx(this, p);
-	i = -1;
-	while (++i < 4)
-	{
-		if (p[i].vec4.w < 0.001)
-			p[i].vec4.w = 0.001;
-		p[i].vec3 = cartesian(&p[i].vec4).vec3;
-		p[i].vec3.x += 1;
-		p[i].vec3.y += 1;
-		p[i].vec4.x *= 0.5 * g_screenwdt;
-		p[i].vec4.y *= 0.5 * g_screenhgt;
-		this->pixvert[i] = p[i].vec3;
-	}
+	getfigmx(this);
 }
 
 /*
 ** Renders a quad on screen.
-** @param const t_quad the quad's points in clip space.
-** @var t_quad pixquad the quad's vectors in screenspace.
+** @param const t_seg2 the quad's points in clip space.
+** @var t_seg2 pixquad the quad's vectors in screenspace.
 */
 
 extern void __attribute__((hot))
-			renderquad(const t_quad quad)
+			renderquad(const t_seg2 quad)
 {
 	t_renderenv		env;
-	t_mx3			tmpmx;
-	t_v3			normal;
 
 	viewtoscreen(&env, quad);
-	bbquad(&env.bbox, env.pixvert);
-	bbclip(&env.bbox, &env.bbox, &g_screenbb);
-	if (!bbisvalid(&env.bbox))
-		return ;
-	normal = normale(env.pixvert).vec3;
-	env.plane = planeeq(&normal, env.pixvert).vec4;
-	mx3cpy(env.figspace, tmpmx);
-	mx3inv(tmpmx, env.figspace);
+	env.linescalar = (env.pixvert[1].y - env.pixvert[0].y)
+		/ (env.pixvert[1].x - env.pixvert[0].x);
 	rasterize(&env);
 }

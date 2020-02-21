@@ -20,12 +20,10 @@
 ** 	false Allocation failed.
 */
 
-short	zbuffinit(unsigned int width, unsigned int height)
+short	zbuffinit(unsigned int width)
 {
-	g_zbuffer.width = width;
-	g_zbuffer.height = height;
-	g_zbuffer.content = malloc(sizeof(float) * width * height);
-	if (g_zbuffer.content)
+	g_zbuffer = malloc(sizeof(float) * width);
+	if (g_zbuffer)
 	{
 		zbuffclear();
 		return (1);
@@ -40,9 +38,9 @@ short	zbuffinit(unsigned int width, unsigned int height)
 ** @return float The depth of the texel.
 */
 
-float	zbuffget(unsigned int x, unsigned int y)
+float	zbuffget(unsigned int x)
 {
-	return (g_zbuffer.content[x + (y * g_zbuffer.width)]);
+	return (g_zbuffer[x]);
 }
 
 /*
@@ -51,9 +49,9 @@ float	zbuffget(unsigned int x, unsigned int y)
 ** @pqrqm unsigned int x,y The coordinates of the texel.
 */
 
-void	zbuffset(unsigned int x, unsigned int y, float value)
+void	zbuffset(unsigned int x, float value)
 {
-	g_zbuffer.content[x + (y * g_zbuffer.width)] = value;
+	g_zbuffer[x] = value;
 }
 
 /*
@@ -63,19 +61,10 @@ void	zbuffset(unsigned int x, unsigned int y, float value)
 void	zbuffclear(void)
 {
 	unsigned int x;
-	unsigned int y;
 
-	x = 0;
-	while (x < g_zbuffer.width)
-	{
-		y = 0;
-		while (y < g_zbuffer.height)
-		{
-			zbuffset(x, y, g_clipspace.max.z);
-			y++;
-		}
-		x++;
-	}
+	x = -1;
+	while (++x < g_screenwdt)
+		g_zbuffer[x] = g_clipspace.max.y;
 }
 
 /*
@@ -87,7 +76,7 @@ void	zbuffclear(void)
 ** 	false The value appears behind the z-buffer.
 */
 
-short	zbuffcmp(unsigned int x, unsigned int y, float value)
+short	zbuffcmp(unsigned int x, float value)
 {
-	return (value > g_clipspace.min.z && value < zbuffget(x, y));
+	return (value > g_clipspace.min.y && value < zbuffget(x));
 }

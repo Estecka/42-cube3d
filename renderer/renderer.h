@@ -38,7 +38,7 @@ void		renderflush();
 void		renderclear(union u_color color);
 void		renderset(unsigned int x, unsigned int y, union u_color color);
 
-void		renderqueuestage(const t_quad quad);
+void		renderqueuestage(const t_seg2 segment);
 void		renderqueueflush();
 
 #endif
