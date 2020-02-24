@@ -25,9 +25,10 @@
 static void		getremapmx(float this[2][1], float depth, float altitude, float angle)
 {
 	depth -= 1;
-	depth *= 0.5 * g_frustrum.min.y;
-	this[0][0] = 1 / (float)g_screenhgt;
-	this[0][0] *= depth;
+	depth *= g_frustrum.min.y;
+	this[0][0] = depth;
+	this[0][0] *= g_aspect / WALLSIZE;
+	this[0][0] /= (float)g_screenhgt;
 	this[1][0] = (angle - 0.5) * g_screenhgt * this[0][0];
 	this[1][0] += altitude;
 }
