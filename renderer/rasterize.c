@@ -21,18 +21,18 @@ static void __attribute__((hot))
 				rasterizecol(t_renderenv *this, unsigned int x)
 {
 	union u_color	color;
-	struct s_v3		p;
+	struct s_v2		p;
 	struct s_v2		uv;
 
 	color.rgba.a = 0;
+	color.rgba.r = 0;
 	p.x = (float)x;
 	p.y = (p.x * this->linescalar) + this->lineoffset;
 	if (zbuffcmp(x, p.y))
 	{
 		zbuffset(x, p.y);
 		uv.x = (p.x * this->figspace[0][0]) + this->figspace[1][0];
-		color.rgba.b = 255 - (int)(128 * (p.z + 1));
-		color.rgba.r = (int)(255 * uv.y);
+		color.rgba.b = 255 - (int)(128 * (p.y + 1));
 		color.rgba.g = (int)(255 * uv.x);
 		for (unsigned int y=0; y<g_screenhgt; y++)
 			renderset(x, g_screenhgt - 1 - y, color);

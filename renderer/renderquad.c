@@ -65,5 +65,6 @@ extern void __attribute__((hot))
 	viewtoscreen(&env, quad);
 	env.linescalar = (env.pixvert[1].y - env.pixvert[0].y)
 		/ (env.pixvert[1].x - env.pixvert[0].x);
+	env.lineoffset = env.pixvert[0].y - (env.linescalar * env.pixvert[0].x);
 	rasterize(&env);
 }

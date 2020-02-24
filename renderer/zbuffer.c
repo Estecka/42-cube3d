@@ -64,7 +64,7 @@ void	zbuffclear(void)
 
 	x = -1;
 	while (++x < g_screenwdt)
-		g_zbuffer[x] = g_clipspace.max.y;
+		g_zbuffer[x] = g_clipspace.min.y;
 }
 
 /*
@@ -78,5 +78,5 @@ void	zbuffclear(void)
 
 short	zbuffcmp(unsigned int x, float value)
 {
-	return (value > g_clipspace.min.y && value < zbuffget(x));
+	return (value < g_clipspace.max.y && value > zbuffget(x));
 }
