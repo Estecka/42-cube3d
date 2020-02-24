@@ -20,27 +20,32 @@
 #define MOVSPEED 0.1
 #define ROTSPEED 0.05
 
+/*
+** It's important that movement has 1 extra dimension, so it can be transformed
+**  as a vector instead of as a position.
+*/
+
 extern void	onkeypress(int keycode)
 {
-	union u_v4 movement;
+	union u_v3 movement;
 
-	movement.vec4 = (t_v4){ 0, 0, 0, 0};
+	movement.vec3 = (t_v3){ 0, 0, 0};
 	if (keycode == KCLEFT)
-		g_player.rotation.y += ROTSPEED;
+		g_player.rotation += ROTSPEED;
 	else if (keycode == KCRIGHT)
-		g_player.rotation.y -= ROTSPEED;
+		g_player.rotation -= ROTSPEED;
 
 	else if (keycode == KCW)
-		movement.vec3.z -= MOVSPEED;
+		movement.vec2.y -= MOVSPEED;
 	else if (keycode == KCS)
-		movement.vec3.z += MOVSPEED;
+		movement.vec2.y += MOVSPEED;
 	else if (keycode == KCA)
-		movement.vec3.x -= MOVSPEED;
+		movement.vec2.x -= MOVSPEED;
 	else if (keycode == KCD)
-		movement.vec3.x += MOVSPEED;
+		movement.vec2.x += MOVSPEED;
 	else if (keycode == KCSPACE)
-		printf("%f %f %f \n%f\n", g_player.position.x, g_player.position.y, g_player.position.z, g_player.rotation.y * RAD2DEG);
+		printf("%f %f\n%f\n", g_player.position.x, g_player.position.y, g_player.rotation * RAD2DEG);
 
-	movement = mx4v4(g_player.l2wmx, &movement.vec4);
-	addvec3(&g_player.position, &g_player.position, &movement.vec3);
+	movement = mx3v3(g_player.l2wmx, &movement.vec3);
+	addvec2(&g_player.position, &g_player.position, &movement);
 }

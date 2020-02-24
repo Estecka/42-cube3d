@@ -27,7 +27,7 @@
 typedef struct s_rendermesh	t_mesh;
 struct	s_rendermesh
 {
-	t_quad		vertices;
+	t_seg2		vertices;
 	t_mlx_img	*texture;
 };
 
@@ -41,7 +41,7 @@ struct	s_rendermesh
 typedef struct s_staticmesh	t_staticmesh;
 struct	s_staticmesh
 {
-	t_quad				vertices;
+	t_seg2				vertices;
 	struct s_rendermesh renderinfo;
 };
 
@@ -55,17 +55,17 @@ struct	s_staticmesh
 typedef struct s_billboardmesh	t_billboardmesh;
 struct	s_billboardmesh
 {
-	struct s_v3			position;
+	struct s_v2			position;
 	struct s_rendermesh renderinfo;
 };
 
 typedef struct s_transform		t_transform;
 struct	s_transform
 {
-	t_v3	position;
-	t_v3	rotation;
-	t_mx4	l2wmx;
-	t_mx4	w2lmx;
+	t_v2	position;
+	float	rotation;
+	t_mx3	l2wmx;
+	t_mx3	w2lmx;
 };
 
 typedef struct s_worldmesh		t_worldmesh;

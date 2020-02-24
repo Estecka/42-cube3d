@@ -27,7 +27,8 @@ extern void	renderworld()
 	while (++i < g_world.wallcount)
 	{
 		wall = g_world.walls + i;
-		mxquad3(wall->vertices, wall->renderinfo.vertices, g_player.w2lmx);
+		wall->renderinfo.vertices[0] = mx3v2(g_player.w2lmx, &wall->vertices[0]).vec2;
+		wall->renderinfo.vertices[1] = mx3v2(g_player.w2lmx, &wall->vertices[1]).vec2;
 		renderqueuestage(wall->renderinfo.vertices);
 	}
 	renderqueueflush();

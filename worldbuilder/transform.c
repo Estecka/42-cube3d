@@ -18,8 +18,8 @@
 
 void	retransform(t_transform *this)
 {
-	mx4init(this->l2wmx);
-	mx4pos(this->l2wmx, &this->position);
-	mx4euler(this->l2wmx, &this->rotation);
-	mx4invaff(this->l2wmx, this->w2lmx);
+	mx3init(this->l2wmx);
+	mx3pos(this->l2wmx, &this->position);
+	mx3angle(this->l2wmx, this->rotation);
+	mx3invaff(this->l2wmx, this->w2lmx);
 }
