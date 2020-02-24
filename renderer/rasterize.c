@@ -96,12 +96,13 @@ void __attribute__((hot))
 	unsigned int	x;
 	unsigned int	max;
 
-	x = (int)this->pixvert[0].x;
-	if (x < 0)
+	if (this->pixvert[0].x < 0)
 		x = 0;
+	else
+		x = (int)this->pixvert[0].x;
 	max = this->pixvert[1].x;
-	if (max > g_screenwdt)
-		max = 0;
+	if (max >= g_screenwdt)
+		max = g_screenwdt - 1;
 	while (x < max)
 	{
 		rasterizecol(this, x);
