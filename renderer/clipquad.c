@@ -22,7 +22,10 @@
 
 static short	isfrontfaced(const t_seg2 seg)
 {
-	return (seg[0].x < seg[1].x);
+	t_v2	n;
+
+	n = normale2d(seg).vec2;
+	return (dotprod2(&n, &seg[0]) > 0);
 }
 
 /*
@@ -46,8 +49,6 @@ static short	frustrumculling(const t_seg2 seg)
 		horto[i].y = seg[i].y;
 		horto[i].x = seg[i].x * g_frustrum.max.y / seg[i].y;
 	}
-	if (!isfrontfaced(horto))
-		return (0);
 	bb2seg(&bbox, horto);
 	return (bb2inter(&bbox, &g_frustrum));
 }
@@ -63,6 +64,8 @@ static short	frustrumculling(const t_seg2 seg)
 
 extern short	clipquad(const t_seg2 quad)
 {
+	if (!isfrontfaced(quad))
+		return (0);
 	if (!frustrumculling(quad))
 		return (0);
 	return (1);
