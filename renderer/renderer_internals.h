@@ -29,7 +29,8 @@ struct			s_float_img
 /*
 ** A rendering environnement for a single quad.
 ** @var t_seg2 pixvert	The pixel coordinates of the vertices.
-** @var t_m2x1 figspace	A 2x1 matrix that transforms a pixel from screen space
+** @var t_m2a umx	A 2x1 matrix that transforms from figure space to UV space.
+** @var t_m2a figspace	A 2x1 matrix that transforms a pixel from screen space
 **  to figure space.
 ** @var	linefloat	The scalar of the segment's line equation.
 ** @var	lineoffset	The offset of the segment's line equation.
@@ -39,7 +40,8 @@ typedef struct s_renderenv	t_renderenv;
 struct			s_renderenv
 {
 	t_seg2	pixvert;
-	float	figspace[2][1];
+	t_mx2a	umx;
+	t_mx2a	figspace;
 	float	linescalar;
 	float	lineoffset;
 };
