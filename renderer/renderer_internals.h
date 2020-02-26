@@ -77,6 +77,7 @@ short			zbuffcmp(unsigned int x, float value);
 void			renderqueueinit();
 
 short			clipquad(const t_seg2 segment);
+void			neartruncate(const t_seg2 segment, t_seg2 destination);
 void			renderquad(const t_seg2 segment);
 void			rasterize(t_renderenv *env);
 

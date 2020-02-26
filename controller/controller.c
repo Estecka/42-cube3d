@@ -44,7 +44,7 @@ extern void	onkeypress(int keycode)
 	else if (keycode == KCD)
 		movement.vec2.x += MOVSPEED;
 	else if (keycode == KCSPACE)
-		printf("%f %f\n%f\n", g_player.position.x, g_player.position.y, g_player.rotation * RAD2DEG);
+		g_log = 1;
 
 	movement = mx3v3(g_player.l2wmx, &movement.vec3);
 	addvec2(&g_player.position, &g_player.position, &movement.vec2);

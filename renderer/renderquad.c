@@ -35,37 +35,6 @@ static void	truncateuv(const t_seg2 src, const t_seg2 dst, t_mx2a mx)
 }
 
 /*
-** Truncates a figure intersecting with the near culling plane.
-** Assumption is made that the figure won't be completely culled.
-** @param const t_seg2 src	The figure's vertices in view space.
-** @param t_seg2 dst	Outputs the truncated figure.
-** @return bool
-** 	true  OK
-** 	false The figure was completely culled.
-*/
-
-static void	neartruncate(const t_seg2 src, t_seg2 dst)
-{
-	t_mx2a	line;
-	short	i;
-
-	if (src[0].y > g_frustrum.max.y)
-		i = 0;
-	else if (src[1].y > g_frustrum.max.y)
-		i = 1;
-	else
-	{
-		dst[0] = src[0];
-		dst[1] = src[1];
-		return ;
-	}
-	line[0][0] = (src[1].x - src[0].x) / (src[1].y - src[0].y);
-	line[1][0] = src[0].x - (line[0][0] * src[0].y);
-	dst[i].y = g_frustrum.max.y;
-	dst[i].x = (g_frustrum.max.y * line[0][0]) + line[1][0];
-}
-
-/*
 ** Computes the matrix that transforms from screenspace to figure space.
 ** @param t_renderenv* this The renderenv whose matrix to initialise.
 ** @param union u_v4* quad The pooints of the figure.

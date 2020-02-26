@@ -48,6 +48,7 @@ static int	update(void *null)
 	renderclear((union u_color){.raw = 0});
 	renderworld();
 	renderflush();
+	g_log = 0;
 	return (0);
 }
 

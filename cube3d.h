@@ -53,5 +53,6 @@ union	u_color
 };
 
 void	*g_mlx;
+short	g_log;
 
 #endif

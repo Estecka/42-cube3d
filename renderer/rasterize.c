@@ -85,6 +85,23 @@ static void __attribute__((hot))
 	}
 }
 
+static void __attribute__((hot))
+				rasterizecoltopview(t_renderenv *this, unsigned int x)
+{
+	float	depth;
+	float	u;
+
+	depth = (x * this->linescalar) + this->lineoffset;
+	if (1)
+	{
+		u = (x * this->figspace[0][0]) + this->figspace[1][0];
+		depth -= 1;
+		depth *= -0.5 * g_screenhgt;
+		if (0 <= depth && depth < g_screenhgt)
+			renderset(x, g_screenhgt - 1 - (int)depth, (union u_color){.rgba={.r=1, .g=u*255, .b=0, .a=0}});
+	}
+}
+
 /*
 ** Prints on screen a fully computed rendering environnement.
 ** @param t_renderenv* this

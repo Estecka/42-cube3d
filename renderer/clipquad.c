@@ -39,15 +39,23 @@ static short	isfrontfaced(const t_seg2 seg)
 
 static short	frustrumculling(const t_seg2 seg)
 {
-	struct s_v2	horto[2];
+	t_seg2	trunc;
+	t_seg2	horto;
 	t_bbox2		bbox;
 	int			i;
 
+	if ((seg[0].y > g_frustrum.max.y) ^ (seg[1].y > g_frustrum.max.y))
+		neartruncate(seg, trunc);
+	else
+	{
+		trunc[0] = seg[0];
+		trunc[1] = seg[1];
+	}
 	i = -1;
 	while (++i < 2)
 	{
-		horto[i].y = seg[i].y;
-		horto[i].x = seg[i].x * g_frustrum.max.y / seg[i].y;
+		horto[i].y = trunc[i].y;
+		horto[i].x = trunc[i].x * g_frustrum.max.y / trunc[i].y;
 	}
 	bb2seg(&bbox, horto);
 	return (bb2inter(&bbox, &g_frustrum));
