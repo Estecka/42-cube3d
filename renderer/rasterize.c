@@ -80,7 +80,8 @@ static void __attribute__((hot))
 	if (zbuffcmp(x, depth))
 	{
 		zbuffset(x, depth);
-		u = (x * this->figspace[0][0]) + this->figspace[1][0];
+		u = mx2av1(this->figspace, x);
+		u = mx2av1(this->umx, u);
 		rasterizecol2(x, depth, u);
 	}
 }

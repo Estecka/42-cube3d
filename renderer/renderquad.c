@@ -25,12 +25,18 @@ static void	truncateuv(const t_seg2 src, const t_seg2 dst, t_mx2a mx)
 {
 	float uv[2];
 
+	if (src[0].y == src[1].y)
+	{
+		mx[0][0] = 1;
+		mx[1][0] = 0;
+		return ;
+	}
 	mx[0][0] = src[1].y - src[0].y;
 	mx[1][0] = src[0].y;
 	mx2ainv(mx, mx);
 	uv[0] = mx2av1(mx, dst[0].y);
 	uv[1] = mx2av1(mx, dst[1].y);
-	mx[0][0] = uv[0] - uv[1];
+	mx[0][0] = uv[1] - uv[0];
 	mx[1][0] = uv[0];
 }
 
@@ -86,6 +92,13 @@ extern void __attribute__((hot))
 	t_seg2		truncquad;
 
 	neartruncate(quad, truncquad);
+	if (g_log)
+	{
+		printf("Truncated fig:\n");
+		printf("%f %f \t %f %f\n", quad[0].x,      quad[0].y,      quad[1].x,      quad[1].y     );
+		printf("%f %f \t %f %f\n", truncquad[0].x, truncquad[0].y, truncquad[1].x, truncquad[1].y);
+		// printf("Matrix:\n[%f %f]\n\n", env.umx[0][0], env.umx[1][0]);
+	}
 	truncateuv(quad, truncquad, env.umx);
 	viewtoscreen(&env, truncquad);
 	env.linescalar = (env.pixvert[1].y - env.pixvert[0].y)
