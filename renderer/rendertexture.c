@@ -48,16 +48,16 @@ extern void	renderclear(union u_color color)
 	unsigned int x;
 	unsigned int y;
 
-	x = 0;
-	while (x < g_rendertex[g_i].width)
+	y = 0;
+	while (y < g_rendertex[g_i].height)
 	{
-		y = 0;
-		while (y < g_rendertex[g_i].height)
+		x = 0;
+		while (x < g_rendertex[g_i].width)
 		{
 			mlx_img_set(&g_rendertex[g_i], x, y, color);
-			y++;
+			x++;
 		}
-		x++;
+		y++;
 	}
 }
 
