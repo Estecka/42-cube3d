@@ -24,12 +24,11 @@
 
 static void		getremapmx(float this[2][1], float depth, float altitude, float angle)
 {
-	depth -= 1;
-	depth *= g_frustrum.min.y;
-	this[0][0] = depth;
-	this[0][0] *= g_aspect / WALLSIZE;
+	this[0][0] = -depth;
+	this[0][0] *= g_aspect / (0.5 * WALLSIZE);
 	this[0][0] *= g_frustrum.min.x / g_frustrum.max.y;
 	this[0][0] /= (float)g_screenhgt;
+	this[1][0] = 0;
 	this[1][0] = (angle - 0.5) * g_screenhgt * this[0][0];
 	this[1][0] += altitude;
 }
@@ -52,6 +51,7 @@ static void __attribute__((hot))
 	color.rgba.a = 0;
 	color.rgba.r = (int)(255 * u);
 	color.rgba.b = 255 - (int)(127.5 * (depth + 1));
+	depth = depthunproject2d(depth, g_projmx);
 	getremapmx(remapmx, depth, 0.5f, 0);
 	y = -1;
 	while (++y < g_screenhgt)
@@ -93,13 +93,14 @@ static void __attribute__((hot))
 	float	u;
 
 	depth = (x * this->linescalar) + this->lineoffset;
-	if (1)
+	if (1 || zbuffcmp(x, depth))
 	{
-		u = (x * this->figspace[0][0]) + this->figspace[1][0];
-		depth -= 1;
-		depth *= -0.5 * g_screenhgt;
+		zbuffset(x, depth);
+		u = mx2av1(this->figspace, x);
+		depth += 1;
+		depth *= 0.5 * g_screenhgt;
 		if (0 <= depth && depth < g_screenhgt)
-			renderset(x, g_screenhgt - 1 - (int)depth, (union u_color){.rgba={.r=1, .g=u*255, .b=0, .a=0}});
+			renderset(x, g_screenhgt - 1 - (int)depth, (union u_color){.rgba={.r=255, .g=u*255, .b=255, .a=0}});
 	}
 }
 

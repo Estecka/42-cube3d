@@ -19,7 +19,7 @@ The cartesian projection of P is P":
 
 We know P".
 We know all values of M.
-We are looking for P".
+We are looking for P'.
 `P'w = FPz`
 
 ` P"z   =     E/F + G/FPz`
@@ -32,3 +32,10 @@ We are looking for P".
 ` P'w   = -G*F/(E - FP"z)`
 
 `P' = P" * -G*F / (E - FP"z)`
+
+We are looking for Pz.
+`P"z = E/F + G/FPz`
+`G/FPz = P"z - E/F`
+`FPz/G = 1 / (P"z - E/F)`
+`Pz = G / F(P"z - E/F)`
+`Pz = G / (FP"z - E)`

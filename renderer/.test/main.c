@@ -42,6 +42,13 @@ void renderuv()
 
 int	loop(void* null)
 {
+	static short b = 0;
+	if (!b)
+		b = 1;
+	else
+		return 0;
+	g_log = 1;
+
 	(void) null;
 	static t_seg2 quads[] = {
 		{

@@ -61,20 +61,17 @@ static void	getfigmx(t_renderenv *this)
 
 static void	viewtoscreen(t_renderenv *this, const t_seg2 src)
 {
-	t_seg2	p;
+	union u_v3	p[2];
 	int		i;
-	float	perspective;
 
 	i = -1;
 	while (++i < 2)
 	{
-		p[i].y = src[i].y;
-		perspective = g_frustrum.max.y / p[i].y;
-		p[i].x = perspective * src[i].x;
-		p[i] = mx3v2(g_projmx, &p[i]).vec2;
-		p[i].x += 1;
-		p[i].x *= 0.5 * g_screenwdt;
-		this->pixvert[i] = p[i];
+		p[i] = mx3v2(g_projmx, &src[i]);
+		p[i].vec2 = cartesian2d(&p[i].vec3).vec2;
+		p[i].vec2.x += 1;
+		p[i].vec2.x *= 0.5 * g_screenwdt;
+		this->pixvert[i] = p[i].vec2;
 	}
 	getfigmx(this);
 }
@@ -92,13 +89,6 @@ extern void __attribute__((hot))
 	t_seg2		truncquad;
 
 	neartruncate(quad, truncquad);
-	if (g_log)
-	{
-		printf("Truncated fig:\n");
-		printf("%f %f \t %f %f\n", quad[0].x,      quad[0].y,      quad[1].x,      quad[1].y     );
-		printf("%f %f \t %f %f\n", truncquad[0].x, truncquad[0].y, truncquad[1].x, truncquad[1].y);
-		// printf("Matrix:\n[%f %f]\n\n", env.umx[0][0], env.umx[1][0]);
-	}
 	truncateuv(quad, truncquad, env.umx);
 	viewtoscreen(&env, truncquad);
 	env.linescalar = (env.pixvert[1].y - env.pixvert[0].y)

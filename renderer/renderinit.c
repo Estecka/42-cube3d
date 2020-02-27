@@ -47,7 +47,7 @@ t_bbox2	g_screenbb = {
 static void		frustruminit(void)
 {
 	g_aspect = g_screenhgt / (float)g_screenwdt;
-	mx3remap(g_projmx, &g_frustrum, &g_clipspace);
+	mxfrust2d(g_projmx, &g_frustrum);
 }
 
 static void		textureinit(unsigned int x, unsigned int y)
