@@ -42,12 +42,14 @@ static int	exitonesc(int keycode, void *null)
 	return (0);
 }
 
+#include ".fps/fps.c"
 static int	update(void *null)
 {
 	(void)null;
 	renderclear((union u_color){.raw = 0});
 	renderworld();
 	renderflush();
+	FpsLoop();
 	g_log = 0;
 	return (0);
 }
