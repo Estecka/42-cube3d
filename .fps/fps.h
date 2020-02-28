@@ -14,5 +14,7 @@
 #define FPS_H
 
 void	FpsLoop();
+void	StopWatch();
+void 	StartWatch();
 
 #endif
