@@ -75,7 +75,7 @@ extern void __attribute__((hot))
 	i = 0;
 	while (i < g_renderqueue.length)
 	{
-		if (queue[i][1].y > quad[1].y)
+		if (queue[i][1].y < quad[1].y)
 			break ;
 		i++;
 	}
