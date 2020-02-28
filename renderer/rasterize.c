@@ -24,12 +24,12 @@
 
 static void		getremapmx(float this[2][1], float depth, float altitude, float angle)
 {
-	this[0][0] = -depth;
+	this[0][0] = depth;
 	this[0][0] *= g_aspect / (0.5 * WALLSIZE);
 	this[0][0] *= g_frustrum.min.x / g_frustrum.max.y;
 	this[0][0] /= (float)g_screenhgt;
 	this[1][0] = 0;
-	this[1][0] = (angle - 0.5) * g_screenhgt * this[0][0];
+	this[1][0] = -(angle + 0.5) * g_screenhgt * this[0][0];
 	this[1][0] += altitude;
 }
 
@@ -59,7 +59,7 @@ static void __attribute__((hot))
 		v = (y * remapmx[0][0]) + remapmx[1][0];
 		color.rgba.g = 255 * v;
 		if (0 <= v && v <= 1)
-			renderset(x, g_screenhgt - 1 - y, color);
+			renderset(x, y, color);
 	}
 }
 
