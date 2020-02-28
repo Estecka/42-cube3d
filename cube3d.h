@@ -14,6 +14,7 @@
 # define CUBE3D_H
 
 # include <errno.h>
+# include ".fps/fps.h"
 # include "throw.h"
 # include "libft/libft.h"
 

@@ -14,10 +14,26 @@
 #include <time.h>
 
 #define PERIOD 1
+#define CLOCKS_TO_MS (1000/(float)CLOCKS_PER_SEC)
+
+static unsigned int watchcalls = 0;
+static clock_t watchstart = 0;
+static clock_t watchclocks = 0;
+
+extern void StartWatch()
+{
+	watchstart = clock();
+}
+
+extern void	StopWatch()
+{
+	watchclocks += clock() - watchstart;
+	watchcalls++;
+}
 
 extern void	FpsLoop()
 {
-	static clock_t lastTime;
+	static clock_t lastTime = 0;
 	static int framecount = 0;
 
 	framecount++;
@@ -26,9 +42,21 @@ extern void	FpsLoop()
 	clock_t inter = currentTime - lastTime;
 	if (inter > (PERIOD * CLOCKS_PER_SEC))
 	{
-		printf("Framerate: %f\n", framecount * (CLOCKS_PER_SEC / (float)inter));
+		float interms = inter * CLOCKS_TO_MS;
+
+		printf("Framerate: %.1f", framecount * (CLOCKS_PER_SEC/(float)inter));
+		printf(" (%.3f ms)\n", interms/framecount);
+
+		if (watchcalls) {
+			float watchtime = watchclocks * CLOCKS_TO_MS;
+			float workload = 100 * watchtime / interms;
+			printf("Stopwatch: %.3fms (%.1f%%).\n", watchtime/framecount, workload);
+			printf("\n");
+			watchclocks = 0;
+			watchcalls  = 0;
+		}
+
 		lastTime = currentTime;
 		framecount = 0;
 	}
-	
 }
