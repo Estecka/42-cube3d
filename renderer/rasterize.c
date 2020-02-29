@@ -69,15 +69,15 @@ void __attribute__((hot))
 	unsigned int	x;
 	unsigned int	y;
 
-	x = (int)this->bbox.min.x;
-	while (x < this->bbox.max.x)
+	y = (int)this->bbox.min.y;
+	while (y < this->bbox.max.y)
 	{
-		y = (int)this->bbox.min.y;
-		while (y < this->bbox.max.y)
+		x = (int)this->bbox.min.x;
+		while (x < this->bbox.max.x)
 		{
 			rasterizep(this, x, y);
-			y++;
+			x++;
 		}
-		x++;
+		y++;
 	}
 }
