@@ -22,7 +22,7 @@
 **  false the pixel lands outside the unit square.
 */
 
-static void	getuv(t_renderenv *this, t_v2 *uv, const t_v3 *pixel)
+static short	getuv(t_renderenv *this, t_v2 *uv, const t_v3 *pixel)
 {
 	t_v3	p;
 
@@ -34,6 +34,8 @@ static void	getuv(t_renderenv *this, t_v2 *uv, const t_v3 *pixel)
 	p = homegeneous(&p, g_projmx).vec3;
 	addvec3(&p, &p, &this->figoffset);
 	*uv = mx3v3(this->figspace, &p).vec2;
+	return (uv->x >= 0 && uv->x <= 1
+		&& uv->y >= 0 && uv->y <= 1);
 }
 
 /*
@@ -52,9 +54,8 @@ static void __attribute__((hot))
 	p.x = (float)x;
 	p.y = (float)y;
 	p.z = planez(&this->plane, &p);
-	if (zbuffcmp(x, y, p.z) && quadcontain((t_v2*)&p, this->pixvert))
+	if (zbuffcmp(x, y, p.z) && getuv(this, &uv, &p))
 	{
-		getuv(this, &uv, &p);
 		zbuffset(x, y, p.z);
 		color.rgba.b = 255 - (int)(128 * (p.z + 1));
 		color.rgba.r = (int)(255 * uv.y);
