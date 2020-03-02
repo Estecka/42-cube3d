@@ -52,6 +52,7 @@ extern void	renderqueueflush(void)
 		renderquad(queue[i]);
 	}
 	renderqueueclear();
+	extrude();
 }
 
 /*
