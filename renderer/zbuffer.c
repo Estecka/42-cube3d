@@ -65,16 +65,16 @@ void	zbuffclear(void)
 	unsigned int x;
 	unsigned int y;
 
-	x = 0;
-	while (x < g_zbuffer.width)
+	y = 0;
+	while (y < g_zbuffer.height)
 	{
-		y = 0;
-		while (y < g_zbuffer.height)
+		x = 0;
+		while (x < g_zbuffer.width)
 		{
 			zbuffset(x, y, g_clipspace.max.z);
-			y++;
+			x++;
 		}
-		x++;
+		y++;
 	}
 }
 
