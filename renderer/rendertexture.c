@@ -62,6 +62,38 @@ extern void	renderclear(union u_color color)
 }
 
 /*
+** Fills the render texture with two colors.
+** @param union u_color f	The floor color.
+** @param union u_color c	The sky color.
+** @param float horizon	The height of the horizon, typically between 0 and 1.
+*/
+
+extern void	rendersky(float horizon, union u_color f, union u_color c)
+{
+	unsigned int x;
+	unsigned int y;
+	unsigned int h;
+
+	if (horizon > 1)
+		horizon = 1;
+	h = g_screenhgt * horizon;
+	y = -1;
+	while (++y < h)
+	{
+		x = -1;
+		while (++x < g_screenwdt)
+			mlx_img_set(&g_rendertex[g_i], x, y, c);
+	}
+	y--;
+	while (++y < g_screenhgt)
+	{
+		x = -1;
+		while (++x < g_screenwdt)
+			mlx_img_set(&g_rendertex[g_i], x, y, f);
+	}
+}
+
+/*
 ** Prints the render texture on screen, and clears the Z-buffer.
 ** Use this method in the MLX loop.
 ** @param void* mlx The MLX main pointer.

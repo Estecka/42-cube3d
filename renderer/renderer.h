@@ -36,6 +36,7 @@ void		renderinit(unsigned int width, unsigned int height);
 void		renderflush();
 
 void		renderclear(union u_color color);
+void		rendersky(float horizon, union u_color floor, union u_color ceil);
 void		renderset(unsigned int x, unsigned int y, union u_color color);
 
 void		renderqueuestage(const t_seg2 segment);

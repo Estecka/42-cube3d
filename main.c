@@ -43,10 +43,9 @@ static int	exitonesc(int keycode, void *null)
 }
 
 #include ".fps/fps.c"
-static int	update(void *null)
+static int	update(t_cubworld *cub)
 {
-	(void)null;
-	renderclear((union u_color){.raw = 0});
+	rendersky(0 + 0.5f, cub->floorcol, cub->ceilcol);
 	renderworld();
 	renderflush();
 	FpsLoop();
@@ -74,6 +73,6 @@ extern int	main(int argc, char **args)
 	g_window = mlx_new_window(g_mlx, cub.world.resolution.x, cub.world.resolution.y, "Cube3D : The Reckoning");
 	mlx_key_hook(g_window, exitonesc, NULL);
 	mlx_hook(g_window, 17, 1<<17, exitonx, NULL);
-	mlx_loop_hook(g_mlx, update, NULL);
+	mlx_loop_hook(g_mlx, update, &cub);
 	mlx_loop(g_mlx);
 }
