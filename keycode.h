@@ -25,6 +25,7 @@
 # define KCDOWN		125
 # define KCUP		126
 
+# define KCLSHIFT	257
 # define KCSPACE	49
 
 #endif

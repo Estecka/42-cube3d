@@ -17,17 +17,19 @@
 #include <stdio.h>
 #include "../ft_math/ft_math.h"
 
-#define MOVSPEED 0.1
-#define ROTSPEED 0.05
+#define MOVSPEED 1
+#define ROTSPEED 1
 
-static short	g_keymask[128];
+#define KCMAX 258
+
+static short	g_keymask[KCMAX];
 
 extern int		keypressevent(int keycode, void *null)
 {
 	(void)null;
 	if (keycode == KCESC)
 		exit(0);
-	if (keycode < 128)
+	if (keycode < KCMAX)
 		g_keymask[keycode] = 1;
 	return (0);
 }
@@ -35,9 +37,14 @@ extern int		keypressevent(int keycode, void *null)
 extern int		keyreleaseevent(int keycode, void *null)
 {
 	(void)null;
-	if (keycode < 128)
+	if (keycode < KCMAX)
 		g_keymask[keycode] = 0;
 	return (0);
+}
+
+static float	deltatime(void)
+{
+	return (1/(float)60);
 }
 
 /*
@@ -45,23 +52,25 @@ extern int		keyreleaseevent(int keycode, void *null)
 **  as a vector instead of as a position.
 */
 
-extern void		controllerloop()
+extern void		controllerloop(void)
 {
-	union u_v3 movement;
+	union u_v3	movement;
+	float		sprint;
 
+	sprint = g_keymask[KCLSHIFT] ? 3 : 1;
 	movement.vec3 = (t_v3){ 0, 0, 0};
 	if (g_keymask[KCLEFT])
-		g_player.rotation += ROTSPEED;
+		g_player.rotation += ROTSPEED * deltatime();
 	else if (g_keymask[KCRIGHT])
-		g_player.rotation -= ROTSPEED;
+		g_player.rotation -= ROTSPEED * deltatime();
 	if (g_keymask[KCW])
-		movement.vec2.y -= MOVSPEED;
+		movement.vec2.y -= MOVSPEED * sprint * deltatime();
 	else if (g_keymask[KCS])
-		movement.vec2.y += MOVSPEED;
+		movement.vec2.y += MOVSPEED * sprint * deltatime();
 	if (g_keymask[KCA])
-		movement.vec2.x -= MOVSPEED;
+		movement.vec2.x -= MOVSPEED * sprint * deltatime();
 	else if (g_keymask[KCD])
-		movement.vec2.x += MOVSPEED;
+		movement.vec2.x += MOVSPEED * sprint * deltatime();
 	if (g_keymask[KCSPACE])
 		g_log = 1;
 	movement = mx3v3(g_player.l2wmx, &movement.vec3);
