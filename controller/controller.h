@@ -15,6 +15,9 @@
 
 # include "../worldbuilder/worldbuilder.h"
 
-void	onkeypress(int keycode);
+int		keypressevent(int keycode, void *null);
+int		keyreleaseevent(int keycode, void *null);
+
+void	controllerloop();
 
 #endif

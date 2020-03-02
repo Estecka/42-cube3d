@@ -33,18 +33,10 @@ static int	exitonx(void *null)
 	return (0);
 }
 
-static int	exitonesc(int keycode, void *null)
-{
-	(void)null;
-	if (keycode == KCESC)
-		exit(0);
-	onkeypress(keycode);
-	return (0);
-}
-
 #include ".fps/fps.c"
 static int	update(t_cubworld *cub)
 {
+	controllerloop();
 	rendersky(0 + 0.5f, cub->floorcol, cub->ceilcol);
 	renderworld();
 	renderflush();
@@ -71,7 +63,8 @@ extern int	main(int argc, char **args)
 	renderinit(cub.world.resolution.x, cub.world.resolution.y);
 	worldinit(&cub.world);
 	g_window = mlx_new_window(g_mlx, cub.world.resolution.x, cub.world.resolution.y, "Cube3D : The Reckoning");
-	mlx_key_hook(g_window, exitonesc, NULL);
+	mlx_hook(g_window, 2, 1L<<0, keypressevent, NULL);
+	mlx_hook(g_window, 3, 1L<<1, keyreleaseevent, NULL);
 	mlx_hook(g_window, 17, 1<<17, exitonx, NULL);
 	mlx_loop_hook(g_mlx, update, &cub);
 	mlx_loop(g_mlx);
