@@ -22,8 +22,8 @@
 
 short	zbuffinit(unsigned int width)
 {
-	g_zbuffer = malloc(sizeof(float) * width);
-	if (g_zbuffer)
+	g_rendercols = malloc(sizeof(t_rendercol) * width);
+	if (g_rendercols)
 	{
 		zbuffclear();
 		return (1);
@@ -40,7 +40,7 @@ short	zbuffinit(unsigned int width)
 
 float	zbuffget(unsigned int x)
 {
-	return (g_zbuffer[x]);
+	return (g_rendercols[x].depth);
 }
 
 /*
@@ -51,7 +51,7 @@ float	zbuffget(unsigned int x)
 
 void	zbuffset(unsigned int x, float value)
 {
-	g_zbuffer[x] = value;
+	g_rendercols[x].depth = value;
 }
 
 /*
@@ -64,7 +64,12 @@ void	zbuffclear(void)
 
 	x = -1;
 	while (++x < g_screenwdt)
-		g_zbuffer[x] = g_clipspace.max.y;
+		g_rendercols[x] = (t_rendercol)
+		{
+			.depth = g_clipspace.max.y,
+			.u = -1,
+			.vmx = {{0}, {-1}},
+		};
 }
 
 /*

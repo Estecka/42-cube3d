@@ -13,6 +13,36 @@
 #include "renderer_internals.h"
 #define WALLSIZE 1
 
+
+
+/*
+** Actually renders the column buffer on screen.
+*/
+
+void			extrude()
+{
+	unsigned int 	x;
+	unsigned int 	y;
+	union u_color	color;
+	float			v;
+
+	color.rgba.a = 0;
+	y = -1;
+	while (++y < g_screenhgt)
+	{
+		x = -1;
+		while (++x < g_screenwdt)
+		{
+			color.rgba.r = (int)(255 * g_rendercols[x].u);
+			color.rgba.b = 255 - (int)(127.5 * (g_rendercols[x].depth + 1));
+			v = mx2av1(g_rendercols[x].vmx, y);
+			color.rgba.g = 255 * v;
+			if (0 <= v && v <= 1)
+				renderset(x, y, color);
+		}
+	}
+}
+
 /*
 ** Computes the matrix that transform a pixel from screen space to UV space. (V
 ** ertical only)
@@ -34,36 +64,6 @@ static void		getremapmx(float this[2][1], float depth, float altitude, float ang
 }
 
 /*
-** Actually renders a column on screen.
-** @param unsigned int x	The coordinates of the column.
-** @param float depth	The distance to the camera in clip space.
-** @param float u	The x coordinate on the texture.
-*/
-
-static void __attribute__((hot))
-				rasterizecol2(unsigned int x, float depth, float u)
-{
-	union u_color	color;
-	unsigned int	y;
-	float			remapmx[2][1];
-	float			v;
-
-	color.rgba.a = 0;
-	color.rgba.r = (int)(255 * u);
-	color.rgba.b = 255 - (int)(127.5 * (depth + 1));
-	depth = depthunproject2d(depth, g_projmx);
-	getremapmx(remapmx, depth, 0.5f, 0);
-	y = -1;
-	while (++y < g_screenhgt)
-	{
-		v = (y * remapmx[0][0]) + remapmx[1][0];
-		color.rgba.g = 255 * v;
-		if (0 <= v && v <= 1)
-			renderset(x, y, color);
-	}
-}
-
-/*
 ** Checks the column against the depth buffer.
 ** If applicable, computes the U of the UVs and renders the column.
 ** @param t_renderenv* this
@@ -74,15 +74,14 @@ static void __attribute__((hot))
 				rasterizecol(t_renderenv *this, unsigned int x)
 {
 	float	depth;
-	float	u;
 
 	depth = (x * this->linescalar) + this->lineoffset;
 	if (zbuffcmp(x, depth))
 	{
-		zbuffset(x, depth);
-		u = mx2av1(this->figspace, x);
-		u = mx2av1(this->umx, u);
-		rasterizecol2(x, depth, u);
+		g_rendercols[x].depth = depth;
+		g_rendercols[x].u = mx2av1(this->umx, mx2av1(this->figspace, x));
+		depth = depthunproject2d(depth, g_projmx);
+		getremapmx(g_rendercols[x].vmx, depth, 0.5f, 0);
 	}
 }
 

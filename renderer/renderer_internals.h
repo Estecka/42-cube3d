@@ -47,6 +47,22 @@ struct			s_renderenv
 };
 
 /*
+** A endering environnement for a single column of the extruder.
+** @var float u	The U coordinate on the texture.
+** @var t_mx2a vmx	The matrix that converts a Y pixel coordinate to the corres
+** ponding V coordinate on the texture.
+** @var float depth	The depth of te pixel in clip space.
+*/
+
+typedef struct s_rendercol	t_rendercol;
+struct			s_rendercol
+{
+	float	depth;
+	float	u;
+	t_mx2a	vmx;
+};
+
+/*
 ** @var t_bbox2 g_frustrum	The dimensions of the frustrum.
 ** @var t_mx3 g_projmx	A matrix that transform the frustrum cube into clip space.
 ** @var const t_bbox2	g_clipspace	The dimensions of the clip space.
@@ -56,7 +72,7 @@ t_bbox2			g_frustrum;
 t_mx3			g_projmx;
 const t_bbox2	g_clipspace;
 
-float			*g_zbuffer;
+t_rendercol		*g_rendercols;
 t_mlx_img		g_rendertex[2];
 t_bbox2			g_screenbb;
 unsigned int	g_screenwdt;
@@ -80,5 +96,6 @@ short			clipquad(const t_seg2 segment);
 void			neartruncate(const t_seg2 segment, t_seg2 destination);
 void			renderquad(const t_seg2 segment);
 void			rasterize(t_renderenv *env);
+void			extrude();
 
 #endif

@@ -32,4 +32,5 @@ extern void	renderworld()
 		renderqueuestage(wall->renderinfo.vertices);
 	}
 	renderqueueflush();
+	extrude();
 }
