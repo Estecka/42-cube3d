@@ -1,5 +1,5 @@
 SRCS = renderinit.c \
-	rendertexture.c zbuffer.c queue.c \
+	rendertexture.c rendercol.c zbuffer.c queue.c \
 	clipquad.c truncate.c renderquad.c rasterize.c \
 
 OBJS = ${SRCS:.c=.o}

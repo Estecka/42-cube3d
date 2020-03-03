@@ -13,8 +13,6 @@
 #include "renderer_internals.h"
 #define WALLSIZE 1
 
-
-
 /*
 ** Actually renders the column buffer on screen.
 */
@@ -76,30 +74,12 @@ static void __attribute__((hot))
 	float	depth;
 
 	depth = (x * this->linescalar) + this->lineoffset;
-	if (zbuffcmp(x, depth))
+	if (rcolzcmp(x, depth))
 	{
 		g_rendercols[x].depth = depth;
 		g_rendercols[x].u = mx2av1(this->umx, mx2av1(this->figspace, x));
 		depth = depthunproject2d(depth, g_projmx);
 		getremapmx(g_rendercols[x].vmx, depth, g_altitude, g_angle);
-	}
-}
-
-static void __attribute__((hot))
-				rasterizecoltopview(t_renderenv *this, unsigned int x)
-{
-	float	depth;
-	float	u;
-
-	depth = (x * this->linescalar) + this->lineoffset;
-	if (1 || zbuffcmp(x, depth))
-	{
-		zbuffset(x, depth);
-		u = mx2av1(this->figspace, x);
-		depth += 1;
-		depth *= 0.5 * g_screenhgt;
-		if (0 <= depth && depth < g_screenhgt)
-			renderset(x, g_screenhgt - 1 - (int)depth, (union u_color){.rgba={.r=255, .g=u*255, .b=255, .a=0}});
 	}
 }
 

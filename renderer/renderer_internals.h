@@ -72,7 +72,6 @@ t_bbox2			g_frustrum;
 t_mx3			g_projmx;
 const t_bbox2	g_clipspace;
 
-t_rendercol		*g_rendercols;
 t_mlx_img		g_rendertex[2];
 t_bbox2			g_screenbb;
 unsigned int	g_screenwdt;
@@ -84,6 +83,14 @@ t_dynarray		g_renderqueue;
 void			mlx_img_set(t_mlx_img *this, unsigned int x, unsigned int y,
 	union u_color col);
 
+t_rendercol		*g_rendercols;
+short			rcolinit(unsigned int width);
+void			rcolclear();
+float			rcolzget(unsigned int x);
+void			rcolzset(unsigned int x, float value);
+short			rcolzcmp(unsigned int x, float value);
+
+t_float_img		g_zbuffer;
 short			zbuffinit(unsigned int width);
 void			zbuffclear();
 float			zbuffget(unsigned int x);

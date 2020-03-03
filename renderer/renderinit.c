@@ -78,6 +78,8 @@ extern void		renderinit(unsigned int x, unsigned int y)
 	g_screenbb.max.x = x - 1;
 	if (!zbuffinit(x))
 		throw(errno, "[FATAL] Could not initialize z-buffer: %d", errno);
+	if (!rcolinit(x))
+		throw(errno, "[FATAL] Could not initialize rendercols: %d", errno);
 	renderqueueinit();
 	textureinit(x, y);
 	frustruminit();

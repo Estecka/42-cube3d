@@ -105,5 +105,6 @@ extern void	renderflush(void)
 {
 	mlx_put_image_to_window(g_mlx, g_window, g_rendertex[g_i].ptr, 0, 0);
 	g_i = !g_i;
+	rcolclear();
 	zbuffclear();
 }
