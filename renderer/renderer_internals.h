@@ -91,11 +91,11 @@ void			rcolzset(unsigned int x, float value);
 short			rcolzcmp(unsigned int x, float value);
 
 t_float_img		g_zbuffer;
-short			zbuffinit(unsigned int width);
+short			zbuffinit(unsigned int width, unsigned int height);
 void			zbuffclear();
-float			zbuffget(unsigned int x);
-void			zbuffset(unsigned int x, float value);
-short			zbuffcmp(unsigned int x, float value);
+float			zbuffget(unsigned int x, unsigned int y);
+void			zbuffset(unsigned int x, unsigned int y, float value);
+short			zbuffcmp(unsigned int x, unsigned int y, float value);
 
 void			renderqueueinit();
 
