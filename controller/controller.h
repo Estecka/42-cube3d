@@ -15,6 +15,9 @@
 
 # include "../worldbuilder/worldbuilder.h"
 
+float	g_altitude;
+float	g_angle;
+
 int		keypressevent(int keycode, void *null);
 int		keyreleaseevent(int keycode, void *null);
 

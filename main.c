@@ -37,7 +37,7 @@ static int	exitonx(void *null)
 static int	update(t_cubworld *cub)
 {
 	controllerloop();
-	rendersky(0 + 0.5f, cub->floorcol, cub->ceilcol);
+	rendersky(cub->floorcol, cub->ceilcol);
 	renderworld();
 	renderflush();
 	FpsLoop();

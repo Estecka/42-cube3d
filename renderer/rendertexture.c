@@ -65,18 +65,19 @@ extern void	renderclear(union u_color color)
 ** Fills the render texture with two colors.
 ** @param union u_color f	The floor color.
 ** @param union u_color c	The sky color.
-** @param float horizon	The height of the horizon, typically between 0 and 1.
 */
 
-extern void	rendersky(float horizon, union u_color f, union u_color c)
+extern void	rendersky(union u_color f, union u_color c)
 {
 	unsigned int x;
 	unsigned int y;
 	unsigned int h;
 
-	if (horizon > 1)
-		horizon = 1;
-	h = g_screenhgt * horizon;
+	if (g_angle > 1)
+		g_angle = 1;
+	if (g_angle < 0)
+		g_angle = 0;
+	h = g_screenhgt * g_angle;
 	y = -1;
 	while (++y < h)
 	{

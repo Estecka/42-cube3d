@@ -59,7 +59,7 @@ static void		getremapmx(float this[2][1], float depth, float altitude, float ang
 	this[0][0] *= g_frustrum.min.x / g_frustrum.max.y;
 	this[0][0] /= (float)g_screenhgt;
 	this[1][0] = 0;
-	this[1][0] = -(angle + 0.5) * g_screenhgt * this[0][0];
+	this[1][0] = -angle * g_screenhgt * this[0][0];
 	this[1][0] += altitude;
 }
 
@@ -81,7 +81,7 @@ static void __attribute__((hot))
 		g_rendercols[x].depth = depth;
 		g_rendercols[x].u = mx2av1(this->umx, mx2av1(this->figspace, x));
 		depth = depthunproject2d(depth, g_projmx);
-		getremapmx(g_rendercols[x].vmx, depth, 0.5f, 0);
+		getremapmx(g_rendercols[x].vmx, depth, g_altitude, g_angle);
 	}
 }
 

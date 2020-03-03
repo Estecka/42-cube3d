@@ -29,17 +29,25 @@ struct		s_mlx_img
 	int				endian;
 };
 
-extern void	*g_mlx;
-extern void	*g_window;
+extern void		*g_mlx;
+extern void		*g_window;
 
-void		renderinit(unsigned int width, unsigned int height);
-void		renderflush();
+/*
+** @var float altitude	The height of the camera. 0.5f by default.
+** @var float altitude	The vertical viewing angle. 0.5f by default.
+*/
 
-void		renderclear(union u_color color);
-void		rendersky(float horizon, union u_color floor, union u_color ceil);
-void		renderset(unsigned int x, unsigned int y, union u_color color);
+extern float	g_altitude;
+extern float	g_angle;
 
-void		renderqueuestage(const t_seg2 segment);
-void		renderqueueflush();
+void			renderinit(unsigned int width, unsigned int height);
+void			renderflush();
+
+void			renderclear(union u_color color);
+void			rendersky(union u_color floor, union u_color s);
+void			renderset(unsigned int x, unsigned int y, union u_color color);
+
+void			renderqueuestage(const t_seg2 segment);
+void			renderqueueflush();
 
 #endif

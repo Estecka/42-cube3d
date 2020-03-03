@@ -22,6 +22,9 @@
 
 #define KCMAX 258
 
+float			g_altitude = 0.5f;
+float			g_angle = 0.5f;
+
 static short	g_keymask[KCMAX];
 
 extern int		keypressevent(int keycode, void *null)
@@ -47,6 +50,23 @@ static float	deltatime(void)
 	return (1/(float)60);
 }
 
+static float	controllerloop2(void)
+{
+	if (g_keymask[KCSPACE])
+	{
+		g_altitude = 0.25f;
+		return (1/3.f);
+	}
+	else
+	{
+		g_altitude = 0.5f;
+		if (g_keymask[KCLSHIFT])
+			return (3);
+		else
+			return (1);
+	}
+}
+
 /*
 ** It's important that movement has 1 extra dimension, so it can be transformed
 **  as a vector instead of as a position.
@@ -57,8 +77,8 @@ extern void		controllerloop(void)
 	union u_v3	movement;
 	float		sprint;
 
-	sprint = g_keymask[KCLSHIFT] ? 3 : 1;
 	movement.vec3 = (t_v3){ 0, 0, 0};
+	sprint = controllerloop2();
 	if (g_keymask[KCLEFT])
 		g_player.rotation += ROTSPEED * deltatime();
 	else if (g_keymask[KCRIGHT])
