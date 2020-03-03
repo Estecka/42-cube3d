@@ -19,11 +19,6 @@ const t_seg2	g_wallmesh = {
 	{+0.5, 0.5},
 };
 
-const t_seg2	g_spritemesh = {
-	{-1, 0},
-	{+1, 0},
-};
-
 /*
 ** The matrices below appear transposed:
 ** {Xx, Xy, 0},
@@ -101,7 +96,6 @@ static void		wallinit(t_cubworld *info)
 	g_world.walls = (t_staticmesh*)array.content;
 }
 
-/*
 static void		spriteinit(t_cubworld *info)
 {
 	t_dynarray		array;
@@ -128,7 +122,6 @@ static void		spriteinit(t_cubworld *info)
 	g_world.spritecount = array.length;
 	g_world.sprites = (t_billboardmesh*)array.content;
 }
-*/
 
 extern void		worldinit(t_cubworld *info)
 {
@@ -136,6 +129,6 @@ extern void		worldinit(t_cubworld *info)
 	g_player.position.y = info->playerspawn.y;
 	g_player.rotation = info->playerspawnangle;
 	retransform(&g_player);
-	// spriteinit(info);
+	spriteinit(info);
 	wallinit(info);
 }
