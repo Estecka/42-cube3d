@@ -80,9 +80,13 @@ extern void		controllerloop(void)
 	movement.vec3 = (t_v3){ 0, 0, 0};
 	sprint = controllerloop2();
 	if (g_keymask[KCLEFT])
-		g_player.rotation += ROTSPEED * deltatime();
-	else if (g_keymask[KCRIGHT])
 		g_player.rotation -= ROTSPEED * deltatime();
+	else if (g_keymask[KCRIGHT])
+		g_player.rotation += ROTSPEED * deltatime();
+	if (g_keymask[KCUP])
+		g_angle += ROTSPEED * deltatime();
+	else if (g_keymask[KCDOWN])
+		g_angle -= ROTSPEED * deltatime();
 	if (g_keymask[KCW])
 		movement.vec2.y -= MOVSPEED * sprint * deltatime();
 	else if (g_keymask[KCS])
