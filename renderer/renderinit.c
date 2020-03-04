@@ -37,10 +37,7 @@ t_bbox2	g_frustrum = {
 t_bbox2	g_screenbb = {
 	.min = {
 		.x = 0,
-		.y = -1,
-	},
-	.max = {
-		.y = 1,
+		.y = 0,
 	},
 };
 
@@ -75,8 +72,9 @@ extern void		renderinit(unsigned int x, unsigned int y)
 {
 	g_screenwdt = x;
 	g_screenhgt = y;
-	g_screenbb.max.x = x - 1;
-	if (!zbuffinit(x))
+	g_screenbb.max.x = x;
+	g_screenbb.max.y = y;
+	if (!zbuffinit(x, y))
 		throw(errno, "[FATAL] Could not initialize z-buffer: %d", errno);
 	if (!rcolinit(x))
 		throw(errno, "[FATAL] Could not initialize rendercols: %d", errno);

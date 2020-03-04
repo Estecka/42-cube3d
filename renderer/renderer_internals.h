@@ -83,6 +83,8 @@ t_dynarray		g_renderqueue;
 void			mlx_img_set(t_mlx_img *this, unsigned int x, unsigned int y,
 	union u_color col);
 
+void			getvmx(float this[2][1], float depth);
+
 t_rendercol		*g_rendercols;
 short			rcolinit(unsigned int width);
 void			rcolclear();

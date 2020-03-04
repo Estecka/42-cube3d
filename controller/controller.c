@@ -32,6 +32,8 @@ extern int		keypressevent(int keycode, void *null)
 	(void)null;
 	if (keycode == KCESC)
 		exit(0);
+	else if (keycode ==  KCSPACE)
+		g_log = 1;
 	if (keycode < KCMAX)
 		g_keymask[keycode] = 1;
 	return (0);
@@ -95,8 +97,6 @@ extern void		controllerloop(void)
 		movement.vec2.x -= MOVSPEED * sprint * deltatime();
 	else if (g_keymask[KCD])
 		movement.vec2.x += MOVSPEED * sprint * deltatime();
-	if (g_keymask[KCSPACE])
-		g_log = 1;
 	movement = mx3v3(g_player.l2wmx, &movement.vec3);
 	addvec2(&g_player.position, &g_player.position, &movement.vec2);
 }

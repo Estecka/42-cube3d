@@ -36,6 +36,7 @@ extern short	bb2inter(const t_bbox2 *b1, const t_bbox2 *b2)
 
 /*
 ** Computes the interection of two bounding boxes.
+** Clipping can be done in-place.
 ** @param t_bbox2* this Outputs the resulting bounding box.
 ** @param const t_bbox2* b1,b2 The bounding boxes to intersect.
 */
