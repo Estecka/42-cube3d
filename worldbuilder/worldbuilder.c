@@ -19,11 +19,6 @@ const t_seg2	g_wallmesh = {
 	{+0.5, 0.5},
 };
 
-const t_seg2	g_spritemesh = {
-	{-1, 0},
-	{+1, 0},
-};
-
 /*
 ** The matrices below appear transposed:
 ** {Xx, Xy, 0},
@@ -101,15 +96,14 @@ static void		wallinit(t_cubworld *info)
 	g_world.walls = (t_staticmesh*)array.content;
 }
 
-/*
 static void		spriteinit(t_cubworld *info)
 {
 	t_dynarray		array;
-	t_billboardmesh	*values;
+	t_v2			*values;
 	signed int		x;
 	signed int		y;
 
-	dyninit(&array, sizeof(t_billboardmesh), 32);
+	dyninit(&array, sizeof(t_v2), 32);
 	y = -1;
 	while (++y < info->mapsize.y)
 	{
@@ -119,23 +113,22 @@ static void		spriteinit(t_cubworld *info)
 			{
 				if (!dynexpand(&array, +1))
 					throw(errno, "[FATAL] Sprite array expansion failed");
-				values = (t_billboardmesh*)array.content;
-				values[array.length].renderinfo.texture = info->sprite;
-				values[array.length].position = (t_v2){x, y};
+				values = (t_v2*)array.content;
+				values[array.length] = (t_v2){x, y};
 				array.length += 1;
 			}
 	}
 	g_world.spritecount = array.length;
-	g_world.sprites = (t_billboardmesh*)array.content;
+	g_world.sprites = (t_v2*)array.content;
 }
-*/
 
 extern void		worldinit(t_cubworld *info)
 {
 	g_player.position.x = info->playerspawn.x;
 	g_player.position.y = info->playerspawn.y;
 	g_player.rotation = info->playerspawnangle;
+	g_world.spritetexture = info->sprite;
 	retransform(&g_player);
-	// spriteinit(info);
+	spriteinit(info);
 	wallinit(info);
 }

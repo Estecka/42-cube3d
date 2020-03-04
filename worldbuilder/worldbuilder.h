@@ -45,20 +45,6 @@ struct	s_staticmesh
 	struct s_rendermesh renderinfo;
 };
 
-/*
-** A mesh whose position is fixed, but orientation varies with the camera.
-** The base mesh is assumedto be g_spritemesh.
-** @var t_quad vertices	The position of the mesh in world space.
-** @var t_rendermesh renderinfo
-*/
-
-typedef struct s_billboardmesh	t_billboardmesh;
-struct	s_billboardmesh
-{
-	struct s_v2			position;
-	struct s_rendermesh renderinfo;
-};
-
 typedef struct s_transform		t_transform;
 struct	s_transform
 {
@@ -74,7 +60,8 @@ struct	s_worldmesh
 	unsigned int	wallcount;
 	t_staticmesh	*walls;
 	unsigned int	spritecount;
-	t_billboardmesh	*sprites;
+	t_v2			*sprites;
+	t_mlx_img		*spritetexture;
 };
 
 t_transform		g_player;
