@@ -20,14 +20,14 @@ static void		bbrasterize(t_bbox2 *bbox, t_mx3 uvmx, float depth)
 	union u_color	color;
 
 	color.rgba.a = 0;
-	color.rgba.b = 255 - (int)(127.5 * (depth + 1));
+	color.rgba.b = (int)(127.5 * (depth + 1));
 	y = bbox->min.y;
 	while (y < bbox->max.y)
 	{
 		x = bbox->min.x;
 		while (x < bbox->max.x)
 		{
-			if (rcolzcmp(x, depth) && zbuffcmp(x, y, depth))
+			if (zbuffcmp(x, y, depth))
 			{
 				zbuffset(x, y, depth);
 				uv.x = (x * uvmx[0][0]) + uvmx[2][0];
@@ -93,6 +93,8 @@ void 			renderbboard(const t_v2 *pos)
 
 	getbboxvert(&bbox, pos);
 	depth = getbboxhori(&bbox, *pos);
+	if (depth < -1 || depth > 1 || !bb2inter(&bbox, &g_screenbb))
+		return;
 	mx3remap(uvmx, &bbox, &g_uvbbox);
 	bb2clip(&bbox, &bbox, &g_screenbb);
 	uvmx[1][1] *= -1;

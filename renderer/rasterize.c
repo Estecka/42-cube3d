@@ -31,12 +31,15 @@ void			extrude()
 		x = -1;
 		while (++x < g_screenwdt)
 		{
-			color.rgba.r = (int)(255 * g_rendercols[x].u);
-			color.rgba.b = 255 - (int)(127.5 * (g_rendercols[x].depth + 1));
-			v = mx2av1(g_rendercols[x].vmx, y);
-			color.rgba.g = 255 * v;
-			if (0 <= v && v <= 1)
-				renderset(x, y, color);
+			if (zbuffcmp(x, y, g_rendercols[x].depth))
+			{
+				color.rgba.r = (int)(255 * g_rendercols[x].u);
+				color.rgba.b = 255 - (int)(127.5 * (g_rendercols[x].depth + 1));
+				v = mx2av1(g_rendercols[x].vmx, y);
+				color.rgba.g = 255 * v;
+				if (0 <= v && v <= 1)
+					renderset(x, y, color);
+			}
 		}
 	}
 }

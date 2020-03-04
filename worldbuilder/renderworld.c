@@ -40,4 +40,5 @@ extern void	renderworld()
 		p = mx3v2(g_player.w2lmx, &g_world.sprites[i]).vec2;
 		renderbboard(&p);
 	}
+	extrude();
 }

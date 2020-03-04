@@ -50,5 +50,6 @@ void			renderset(unsigned int x, unsigned int y, union u_color color);
 void			renderqueuestage(const t_seg2 segment);
 void			renderbboard(const t_v2	*position);
 void			renderqueueflush();
+void			extrude();
 
 #endif
