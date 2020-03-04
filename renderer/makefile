@@ -43,6 +43,6 @@ clean:
 fclean: clean
 	rm -f ${NAME}
 
-re: fclean all
+re: fclean ${NAME}
 
 .PHONY: all clean fclean re test

@@ -60,6 +60,8 @@ struct			s_rendercol
 	float	depth;
 	float	u;
 	t_mx2a	vmx;
+	float	ymin;
+	float	ymax;
 };
 
 /*

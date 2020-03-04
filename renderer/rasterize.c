@@ -31,14 +31,14 @@ void			extrude()
 		x = -1;
 		while (++x < g_screenwdt)
 		{
-			if (zbuffcmp(x, y, g_rendercols[x].depth))
+			if (g_rendercols[x].ymin <= y && y <= g_rendercols[x].ymax 
+				&& zbuffcmp(x, y, g_rendercols[x].depth))
 			{
 				color.rgba.r = (int)(255 * g_rendercols[x].u);
 				color.rgba.b = 255 - (int)(127.5 * (g_rendercols[x].depth + 1));
 				v = mx2av1(g_rendercols[x].vmx, y);
 				color.rgba.g = 255 * v;
-				if (0 <= v && v <= 1)
-					renderset(x, y, color);
+				renderset(x, y, color);
 			}
 		}
 	}
@@ -73,6 +73,7 @@ static void __attribute__((hot))
 				rasterizecol(t_renderenv *this, unsigned int x)
 {
 	float	depth;
+	t_mx2a	vmxi;
 
 	depth = (x * this->linescalar) + this->lineoffset;
 	if (rcolzcmp(x, depth))
@@ -81,6 +82,9 @@ static void __attribute__((hot))
 		g_rendercols[x].u = mx2av1(this->umx, mx2av1(this->figspace, x));
 		depth = depthunproject2d(depth, g_projmx);
 		getvmx(g_rendercols[x].vmx, depth);
+		mx2ainv(g_rendercols[x].vmx, vmxi);
+		g_rendercols[x].ymin = mx2av1(vmxi, 1);
+		g_rendercols[x].ymax = mx2av1(vmxi, 0);
 	}
 }
 
