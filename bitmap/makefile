@@ -1,8 +1,8 @@
-SRCS = mlx_img.c\
+SRCS = bmpread.c \
 
 OBJS = ${SRCS:.c=.o}
 
-NAME	= libmlxpp.a
+NAME	= libbitmap.a
 
 CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror

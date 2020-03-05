@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bmpheader.c                                        :+:      :+:    :+:   */
+/*   bmpread.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -23,15 +23,15 @@
 
 static short	get_bmp_headers(int fd, t_bmpheader *header, t_bmpinfo *info)
 {
-	unsigned char	*bytes;
+	char	*bytes;
 	size_t			i;
 
-	bytes = (unsigned char*)header;
+	bytes = (char*)header;
 	i = -1;
 	while (++i < sizeof(t_bmpheader))
 		if (1 > get_next_char(fd, bytes + i))
 			return (0);
-	bytes = (unsigned char*)info;
+	bytes = (char*)info;
 	i = -1;
 	while (++i < sizeof(t_bmpinfo))
 		if (1 > get_next_char(fd, bytes + i))
@@ -58,10 +58,10 @@ static short	bmp_validate_headers(t_bmpheader *header, t_bmpinfo *info)
 
 static short	get_bmp_texels(int fd, t_mlx_img *dst, t_bmpinfo *info)
 {
-	unsigned int	x;
-	unsigned int	y;
-	unsigned int	b;
-	unsigned char	*color;
+	signed int	x;
+	signed int	y;
+	int			b;
+	char		*color;
 
 	y = -1;
 	while(++y < info->imageheight)
@@ -69,10 +69,10 @@ static short	get_bmp_texels(int fd, t_mlx_img *dst, t_bmpinfo *info)
 		x = -1;
 		while (++x < info->imagewidth)
 		{
-			c = (unsigned char*)mlx_img_getptr(dst, x, y);
+			color = (char*)mlx_img_getptr(dst, x, y);
 			b = -1;
 			while (++b < info->bitsperpixel / 8)
-				if (1 > get_next_char(fd, &color[i]))
+				if (1 > get_next_char(fd, &color[b]))
 					return (0);
 		}
 		b = info->imagewidth * info->bitsperpixel / 8;
