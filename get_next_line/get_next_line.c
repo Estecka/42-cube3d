@@ -86,13 +86,14 @@ static char	*flushbuff(t_gnlbuffer *first, char *dst)
 ** Buffers the given file, and fetches the next character on each call.
 ** @param int fd The file descriptor to read.
 ** @param char* dst The adress where to write the character.
+** 	It can be null in order to discard characters.
 ** @return
 **  1 if a character is read
 **  0 upon reading EOF, EOF is output to dst.
 ** -1 in case of error
 */
 
-int			get_next_char(int fd, char *dst)
+extern int	get_next_char(int fd, char *dst)
 {
 	static char	buffer[BUFFER_SIZE] = { BUFFER };
 	static int	offset = BUFFER_SIZE;
@@ -102,12 +103,13 @@ int			get_next_char(int fd, char *dst)
 	{
 		offset = 0;
 		readsize = read(fd, buffer, BUFFER_SIZE);
-		if (readsize == 0)
+		if (readsize == 0 && dst)
 			*dst = EOF;
 		if (readsize < 1)
 			return (readsize);
 	}
-	*dst = buffer[offset++];
+	if (dst)
+		*dst = buffer[offset++];
 	return (1);
 }
 
@@ -142,7 +144,7 @@ static int	bufappend(t_gnlbuffer **current, char value)
 	return (0);
 }
 
-int			get_next_line(int fd, char **line)
+extern int	get_next_line(int fd, char **line)
 {
 	t_gnlbuffer *chainedbuffer;
 	t_gnlbuffer *current;
