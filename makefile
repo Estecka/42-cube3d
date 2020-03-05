@@ -19,6 +19,7 @@ LIBFLAGS = \
 	-L dynarray -ldynarray \
 	-L libft -lft \
 	-L ft_printf -lftprintf \
+	-L mlxpp -lmlxpp \
 	-L ./ -lmlx \
 
 
@@ -29,6 +30,7 @@ ${NAME}: ${OBJS} ${MINILIBX} libs
 		${CFLAGS} \
 
 libs:
+	make -C mlxpp
 	make -C libft
 	make -C ft_printf
 	make -C ft_math

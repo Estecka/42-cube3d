@@ -15,19 +15,6 @@
 static short g_i;
 
 /*
-** Sets a single texel on a mlx image.
-** @param t_mlx_img* this Ths image to edit.
-** @param unsigned int x,y The coordinates of the texel to set.
-** @param union u_color col The color to applyto the texel.
-*/
-
-void		mlx_img_set(t_mlx_img *this, unsigned int x, unsigned int y,
-	union u_color color)
-{
-	this->pixels[(y * (this->pixel_line)) + x] = color;
-}
-
-/*
 ** Sets a single texel in the render texture.
 ** @param unsigned int x,y The coordinates of the texel.
 ** @param union u_color color The desired color.
@@ -35,7 +22,7 @@ void		mlx_img_set(t_mlx_img *this, unsigned int x, unsigned int y,
 
 extern void	renderset(unsigned int x, unsigned int y, union u_color color)
 {
-	mlx_img_set(&g_rendertex[g_i], x, y, color);
+	g_rendertex[g_i].pixels[(y * (g_rendertex[g_i].pixel_line)) + x] = color;
 }
 
 /*
@@ -49,12 +36,12 @@ extern void	renderclear(union u_color color)
 	unsigned int y;
 
 	y = 0;
-	while (y < g_rendertex[g_i].height)
+	while (y < g_screenhgt)
 	{
 		x = 0;
-		while (x < g_rendertex[g_i].width)
+		while (x < g_screenwdt)
 		{
-			mlx_img_set(&g_rendertex[g_i], x, y, color);
+			renderset(x, y, color);
 			x++;
 		}
 		y++;
@@ -83,14 +70,14 @@ extern void	rendersky(union u_color f, union u_color c)
 	{
 		x = -1;
 		while (++x < g_screenwdt)
-			mlx_img_set(&g_rendertex[g_i], x, y, c);
+			renderset(x, y, c);
 	}
 	y--;
 	while (++y < g_screenhgt)
 	{
 		x = -1;
 		while (++x < g_screenwdt)
-			mlx_img_set(&g_rendertex[g_i], x, y, f);
+			renderset(x, y, f);
 	}
 }
 

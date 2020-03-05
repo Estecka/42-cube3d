@@ -15,6 +15,7 @@
 
 # include <errno.h>
 # include ".fps/fps.h"
+# include "mlxpp/mlxpp.h"
 # include "throw.h"
 # include "libft/libft.h"
 
@@ -26,31 +27,6 @@ struct	s_v2i
 {
 	signed int	x;
 	signed int	y;
-};
-
-typedef struct s_rgb	t_rgb;
-struct	s_rgb
-{
-	unsigned int	b : 8;
-	unsigned int	g : 8;
-	unsigned int	r : 8;
-};
-
-typedef struct s_rgba	t_rgba;
-struct	s_rgba
-{
-	unsigned int	b : 8;
-	unsigned int	g : 8;
-	unsigned int	r : 8;
-	unsigned int	a : 8;
-};
-
-typedef union u_color	t_color;
-union	u_color
-{
-	unsigned int	raw;
-	struct s_rgb	rgb;
-	struct s_rgba	rgba;
 };
 
 void	*g_mlx;

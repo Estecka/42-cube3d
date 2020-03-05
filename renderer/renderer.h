@@ -16,19 +16,6 @@
 # include "../cube3d.h"
 # include "../ft_math/ft_math.h"
 
-typedef struct s_mlx_img	t_mlx_img;
-struct		s_mlx_img
-{
-	void			*ptr;
-	union u_color	*pixels;
-	unsigned int	width;
-	unsigned int	height;
-	int				bits_per_pixel;
-	int				size_line;
-	int				pixel_line;
-	int				endian;
-};
-
 extern void		*g_mlx;
 extern void		*g_window;
 
