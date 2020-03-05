@@ -60,27 +60,26 @@ static short	get_bmp_texels(int fd, t_mlx_img *dst, t_bmpinfo *info)
 {
 	unsigned int	x;
 	unsigned int	y;
-	unsigned int	i;
-	union u_color	*c;
+	unsigned char	*color;
 
 	y = -1;
 	while(++y < info->imageheight)
 	{
 		x = -1;
-		i = 0;
 		while (++x < info->imagewidth)
 		{
-			c = mlx_img_getptr(dst, x, y);
-			if (1 > get_next_char(fd, c->raw + 0)
-				|| 1 > get_next_char(fd, c->raw + 1)
-				|| 1 > get_next_char(fd, c->raw + 2))
+			c = (unsigned char*)mlx_img_getptr(dst, x, y);
+			if (1 > get_next_char(fd, color + 0)
+				|| 1 > get_next_char(fd, color + 1)
+				|| 1 > get_next_char(fd, color + 2))
 				return (0);
-			if (info->bitsperpixel == 32 && 1 > get_next_char(fd, c->raw + 3))
+			if (info->bitsperpixel == 32 && 1 > get_next_char(fd, color + 3))
 				return (0);
-			i += info->bitsperpixel == 32 ? 4 : 3;
 		}
+		x *= info->bitsperpixel / 8;
+		while (x++ % 4)
+			if (1 > get_next_char(fd, NULL))
+				return (0);
 	}
-
-
-
-} // 86
+	return (1);
+}
