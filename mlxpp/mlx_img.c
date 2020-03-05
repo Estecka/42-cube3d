@@ -24,6 +24,11 @@ extern t_color	mlx_img_get(t_mlx_img *this, unsigned int x, unsigned int y)
 	return (this->pixels[(y * (this->pixel_line)) + x]);
 }
 
+extern t_color	*mlx_img_getptr(t_mlx_img *this, unsigned int x, unsigned int y)
+{
+	return (&this->pixels[(y * (this->pixel_line)) + x]);
+}
+
 extern short	mlx_img_init(t_mlx_img *this, unsigned int x, unsigned int y)
 {
 	this->width = x;

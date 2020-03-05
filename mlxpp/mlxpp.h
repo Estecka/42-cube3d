@@ -88,12 +88,19 @@ void		mlx_img_set(t_mlx_img *this, unsigned int x, unsigned int y,
 	t_color col);
 
 /*
-** Gets a texel in a mlx_img.
+** Gets a texel's color.
 ** The color format is assumed to be 32-bits ARGB.
 ** @param t_mlx_img* this	The texture to read.
 ** @param unsigned int x, y	The coordinates of the texel.
 */
 t_color		mlx_img_get(t_mlx_img *this, unsigned int x, unsigned int y);
+/*
+** Gets a pointer to a texel.
+** The color format is assumed to be 32-bits ARGB.
+** @param t_mlx_img* this	The texture to read.
+** @param unsigned int x, y	The coordinates of the texel.
+*/
+t_color		*mlx_img_getptr(t_mlx_img *this, unsigned int x, unsigned int y);
 
 /*
 ** Allocates a vanilla mlx picture, and fills its informations into the given o
