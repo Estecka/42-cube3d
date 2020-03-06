@@ -90,12 +90,11 @@ extern short	bmp_read(t_mlx_img *this, int fd)
 
 	if (!get_bmp_headers(fd, &header, &info) 
 		|| !bmp_validate_headers(&header, &info))
-		|| !mlx_img_init(this, info.imagewidth, info.imageheight))
-		|| !get_bmp_texels(fd, this, &info))
+		|| !mlx_img_init(this, info.imagewidth, info.imageheight)))
+		return (0);
+	if (!get_bmp_texels(fd, this, &info))
 	{
-		if (this->ptr)
-			free(this->ptr);
-		*this = (t_mlx_img){ 0 };
+		free(this->ptr);
 		return (0);
 	}
 	return (1);

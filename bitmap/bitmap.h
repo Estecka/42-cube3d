@@ -17,7 +17,8 @@
 
 /*
 ** Initialize a mxl image from a bmp file.
-** If the method fails, the mlx image will be cleared.
+** If the method fails, the mlx image may be partially initialized, abut any al
+** located memory will be freed.
 ** @return bool
 ** 	true 	OK
 ** 	false	Invalid file, or Allocation failed.
