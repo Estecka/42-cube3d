@@ -40,7 +40,9 @@ static short	bmp_write_info(t_mlx_img *this, int fd)
 	info.imageheight = this->height;
 	info.planes = 1;
 	info.bitsperpixel = 32;
-	info.imagesize = ;
+	info.imagesize = this->width * 32;
+	info.imagesize += info.imagesize % 4;
+	info.imagesize *= info.imageheight;
 	if (0 > write(fd, &info, sizeof(t_bmpinfo)))
 		return (0);
 	else
