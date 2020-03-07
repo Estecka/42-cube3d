@@ -32,7 +32,19 @@ static short	bmp_write_header(t_mlx_img *this, int fd)
 
 static short	bmp_write_info(t_mlx_img *this, int fd)
 {
-	return (1);
+	t_bmpinfo	info;
+
+	info = (t_bmpinfo){ 0 };
+	info.headersize = sizeof(t_bmpinfo);
+	info.imagewidth = this->width;
+	info.imageheight = this->height;
+	info.planes = 1;
+	info.bitsperpixel = 32;
+	info.imagesize = ;
+	if (0 > write(fd, &info, sizeof(t_bmpinfo)))
+		return (0);
+	else
+		return (1);
 }
 
 static short	bmp_write_pixel(t_mlx_img *this, int fd)
