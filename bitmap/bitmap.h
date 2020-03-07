@@ -27,7 +27,7 @@ short	bmp_read(t_mlx_img *this, int fd);
 
 /*
 ** Write an image into a bitmap file.
-** The encoding will be ARGB 32-bits.
+** The encoding will be XRGB 32-bits.
 ** @return bool
 ** 	true 	OK
 ** 	false	An error occured. (See errno.)

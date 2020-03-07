@@ -49,6 +49,19 @@ static short	bmp_write_info(t_mlx_img *this, int fd)
 
 static short	bmp_write_pixel(t_mlx_img *this, int fd)
 {
+	unsigned int	y;
+	unsigned int	size;
+
+	y = -1;
+	while (++y < this->height)
+	{
+		size = this->width * 32;
+		if (0 > write(fd, mlx_img_getptr(this, 0, y), size))
+			return (0);
+		size %= 4;
+		if (size && write(fd, "\0\0\0", size))
+			return (0);
+	}
 	return (1);
 }
 
