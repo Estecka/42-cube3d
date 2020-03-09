@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <fcntl.h>
+
 #include "bmp_internals.h"
 
 /*
@@ -84,19 +86,27 @@ static short	get_bmp_texels(int fd, t_mlx_img *dst, t_bmpinfo *info)
 	return (1);
 }
 
-extern short	bmp_read(t_mlx_img *this, int fd)
+extern short	bmp_read(t_mlx_img *this, const char *path)
 {
 	t_bmpheader	header;
 	t_bmpinfo	info;
+	int			fd;
 
+	if (0 > (fd = open(path, O_RDONLY)))
+		return (0);
 	if (!get_bmp_headers(fd, &header, &info) 
 		|| !bmp_validate_headers(&header, &info)
 		|| !mlx_img_init(this, info.imagewidth, info.imageheight))
-		return (0);
+		{
+			close(fd);
+			return (0);
+		}
 	if (!get_bmp_texels(fd, this, &info))
 	{
+		close(fd);
 		free(this->ptr);
 		return (0);
 	}
+	close(fd);
 	return (1);
 }

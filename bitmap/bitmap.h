@@ -20,11 +20,13 @@
 ** Supported format are 24-bits RGB and 32-bits ARGB.
 ** If the method fails, the mlx image may be partially initialized, but any all
 ** ocated memory will be freed.
+** @param t_mlx_img* this	The texture to initialize.
+** @param const string path	The path to the file.
 ** @return bool
 ** 	true 	OK
 ** 	false	Invalid file, or Allocation failed.
 */
-short	bmp_read(t_mlx_img *this, int fd);
+short	bmp_read(t_mlx_img *this, const char *path);
 
 short	bmp_write(t_mlx_img *this, int fd);
 
