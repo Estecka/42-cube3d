@@ -23,7 +23,7 @@ struct	s_bmpfileheader
 	unsigned int	filesize;
 	unsigned char	reserved[4];
 	unsigned int	pixeldataoffset;
-};
+} __attribute__((packed));
 
 
 typedef struct s_bmpinfodata	t_bmpinfo;
