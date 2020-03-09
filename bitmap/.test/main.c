@@ -61,4 +61,14 @@ int	main(int argc, char** args)
 		printf("\nInvalid header\n");
 		return (-1);
 	}
+
+	t_mlx_img img;
+	void*	window;
+	g_mlx = mlx_init();
+	mlx_img_init(&img, infos.imagewidth, infos.imageheight);
+	if (!get_bmp_texels(fd, &img, &infos))
+		printf("\nError reading pixels\n");
+	window = mlx_new_window(g_mlx, infos.imagewidth, infos.imageheight, path);
+	mlx_put_image_to_window(g_mlx, window, img.ptr, 0, 0);
+	mlx_loop(g_mlx);
 }

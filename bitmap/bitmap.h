@@ -16,9 +16,10 @@
 # include "../mlxpp/mlxpp.h"
 
 /*
-** Initialize a mxl image from a bmp file.
-** If the method fails, the mlx image may be partially initialized, abut any al
-** located memory will be freed.
+** Initializes a mxl image from a bmp file.
+** Supported format are 24-bits RGB and 32-bits ARGB.
+** If the method fails, the mlx image may be partially initialized, but any all
+** ocated memory will be freed.
 ** @return bool
 ** 	true 	OK
 ** 	false	Invalid file, or Allocation failed.

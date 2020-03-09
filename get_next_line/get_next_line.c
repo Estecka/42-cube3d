@@ -109,7 +109,8 @@ extern int	get_next_char(int fd, char *dst)
 			return (readsize);
 	}
 	if (dst)
-		*dst = buffer[offset++];
+		*dst = buffer[offset];
+	offset++;
 	return (1);
 }
 
