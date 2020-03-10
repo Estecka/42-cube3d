@@ -3,6 +3,7 @@ SRCS = bmpread.c \
 OBJS = ${SRCS:.c=.o}
 
 NAME	= libbitmap.a
+TEST	= test.out
 
 CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror
@@ -12,7 +13,13 @@ CFLAGS	= -Wall -Wextra -Werror
 ${NAME}: ${OBJS} 
 	ar rcs ${NAME} ${OBJS}
 
-all: ${NAME}
+test:
+	cp ../minilibx/libmlx.dylib ./
+	gcc -o ${TEST} .test/main.c -Wall -Wextra \
+		-L ../mlxpp/ -lmlxpp \
+		-L ../minilibx -lmlx \
+
+all: ${NAME} ${TEST}
 
 clean:
 	rm -f ${OBJS}
@@ -24,4 +31,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re test

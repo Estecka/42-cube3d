@@ -43,6 +43,7 @@ typedef union u_color	t_color32;
 union		u_color
 {
 	unsigned int	raw;
+	char			bytes[4];
 	struct s_rgb24	rgb;
 	struct s_rgba32	rgba;
 };

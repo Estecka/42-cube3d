@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <fcntl.h>
+
 #include "bmp_internals.h"
 
 /*
@@ -61,7 +63,7 @@ static short	get_bmp_texels(int fd, t_mlx_img *dst, t_bmpinfo *info)
 	signed int	x;
 	signed int	y;
 	int			b;
-	char		*color;
+	t_color32	*color;
 
 	y = -1;
 	while(++y < info->imageheight)
@@ -69,11 +71,12 @@ static short	get_bmp_texels(int fd, t_mlx_img *dst, t_bmpinfo *info)
 		x = -1;
 		while (++x < info->imagewidth)
 		{
-			color = (char*)mlx_img_getptr(dst, x, y);
+			color = mlx_img_getptr(dst, x, info->imageheight - 1 - y);
 			b = -1;
 			while (++b < info->bitsperpixel / 8)
-				if (1 > get_next_char(fd, &color[b]))
+				if (1 > get_next_char(fd, &color->bytes[b]))
 					return (0);
+			color->rgba.a = info->bitsperpixel == 32 ? ~color->rgba.a : 0;
 		}
 		b = info->imagewidth * info->bitsperpixel / 8;
 		while (b++ % 4)
@@ -83,19 +86,27 @@ static short	get_bmp_texels(int fd, t_mlx_img *dst, t_bmpinfo *info)
 	return (1);
 }
 
-extern short	bmp_read(t_mlx_img *this, int fd)
+extern short	bmp_read(t_mlx_img *this, const char *path)
 {
 	t_bmpheader	header;
 	t_bmpinfo	info;
+	int			fd;
 
-	if (!get_bmp_headers(fd, &header, &info) 
-		|| !bmp_validate_headers(&header, &info))
-		|| !mlx_img_init(this, info.imagewidth, info.imageheight)))
+	if (0 > (fd = open(path, O_RDONLY)))
 		return (0);
+	if (!get_bmp_headers(fd, &header, &info) 
+		|| !bmp_validate_headers(&header, &info)
+		|| !mlx_img_init(this, info.imagewidth, info.imageheight))
+		{
+			close(fd);
+			return (0);
+		}
 	if (!get_bmp_texels(fd, this, &info))
 	{
+		close(fd);
 		free(this->ptr);
 		return (0);
 	}
+	close(fd);
 	return (1);
 }
