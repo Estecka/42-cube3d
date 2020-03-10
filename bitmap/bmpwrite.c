@@ -39,9 +39,9 @@ static short	bmp_write_info(t_mlx_img *this, int fd)
 	info.imagewidth = this->width;
 	info.imageheight = this->height;
 	info.planes = 1;
-	info.bitsperpixel = 32;
-	info.imagesize = this->width * 32;
-	info.imagesize += info.imagesize % 4;
+	info.bitsperpixel = 24;
+	info.imagesize = this->width * 24;
+	info.imagesize += info.imagesize % 32;
 	info.imagesize *= info.imageheight;
 	if (0 > write(fd, &info, sizeof(t_bmpinfo)))
 		return (0);
@@ -49,19 +49,21 @@ static short	bmp_write_info(t_mlx_img *this, int fd)
 		return (1);
 }
 
-static short	bmp_write_pixel(t_mlx_img *this, int fd)
+static short	bmp_write_pixel(t_mlx_img *src, int fd)
 {
+	unsigned int	x;
 	unsigned int	y;
 	unsigned int	size;
 
 	y = -1;
-	while (++y < this->height)
+	while (++y < src->height)
 	{
-		size = this->width * 32;
-		if (0 > write(fd, mlx_img_getptr(this, 0, y), size))
-			return (0);
-		size %= 4;
-		if (size && write(fd, "\0\0\0", size))
+		x = -1;
+		while (++x < src->width)
+			if (0 > write(fd, mlx_img_getptr(src, x, src->height - 1 - y), 24))
+				return (0);
+		size = (this->width * 24) % 32;
+		if (size && 0 > write(fd, "\0\0\0\0", size))
 			return (0);
 	}
 	return (1);
