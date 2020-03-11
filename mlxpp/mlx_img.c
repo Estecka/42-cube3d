@@ -29,6 +29,11 @@ extern t_color	*mlx_img_getptr(t_mlx_img *this, unsigned int x, unsigned int y)
 	return (&this->pixels[(y * (this->pixel_line)) + x]);
 }
 
+static unsigned int	g_xcache;
+static unsigned int	g_ycache;
+static t_mlx_img	*g_texcache;
+static t_color		g_colorcache;
+
 extern t_color	mlx_img_sample(t_mlx_img *this, float u, float v)
 {
 	unsigned int	x;
@@ -46,7 +51,14 @@ extern t_color	mlx_img_sample(t_mlx_img *this, float u, float v)
 		y = this->height - 1;
 	else
 		y = v * (this->height - 1);
-	return (this->pixels[(y * (this->pixel_line)) + x]);
+	if (x != g_xcache || y != g_ycache || this != g_texcache)
+	{
+		g_xcache = x;
+		g_ycache = y;
+		g_texcache = this;
+		g_colorcache = this->pixels[(y * (this->pixel_line)) + x];
+	}
+	return (g_colorcache);
 }
 
 extern short	mlx_img_init(t_mlx_img *this, unsigned int x, unsigned int y)
