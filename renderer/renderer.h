@@ -36,6 +36,7 @@ extern void		*g_window;
 ** @var float altitude	The vertical viewing angle. 0.5f by default.
 */
 
+extern t_color	g_fogcolor;
 extern float	g_altitude;
 extern float	g_angle;
 

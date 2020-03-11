@@ -52,6 +52,7 @@ struct			s_renderenv
 ** A endering environnement for a single column of the extruder.
 ** @param const t_mlx_img* texture	The texture of the wall.
 ** @param float depth	The depth of the column in cartesian clip space.
+** @param float realdepth	The depth of the column in view space.
 ** @var float u	The U coordinate on the texture.
 ** @var t_mx2a vmx	The matrix that converts a Y pixel coordinate to the corres
 ** ponding V coordinate on the texture.
@@ -63,6 +64,7 @@ struct			s_rendercol
 {
 	const t_mlx_img	*texture;
 	float	depth;
+	float	realdepth;
 	float	u;
 	t_mx2a	vmx;
 	float	ymin;
@@ -110,5 +112,7 @@ void			neartruncate(const t_seg2 segment, t_seg2 destination);
 void			renderquad(const t_mesh *mesh);
 void			rasterize(t_renderenv *env);
 void			extrude();
+
+t_color			fogblend(t_color, float depth);
 
 #endif

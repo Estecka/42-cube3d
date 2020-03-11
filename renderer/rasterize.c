@@ -33,8 +33,10 @@ void			extrude()
 				&& zbuffcmp(x, y, g_rendercols[x].depth))
 			{
 				v = mx2av1(g_rendercols[x].vmx, y);
-				renderset(x, y, mlx_img_sample(g_rendercols[x].texture, 
-					g_rendercols[x].u, 1 - v));
+				renderset(x, y, fogblend(
+					mlx_img_sample(g_rendercols[x].texture,
+						g_rendercols[x].u, 1 - v),
+					g_rendercols[x].realdepth));
 			}
 		}
 	}
@@ -77,7 +79,8 @@ static void __attribute__((hot))
 	{
 		g_rendercols[x].texture = this->texture;
 		g_rendercols[x].depth = p.vec2.y;
-		getvmx(g_rendercols[x].vmx, depthunproject2d(p.vec2.y, g_projmx));
+		g_rendercols[x].realdepth = depthunproject2d(p.vec2.y, g_projmx);
+		getvmx(g_rendercols[x].vmx, g_rendercols[x].realdepth);
 		mx2ainv(g_rendercols[x].vmx, vmxi);
 		g_rendercols[x].ymin = mx2av1(vmxi, 1);
 		g_rendercols[x].ymax = mx2av1(vmxi, 0);

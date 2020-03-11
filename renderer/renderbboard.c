@@ -18,7 +18,9 @@ static void		bbrasterize(t_bbox2 *bbox, t_mx3 uvmx, float depth, t_mlx_img *text
 	unsigned int	y;
 	t_v2			uv;
 	union u_color	color;
+	float			realdepth;
 
+	realdepth = depthunproject2d(depth, g_projmx);
 	y = ((unsigned int)bbox->min.y) - 1;
 	while (++y < bbox->max.y)
 	{
@@ -31,10 +33,9 @@ static void		bbrasterize(t_bbox2 *bbox, t_mx3 uvmx, float depth, t_mlx_img *text
 				uv.y = (y * uvmx[1][1]) + uvmx[2][1];
 				color = mlx_img_sample(texture, uv.x, uv.y);
 				if (color.rgba.a < 128)
-				{
 					zbuffset(x, y, depth);
-					renderset(x, y, color);
-				}
+				if (color.rgba.a < 128)
+					renderset(x, y, fogblend(color, realdepth));
 			}
 		}
 	}

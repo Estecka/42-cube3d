@@ -26,7 +26,7 @@ const t_bbox2	g_clipspace = {
 t_bbox2	g_frustrum = {
 	.min = {
 		.x = -0.1,
-		.y = -100,
+		.y = -15,
 	},
 	.max = {
 		.x = 0.1,
@@ -40,6 +40,8 @@ t_bbox2	g_screenbb = {
 		.y = 0,
 	},
 };
+
+t_color			g_fogcolor = { 0 };
 
 static void		frustruminit(void)
 {
