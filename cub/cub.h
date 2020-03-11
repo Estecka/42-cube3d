@@ -72,12 +72,11 @@ struct	s_cubworld
 {
 	struct s_v2i	resolution;
 
-	void			*north;
-	void			*south;
-	void			*east;
-	void			*west;
-
-	void			*sprite;
+	void			*northpath;
+	void			*southpath;
+	void			*eastpath;
+	void			*westpath;
+	void			*spritepath;
 
 	union u_color	floorcol;
 	union u_color	ceilcol;
@@ -87,6 +86,12 @@ struct	s_cubworld
 
 	struct s_v2i	playerspawn;
 	float			playerspawnangle;
+
+	t_mlx_img		north;
+	t_mlx_img		south;
+	t_mlx_img		east;
+	t_mlx_img		west;
+	t_mlx_img		sprite;
 };
 
 union	u_cub

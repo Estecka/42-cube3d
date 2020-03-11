@@ -11,10 +11,11 @@ NAME	= cube3d.out
 MINILIBX = libmlx.dylib
 
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Ofast #-Werror
+CFLAGS	= -Wall -Wextra -Ofast -Werror
 LIBFLAGS = \
 	-L cub -lcub \
 	-L renderer -lrenderer \
+	-L bitmap -lbitmap \
 	-L ft_math -lftmath \
 	-L dynarray -ldynarray \
 	-L libft -lft \
@@ -37,6 +38,7 @@ libs:
 	make -C dynarray
 	make -C cub
 	make -C renderer
+	make -C bitmap
 
 minilibx: ${MINILIBX}
 ${MINILIBX}:

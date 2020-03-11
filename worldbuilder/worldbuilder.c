@@ -13,6 +13,7 @@
 #include "worldbuilder_internals.h"
 
 #include "../cub/cub.h"
+#include "../bitmap/bitmap.h"
 
 const t_seg2	g_wallmesh = {
 	{-0.5, 0.5},
@@ -50,7 +51,7 @@ static t_mx3	g_west = {
 };
 
 static void		wallinitone(t_dynarray *array, t_v2i pos,
-t_mx3 mx, void *texture)
+t_mx3 mx, t_mlx_img *texture)
 {
 	t_staticmesh	*values;
 	struct s_v2		position;
@@ -69,13 +70,13 @@ t_mx3 mx, void *texture)
 static void		wallinitfour(t_cubworld *info, t_dynarray *array, t_v2i i)
 {
 	if (tile(info, i.x + 1, i.y) != '1' && tile(info, i.x + 1, i.y) != '\0')
-		wallinitone(array, i, g_west, info->west);
+		wallinitone(array, i, g_west, &info->west);
 	if (tile(info, i.x - 1, i.y) != '1' && tile(info, i.x - 1, i.y) != '\0')
-		wallinitone(array, i, g_east, info->east);
+		wallinitone(array, i, g_east, &info->east);
 	if (tile(info, i.x, i.y + 1) != '1' && tile(info, i.x, i.y + 1) != '\0')
-		wallinitone(array, i, g_south, info->south);
+		wallinitone(array, i, g_south, &info->south);
 	if (tile(info, i.x, i.y - 1) != '1' && tile(info, i.x, i.y - 1) != '\0')
-		wallinitone(array, i, g_north, info->north);
+		wallinitone(array, i, g_north, &info->north);
 }
 
 static void		wallinit(t_cubworld *info)
@@ -124,10 +125,19 @@ static void		spriteinit(t_cubworld *info)
 
 extern void		worldinit(t_cubworld *info)
 {
+	int	i;
+
+	i = -1;
+	while (++i < 5)
+	{
+		if (!bmp_read(&(&info->north)[i], (&info->northpath)[i]))
+			throw(errno ? errno : -1, "Failed to read texture: \n%s",
+			info->northpath);
+	}
 	g_player.position.x = info->playerspawn.x;
 	g_player.position.y = info->playerspawn.y;
 	g_player.rotation = info->playerspawnangle;
-	g_world.spritetexture = info->sprite;
+	g_world.spritetexture = &info->sprite;
 	retransform(&g_player);
 	spriteinit(info);
 	wallinit(info);

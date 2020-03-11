@@ -1,11 +1,11 @@
 R 1920 1080 
 
-NO ./.maps/subject.cub
-SO ./.maps/subject.cub
-EA ./.maps/subject.cub
-WE ./.maps/subject.cub
+NO ./.assets/Stone.bmp
+SO ./.assets/Stone.bmp
+EA ./.assets/Stone.bmp
+WE ./.assets/Stone.bmp
 
-S  ./.maps/subject.cub
+S  ./.assets/Pepper.bmp
 
 
 F 80,70,64 

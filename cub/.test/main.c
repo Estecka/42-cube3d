@@ -80,8 +80,8 @@ Map size: %u %u \n\
 Map content: \n\
 ",
 		map.world.resolution.x, map.world.resolution.y,
-		map.world.north, map.world.south, map.world.west, map.world.east,
-		map.world.sprite,
+		map.world.northpath, map.world.southpath, map.world.westpath, map.world.eastpath,
+		map.world.spritepath,
 		map.world.floorcol.rgb.r, map.world.floorcol.rgb.g, map.world.floorcol.rgb.b,
 		map.world.ceilcol.rgb.r, map.world.ceilcol.rgb.g, map.world.ceilcol.rgb.b,
 		map.world.playerspawn.x, map.world.playerspawn.y,
