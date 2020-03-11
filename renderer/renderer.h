@@ -16,6 +16,18 @@
 # include "../cube3d.h"
 # include "../ft_math/ft_math.h"
 
+/*
+** @var t_quad vertices	The vertices of the mesh in view space.
+** @var t_mlx_img* texture The texture to apply.
+*/
+
+typedef struct s_rendermesh	t_mesh;
+struct	s_rendermesh
+{
+	t_seg2			vertices;
+	const t_mlx_img	*texture;
+};
+
 extern void		*g_mlx;
 extern void		*g_window;
 
