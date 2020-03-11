@@ -104,6 +104,14 @@ t_color		mlx_img_get(t_mlx_img *this, unsigned int x, unsigned int y);
 t_color		*mlx_img_getptr(t_mlx_img *this, unsigned int x, unsigned int y);
 
 /*
+** Gets a color on a texture from normalized coordinates.
+** @param t_mlx_img* this	The texture to read.
+** @param float u, v	The coordinates to sample, in the [0;1] range.
+** 	Out of bounds  coordinates are clamped.
+*/
+t_color		mlx_img_sample(t_mlx_img *this, float u, float v);
+
+/*
 ** Allocates a vanilla mlx picture, and fills its informations into the given o
 ** bject.
 ** This requires `g_mlx` to be set.
