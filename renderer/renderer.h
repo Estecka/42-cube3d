@@ -46,7 +46,7 @@ void			renderclear(union u_color color);
 void			rendersky(union u_color floor, union u_color s);
 void			renderset(unsigned int x, unsigned int y, union u_color color);
 
-void			renderqueuestage(const t_seg2 segment);
+void			renderqueuestage(const t_mesh *mesh);
 void			renderbboard(const t_v2	*position, t_mlx_img *texture);
 void			renderqueueflush();
 void			extrude();

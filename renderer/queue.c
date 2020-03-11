@@ -43,13 +43,13 @@ static void		renderqueueclear(void)
 extern void	renderqueueflush(void)
 {
 	size_t	i;
-	t_v2	**queue;
+	t_mesh	**queue;
 
-	queue = (t_v2**)g_renderqueue.content;
+	queue = (t_mesh**)g_renderqueue.content;
 	i = -1;
 	while (++i < g_renderqueue.length)
 	{
-		renderquad(queue[i]);
+		renderquad(queue[i]->vertices);
 	}
 	renderqueueclear();
 }
@@ -58,27 +58,26 @@ extern void	renderqueueflush(void)
 ** Stages a quad to be renderered.
 ** Performs early culling on the quad, and roughly sorts the queue from closest
 **  to farthest.
-** @param const t_seg2 quad	The quad to queue in view space.
+** @param const t_mesh* quad	The mesh to enqueue in view space.
 ** 	The reference should not be modified or deallocated until after the queue w
 ** 	as rendered.
 */
 
-extern void __attribute__((hot))
-			renderqueuestage(const t_seg2 quad)
+extern void	renderqueuestage(const t_mesh *mesh)
 {
-	t_v2	**queue;
+	t_mesh	**queue;
 	size_t	i;
 
-	if (!clipquad(quad))
+	if (!clipquad(mesh->vertices))
 		return ;
-	queue = (t_v2**)g_renderqueue.content;
+	queue = (t_mesh**)g_renderqueue.content;
 	i = 0;
 	while (i < g_renderqueue.length)
 	{
-		if (queue[i][1].y < quad[1].y)
+		if (queue[i]->vertices[1].y < mesh->vertices[1].y)
 			break ;
 		i++;
 	}
-	if (!dyninsert(&g_renderqueue, i, &quad))
+	if (!dyninsert(&g_renderqueue, i, &mesh))
 		throw(errno, "[FATAL] Renderqueue insertion failed: %d", errno);
 }
