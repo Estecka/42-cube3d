@@ -49,7 +49,7 @@ extern int		keyreleaseevent(int keycode, void *null)
 
 static float	deltatime(void)
 {
-	return (1/(float)60);
+	return (1/(float)30);
 }
 
 static float	controllerloop2(void)
