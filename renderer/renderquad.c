@@ -41,15 +41,23 @@ static void	truncateuv(const t_seg2 src, const t_seg2 dst, t_mx2a mx)
 }
 
 /*
-** Computes the matrix that transforms from screenspace to figure space.
+** Computes the matrix that transforms from homogeneous clip space to figure space.
 ** @param t_renderenv* this The renderenv whose matrix to initialise.
-** @param union u_v4* quad The pooints of the figure.
+** @param union u_v3* quad	The points of the figure in homogemeous clip sace.
 */
 
-static void	getfigmx(t_renderenv *this)
+static void	getfigmx(t_renderenv *this, union u_v3 fig[2])
 {
-	this->figspace[0][0] = 1 / (this->pixvert[1].x - this->pixvert[0].x);
-	this->figspace[1][0] = -this->pixvert[0].x * this->figspace[0][0];
+	t_mx3	f2wmx;
+
+	mx3init(f2wmx);
+	f2wmx[0][0] = fig[1].vec2.x - fig[0].vec2.x;
+	f2wmx[0][1] = fig[1].vec2.y - fig[0].vec2.y;
+	f2wmx[1][0] = -f2wmx[0][1];
+	f2wmx[1][1] = f2wmx[0][0];
+	f2wmx[2][0] = fig[0].vec2.x;
+	f2wmx[2][1] = fig[0].vec2.y;
+	mx3invaff(f2wmx, this->figspace);
 }
 
 /*
@@ -64,16 +72,17 @@ static void	viewtoscreen(t_renderenv *this, const t_seg2 src)
 	union u_v3	p[2];
 	int		i;
 
+	p[0] = mx3v2(g_projmx, &src[0]);
+	p[1] = mx3v2(g_projmx, &src[1]);
+	getfigmx(this, p);
 	i = -1;
 	while (++i < 2)
 	{
-		p[i] = mx3v2(g_projmx, &src[i]);
 		p[i].vec2 = cartesian2d(&p[i].vec3).vec2;
 		p[i].vec2.x += 1;
 		p[i].vec2.x *= 0.5 * g_screenwdt;
 		this->pixvert[i] = p[i].vec2;
 	}
-	getfigmx(this);
 }
 
 /*

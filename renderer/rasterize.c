@@ -68,20 +68,21 @@ void		getvmx(float this[2][1], float depth)
 static void __attribute__((hot))
 				rasterizecol(t_renderenv *this, unsigned int x)
 {
-	float	depth;
-	t_mx2a	vmxi;
+	union u_v3	p;
+	t_mx2a		vmxi;
 
-	depth = (x * this->linescalar) + this->lineoffset;
-	if (rcolzcmp(x, depth))
+	p.vec2.x = (2 * x / (float)g_screenwdt) - 1;
+	p.vec2.y = (x * this->linescalar) + this->lineoffset;
+	if (rcolzcmp(x, p.vec2.y))
 	{
 		g_rendercols[x].texture = this->texture;
-		g_rendercols[x].depth = depth;
-		g_rendercols[x].u = mx2av1(this->umx, mx2av1(this->figspace, x));
-		depth = depthunproject2d(depth, g_projmx);
-		getvmx(g_rendercols[x].vmx, depth);
+		g_rendercols[x].depth = p.vec2.y;
+		getvmx(g_rendercols[x].vmx, depthunproject2d(p.vec2.y, g_projmx));
 		mx2ainv(g_rendercols[x].vmx, vmxi);
 		g_rendercols[x].ymin = mx2av1(vmxi, 1);
 		g_rendercols[x].ymax = mx2av1(vmxi, 0);
+		p = homegeneous2d(&p.vec2, g_projmx);
+		g_rendercols[x].u = mx2av1(this->umx, mx3v2(this->figspace, &p.vec2).vec2.x);
 	}
 }
 

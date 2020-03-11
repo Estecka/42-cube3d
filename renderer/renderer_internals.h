@@ -31,8 +31,8 @@ struct			s_float_img
 ** @var const t_mlx_img* texture	The texture to paint onto the mesh.
 ** @var t_seg2 pixvert	The pixel coordinates of the vertices.
 ** @var t_m2a umx	A 2x1 matrix that transforms from figure space to UV space.
-** @var t_m2a figspace	A 2x1 matrix that transforms a pixel from screen space
-**  to figure space.
+** @var t_m2 figspace	A 3x3 matrix that transforms from homogeneous clip spac
+** e to figure space.
 ** @var	linefloat	The scalar of the segment's line equation.
 ** @var	lineoffset	The offset of the segment's line equation.
 */
@@ -43,7 +43,7 @@ struct			s_renderenv
 	const t_mlx_img	*texture;
 	t_seg2			pixvert;
 	t_mx2a			umx;
-	t_mx2a			figspace;
+	t_mx3			figspace;
 	float			linescalar;
 	float			lineoffset;
 };
