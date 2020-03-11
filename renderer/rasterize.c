@@ -34,7 +34,7 @@ void			extrude()
 			{
 				v = mx2av1(g_rendercols[x].vmx, y);
 				renderset(x, y, mlx_img_sample(g_rendercols[x].texture, 
-					g_rendercols[x].u, v));
+					g_rendercols[x].u, 1 - v));
 			}
 		}
 	}
