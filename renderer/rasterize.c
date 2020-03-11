@@ -21,10 +21,8 @@ void			extrude()
 {
 	unsigned int 	x;
 	unsigned int 	y;
-	union u_color	color;
 	float			v;
 
-	color.rgba.a = 0;
 	y = -1;
 	while (++y < g_screenhgt)
 	{
@@ -34,11 +32,9 @@ void			extrude()
 			if (g_rendercols[x].ymin <= y && y <= g_rendercols[x].ymax 
 				&& zbuffcmp(x, y, g_rendercols[x].depth))
 			{
-				color.rgba.r = (int)(255 * g_rendercols[x].u);
-				color.rgba.b = 255 - (int)(127.5 * (g_rendercols[x].depth + 1));
 				v = mx2av1(g_rendercols[x].vmx, y);
-				color.rgba.g = 255 * v;
-				renderset(x, y, color);
+				renderset(x, y, mlx_img_sample(g_rendercols[x].texture, 
+					g_rendercols[x].u, v));
 			}
 		}
 	}
