@@ -28,6 +28,7 @@ struct			s_float_img
 
 /*
 ** A rendering environnement for a single quad.
+** @var const t_mlx_img* texture	The texture to paint onto the mesh.
 ** @var t_seg2 pixvert	The pixel coordinates of the vertices.
 ** @var t_m2a umx	A 2x1 matrix that transforms from figure space to UV space.
 ** @var t_m2a figspace	A 2x1 matrix that transforms a pixel from screen space
@@ -39,15 +40,18 @@ struct			s_float_img
 typedef struct s_renderenv	t_renderenv;
 struct			s_renderenv
 {
-	t_seg2	pixvert;
-	t_mx2a	umx;
-	t_mx2a	figspace;
-	float	linescalar;
-	float	lineoffset;
+	const t_mlx_img	*texture;
+	t_seg2			pixvert;
+	t_mx2a			umx;
+	t_mx2a			figspace;
+	float			linescalar;
+	float			lineoffset;
 };
 
 /*
 ** A endering environnement for a single column of the extruder.
+** @param const t_mlx_img* texture	The texture of the wall.
+** @param float depth	The depth of the column in cartesian clip space.
 ** @var float u	The U coordinate on the texture.
 ** @var t_mx2a vmx	The matrix that converts a Y pixel coordinate to the corres
 ** ponding V coordinate on the texture.
@@ -57,6 +61,7 @@ struct			s_renderenv
 typedef struct s_rendercol	t_rendercol;
 struct			s_rendercol
 {
+	const t_mlx_img	*texture;
 	float	depth;
 	float	u;
 	t_mx2a	vmx;
@@ -102,7 +107,7 @@ void			renderqueueinit();
 
 short			clipquad(const t_seg2 segment);
 void			neartruncate(const t_seg2 segment, t_seg2 destination);
-void			renderquad(const t_seg2 segment);
+void			renderquad(const t_mesh *mesh);
 void			rasterize(t_renderenv *env);
 void			extrude();
 

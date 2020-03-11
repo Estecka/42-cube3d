@@ -77,19 +77,18 @@ static void	viewtoscreen(t_renderenv *this, const t_seg2 src)
 }
 
 /*
-** Renders a quad on screen.
-** @param const t_seg2 the quad's points in clip space.
-** @var t_seg2 pixquad the quad's vectors in screenspace.
+** Renders a mesh on screen.
+** @param const t_mesh*	The mesh in clip space.
 */
 
-extern void __attribute__((hot))
-			renderquad(const t_seg2 quad)
+extern void	renderquad(const t_mesh *mesh)
 {
 	t_renderenv	env;
 	t_seg2		truncquad;
 
-	neartruncate(quad, truncquad);
-	truncateuv(quad, truncquad, env.umx);
+	env.texture = mesh->texture;
+	neartruncate(mesh->vertices, truncquad);
+	truncateuv(mesh->vertices, truncquad, env.umx);
 	viewtoscreen(&env, truncquad);
 	env.linescalar = (env.pixvert[1].y - env.pixvert[0].y)
 		/ (env.pixvert[1].x - env.pixvert[0].x);

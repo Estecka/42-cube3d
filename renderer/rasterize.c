@@ -78,6 +78,7 @@ static void __attribute__((hot))
 	depth = (x * this->linescalar) + this->lineoffset;
 	if (rcolzcmp(x, depth))
 	{
+		g_rendercols[x].texture = this->texture;
 		g_rendercols[x].depth = depth;
 		g_rendercols[x].u = mx2av1(this->umx, mx2av1(this->figspace, x));
 		depth = depthunproject2d(depth, g_projmx);

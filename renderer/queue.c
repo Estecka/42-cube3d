@@ -49,7 +49,7 @@ extern void	renderqueueflush(void)
 	i = -1;
 	while (++i < g_renderqueue.length)
 	{
-		renderquad(queue[i]->vertices);
+		renderquad(queue[i]);
 	}
 	renderqueueclear();
 }
