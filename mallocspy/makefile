@@ -11,7 +11,7 @@ PRINTF	= ${PRINTFDIR}libftprintf.a
 
 
 CC		= gcc
-CFLAGS	= -Wall -Wextra #-Werror
+CFLAGS	= -O3 -Wall -Wextra -Werror
 LIBFLAGS = \
 	-L ./ -lmallocspy \
 	-L ${LIBFTDIR} -lft \

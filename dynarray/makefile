@@ -6,7 +6,7 @@ NAME	= libdynarray.a
 TEST	= test.out
 
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -O3 -Wall -Wextra -Werror
 
 
 ${NAME}: ${OBJS}

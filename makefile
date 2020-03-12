@@ -7,11 +7,11 @@ SRCS	= main.c \
 
 OBJS	= ${SRCS:.c=.o}
 
-NAME	= cube3d.out
+NAME	= cub3d.out
 MINILIBX = libmlx.dylib
 
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Ofast -Werror
+CFLAGS	= -O3 -Wall -Wextra -Werror
 LIBFLAGS = \
 	-L cub -lcub \
 	-L renderer -lrenderer \
