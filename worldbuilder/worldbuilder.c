@@ -70,9 +70,9 @@ t_mx3 mx, t_mlx_img *texture)
 static void		wallinitfour(t_cubworld *info, t_dynarray *array, t_v2i i)
 {
 	if (tile(info, i.x + 1, i.y) != '1' && tile(info, i.x + 1, i.y) != '\0')
-		wallinitone(array, i, g_west, &info->west);
+		wallinitone(array, i, g_west, &info->east);
 	if (tile(info, i.x - 1, i.y) != '1' && tile(info, i.x - 1, i.y) != '\0')
-		wallinitone(array, i, g_east, &info->east);
+		wallinitone(array, i, g_east, &info->west);
 	if (tile(info, i.x, i.y + 1) != '1' && tile(info, i.x, i.y + 1) != '\0')
 		wallinitone(array, i, g_south, &info->south);
 	if (tile(info, i.x, i.y - 1) != '1' && tile(info, i.x, i.y - 1) != '\0')
