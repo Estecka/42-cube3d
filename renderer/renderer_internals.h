@@ -18,6 +18,8 @@
 # include "../dynarray/dynarray.h"
 # include "../minilibx/mlx.h"
 
+#define WALLSIZE 1
+
 typedef struct s_float_img	t_float_img;
 struct			s_float_img
 {

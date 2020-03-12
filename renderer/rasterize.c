@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "renderer_internals.h"
-#define WALLSIZE 1
 
 /*
 ** Actually renders the column buffer on screen.

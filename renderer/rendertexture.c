@@ -50,11 +50,14 @@ extern void		renderclear(union u_color color)
 
 static float	getdepth(unsigned int y)
 {
+	float altitude;
 	float r;
 
-	r = (2 * y / (float)g_screenhgt) - 1;
-	r = r < 0 ? -r: r;
-	r = -g_frustrum.max.y / (g_frustrum.min.x * r);
+	r = y - (g_angle * g_screenhgt);
+	r = (2 * r / (float)g_screenhgt);
+	altitude = r < 0 ? WALLSIZE - g_altitude : g_altitude;
+	r = r < 0 ? r : -r;
+	r = altitude * g_frustrum.max.y / (g_aspect * g_frustrum.min.x * r);
 	return (r);
 }
 
