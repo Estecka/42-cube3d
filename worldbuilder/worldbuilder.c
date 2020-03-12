@@ -138,6 +138,7 @@ extern void		worldinit(t_cubworld *info)
 	g_player.position.y = info->playerspawn.y;
 	g_player.rotation = info->playerspawnangle;
 	g_world.spritetexture = &info->sprite;
+	g_fogcolor = info->ceilcol;
 	retransform(&g_player);
 	spriteinit(info);
 	wallinit(info);
