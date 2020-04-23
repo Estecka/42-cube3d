@@ -57,7 +57,7 @@ static void		parsemap(t_cubfile *this, int fd, char *firstrow)
 	short		gnl;
 
 	if (!dyninit(&array, sizeof(char*), 16))
-		throw(errno, "[FATAL] Dyinit failed", errno);
+		throw(errno, "[FATAL] Dyinit failed: %d", errno);
 	parsegridrow(this, firstrow, &array);
 	while (0 <= (gnl = get_next_line(fd, &line)))
 	{
