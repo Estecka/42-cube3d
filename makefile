@@ -10,7 +10,7 @@ OBJS	= ${SRCS:.c=.o}
 NAME	= cub3d.out
 MINILIBX = libmlx.dylib
 
-CC		= gcc
+CC		= clang
 CFLAGS	= -O3 -Wall -Wextra -Werror
 LIBFLAGS = \
 	-L cub -lcub \
@@ -26,7 +26,7 @@ LIBFLAGS = \
 
 
 ${NAME}: ${MINILIBX} libs ${OBJS} 
-	gcc ${OBJS} -o ${NAME} \
+	clang ${OBJS} -o ${NAME} \
 		${LIBFLAGS} \
 		${CFLAGS} \
 

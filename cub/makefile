@@ -13,7 +13,7 @@ LIBFT	= ../libft/libft.a
 PRINTF	= ../ft_printf/libftprintf.a
 DYNARRAY= ../dynarray/libdynarray.a
 
-CC		= gcc
+CC		= clang
 CFLAGS	= -Wall -Wextra -Werror
 LIBFLAGS = \
 	-L ./ -lcub \
@@ -37,7 +37,7 @@ all: ${NAME} ${TEST}
 
 test: ${TEST}
 ${TEST}: ${NAME} ${PRINTF} ${LIBFT} ${DYNARRAY} ${TEST_SRCS}
-	gcc -o ${TEST} ${TEST_SRCS} \
+	clang -o ${TEST} ${TEST_SRCS} \
 		${LIBFLAGS} \
 		${CFLAGS} \
 

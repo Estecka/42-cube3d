@@ -9,7 +9,7 @@ NAME = librenderer.a
 TEST = renderer.out
 MLX = libmlx.dylib
 
-CC     = gcc
+CC     = clang
 CFLAGS = -O3 -Wall -Wextra -Werror
 LIBFLAGS = \
 		-L ./ -lmlx -lrenderer \
@@ -24,7 +24,7 @@ ${NAME}: ${OBJS}
 test: ${TEST}
 ${TEST}: ${NAME} ${MLX} .test/main.c ../throw.c
 	make libs -C ../
-	gcc .test/main.c ../throw.c -o ${TEST} \
+	clang .test/main.c ../throw.c -o ${TEST} \
 		${LIBFLAGS} \
 		${CFLAGS} \
 

@@ -10,7 +10,7 @@ LIBFT	= ${LIBFTDIR}libft.a
 PRINTF	= ${PRINTFDIR}libftprintf.a
 
 
-CC		= gcc
+CC		= clang
 CFLAGS	= -O3 -Wall -Wextra -Werror
 LIBFLAGS = \
 	-L ./ -lmallocspy \
@@ -23,7 +23,7 @@ ${NAME}: ${OBJS}
 
 test: ${TEST}
 ${TEST}: .test/main.c ${NAME} ${LIBFT} ${PRINTF}
-	gcc .test/main.c -o ${TEST} ${LIBFLAGS}
+	clang .test/main.c -o ${TEST} ${LIBFLAGS}
 
 
 libft: ${LIBFT}

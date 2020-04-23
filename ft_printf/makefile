@@ -13,7 +13,7 @@ NAME = libftprintf.a
 
 LIBFTDIR = ../libft/
 
-CC   = gcc
+CC   = clang
 CFLAGS = -Wall -Wextra -Werror -O3 -I${LIBFTDIR}
 
 

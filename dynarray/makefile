@@ -5,7 +5,7 @@ OBJS	= ${SRCS:.c=.o}
 NAME	= libdynarray.a
 TEST	= test.out
 
-CC		= gcc
+CC		= clang
 CFLAGS	= -O3 -Wall -Wextra -Werror
 
 
@@ -14,7 +14,7 @@ ${NAME}: ${OBJS}
 
 test: ${TEST}
 ${TEST}: ${NAME} .test/main.c
-	gcc -o ${TEST} \
+	clang -o ${TEST} \
 	.test/main.c -L ./ -ldynarray
 	${CFlAGS} \
 
