@@ -21,16 +21,16 @@ LIBFLAGS = \
 	-L libft -lft \
 	-L ft_printf -lftprintf \
 	-L mlxpp -lmlxpp \
-	-L ./ -lmlx \
+	-L minilibx/linux -lmlx \
 
 
 
-${NAME}: ${OBJS} ${MINILIBX} libs
+${NAME}: ${MINILIBX} libs ${OBJS} 
 	gcc ${OBJS} -o ${NAME} \
 		${LIBFLAGS} \
 		${CFLAGS} \
 
-libs:
+libs: ${MINILIBX}
 	make -C mlxpp
 	make -C libft
 	make -C ft_printf
@@ -42,8 +42,9 @@ libs:
 
 minilibx: ${MINILIBX}
 ${MINILIBX}:
-	make -C minilibx
-	cp minilibx/${MINILIBX} ./
+	make -C minilibx/linux
+	cp minilibx/linux/mlx.h minilibx/
+	#cp minilibx/${MINILIBX} ./ #Used for the metal MLX on mac-os, which builds a dynamic library.
 
 
 all: ${NAME}
