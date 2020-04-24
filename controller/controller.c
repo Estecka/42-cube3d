@@ -20,7 +20,11 @@
 #define MOVSPEED 1
 #define ROTSPEED 1
 
-#define KCMAX 258
+#ifdef __APPLE_
+# define KXMAX 258
+#elif __linux__
+# define KCMAX 65506
+#endif
 
 float			g_altitude = 0.5f;
 float			g_angle = 0.5f;
@@ -89,11 +93,11 @@ extern void		controllerloop(void)
 		g_angle += ROTSPEED * deltatime();
 	else if (g_keymask[KCDOWN])
 		g_angle -= ROTSPEED * deltatime();
-	if (g_keymask[KCW])
+	if (g_keymask[KCW] || g_keymask[KCZ])
 		movement.vec2.y -= MOVSPEED * sprint * deltatime();
 	else if (g_keymask[KCS])
 		movement.vec2.y += MOVSPEED * sprint * deltatime();
-	if (g_keymask[KCA])
+	if (g_keymask[KCA] || g_keymask[KCQ])
 		movement.vec2.x -= MOVSPEED * sprint * deltatime();
 	else if (g_keymask[KCD])
 		movement.vec2.x += MOVSPEED * sprint * deltatime();
