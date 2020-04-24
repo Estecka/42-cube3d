@@ -7,8 +7,14 @@ SRCS	= main.c \
 
 OBJS	= ${SRCS:.c=.o}
 
+OS		= $(shell uname)
+
 NAME	= cub3d.out
+ifeq (${OS}, Linux)
+MINILIBX =	minilibx/linux/libmlx.a
+else
 MINILIBX = libmlx.dylib
+endif
 
 CC		= clang
 CFLAGS	= -O3 -Wall -Wextra -Werror
@@ -17,22 +23,31 @@ LIBFLAGS = \
 	-L renderer -lrenderer \
 	-L bitmap -lbitmap \
 	-L ft_math -lftmath \
-	-lm \
 	-L dynarray -ldynarray \
 	-L ft_printf -lftprintf \
 	-L libft -lft \
 	-L mlxpp -lmlxpp \
+
+ifeq (${OS}, Linux)
+LIBFLAGS += \
 	-L minilibx/linux -lmlx \
 	-lbsd -lX11 -lXext \
+	-lm \
+
+else
+LIBFLAGS += \
+	-L ./ -lmlx\
+
+endif
 
 
 
-${NAME}: ${MINILIBX} libs ${OBJS} 
+${NAME}: minilibx libs ${OBJS} 
 	clang ${OBJS} -o ${NAME} \
 		${LIBFLAGS} \
 		${CFLAGS} \
 
-libs: ${MINILIBX}
+libs: minilibx
 	make -C mlxpp
 	make -C libft
 	make -C ft_printf
@@ -42,11 +57,21 @@ libs: ${MINILIBX}
 	make -C renderer
 	make -C bitmap
 
-minilibx: ${MINILIBX}
+minilibx: ${MINILIBX} minilibx/mlx.h
 ${MINILIBX}:
+ifeq (${OS}, Linux)
 	make -C minilibx/linux
+else
+	make -C minilibx/macos-metal
+	cp minilibx/${MINILIBX} ./
+endif
+minilibx/mlx.h:
+ifeq (${OS}, Linux)
 	cp minilibx/linux/mlx.h minilibx/
-	#cp minilibx/${MINILIBX} ./ #Used for the metal MLX on mac-os, which builds a dynamic library.
+else
+	cp minilibx/macos-metal/mlx.h minilibx/
+endif
+
 
 
 all: ${NAME}
@@ -60,4 +85,7 @@ fclean: clean
 
 re: fclean ${NAME}
 
-.PHONY: all clean fclean re libs
+.PHONY: \
+	all clean fclean re \
+	libs \
+	minilibx \
