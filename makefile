@@ -17,11 +17,13 @@ LIBFLAGS = \
 	-L renderer -lrenderer \
 	-L bitmap -lbitmap \
 	-L ft_math -lftmath \
+	-lm \
 	-L dynarray -ldynarray \
-	-L libft -lft \
 	-L ft_printf -lftprintf \
+	-L libft -lft \
 	-L mlxpp -lmlxpp \
 	-L minilibx/linux -lmlx \
+	-lbsd -lX11 -lXext \
 
 
 
