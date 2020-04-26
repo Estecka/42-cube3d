@@ -18,7 +18,7 @@
 # include "../dynarray/dynarray.h"
 # include "../minilibx/mlx.h"
 
-#define WALLSIZE 1
+# define WALLSIZE 1
 
 typedef struct s_float_img	t_float_img;
 struct			s_float_img
@@ -65,17 +65,18 @@ typedef struct s_rendercol	t_rendercol;
 struct			s_rendercol
 {
 	const t_mlx_img	*texture;
-	float	depth;
-	float	realdepth;
-	float	u;
-	t_mx2a	vmx;
-	float	ymin;
-	float	ymax;
+	float			depth;
+	float			realdepth;
+	float			u;
+	t_mx2a			vmx;
+	float			ymin;
+	float			ymax;
 };
 
 /*
 ** @var t_bbox2 g_frustrum	The dimensions of the frustrum.
-** @var t_mx3 g_projmx	A matrix that transform the frustrum cube into clip space.
+** @var t_mx3 g_projmx	A matrix that transform the frustrum cube into clip spa
+** ce.
 ** @var const t_bbox2	g_clipspace	The dimensions of the clip space.
 */
 
@@ -115,6 +116,6 @@ void			renderquad(const t_mesh *mesh);
 void			rasterize(t_renderenv *env);
 void			extrude();
 
-t_color			fogblend(t_color, float depth);
+t_color			fogblend(t_color source, float depth);
 
 #endif

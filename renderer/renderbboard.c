@@ -12,7 +12,8 @@
 
 #include "renderer_internals.h"
 
-static void		bbrasterize(t_bbox2 *bbox, t_mx3 uvmx, float depth, t_mlx_img *texture)
+static void		bbrasterize(t_bbox2 *bbox, t_mx3 uvmx, float depth,
+t_mlx_img *texture)
 {
 	unsigned int	x;
 	unsigned int	y;
@@ -58,7 +59,7 @@ static void		getbboxvert(t_bbox2 *bbox, const t_v2 *pos)
 static float	getbboxhori(t_bbox2 *bbox, t_v2 pos)
 {
 	union u_v3	p;
-	int		i;
+	int			i;
 
 	pos.x -= 0.5;
 	i = -1;
@@ -84,7 +85,7 @@ static t_bbox2	g_uvbbox = {
 ** @param t_v2 pos	The position of the billboard in view space.
 */
 
-void 			renderbboard(const t_v2 *pos, t_mlx_img *texture)
+void			renderbboard(const t_v2 *pos, t_mlx_img *texture)
 {
 	t_bbox2 bbox;
 	t_mx3	uvmx;
@@ -93,7 +94,7 @@ void 			renderbboard(const t_v2 *pos, t_mlx_img *texture)
 	getbboxvert(&bbox, pos);
 	depth = getbboxhori(&bbox, *pos);
 	if (depth < -1 || depth > 1 || !bb2inter(&bbox, &g_screenbb))
-		return;
+		return ;
 	mx3remap(uvmx, &bbox, &g_uvbbox);
 	bb2clip(&bbox, &bbox, &g_screenbb);
 	bbrasterize(&bbox, uvmx, depth, texture);

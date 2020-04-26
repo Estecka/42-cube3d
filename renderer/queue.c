@@ -20,7 +20,7 @@ void		renderqueueinit(void)
 		throw(errno, "[FATAL] Renderqueue initialization failed: %d", errno);
 }
 
-static void		renderqueueclear(void)
+static void	renderqueueclear(void)
 {
 	size_t	i;
 	void	**queue;

@@ -41,7 +41,8 @@ static void	truncateuv(const t_seg2 src, const t_seg2 dst, t_mx2a mx)
 }
 
 /*
-** Computes the matrix that transforms from homogeneous clip space to figure space.
+** Computes the matrix that transforms from homogeneous clip space to figure sp
+** ace.
 ** @param t_renderenv* this The renderenv whose matrix to initialise.
 ** @param union u_v3* quad	The points of the figure in homogemeous clip sace.
 */
@@ -70,7 +71,7 @@ static void	getfigmx(t_renderenv *this, union u_v3 fig[2])
 static void	viewtoscreen(t_renderenv *this, const t_seg2 src)
 {
 	union u_v3	p[2];
-	int		i;
+	int			i;
 
 	p[0] = mx3v2(g_projmx, &src[0]);
 	p[1] = mx3v2(g_projmx, &src[1]);

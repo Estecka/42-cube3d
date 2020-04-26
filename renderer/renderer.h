@@ -22,7 +22,7 @@
 */
 
 typedef struct s_rendermesh	t_mesh;
-struct	s_rendermesh
+struct			s_rendermesh
 {
 	t_seg2			vertices;
 	const t_mlx_img	*texture;

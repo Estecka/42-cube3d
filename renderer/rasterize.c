@@ -16,10 +16,10 @@
 ** Actually renders the column buffer on screen.
 */
 
-void			extrude()
+void		extrude(void)
 {
-	unsigned int 	x;
-	unsigned int 	y;
+	unsigned int	x;
+	unsigned int	y;
 	float			v;
 
 	y = -1;
@@ -28,7 +28,7 @@ void			extrude()
 		x = -1;
 		while (++x < g_screenwdt)
 		{
-			if (g_rendercols[x].ymin <= y && y <= g_rendercols[x].ymax 
+			if (g_rendercols[x].ymin <= y && y <= g_rendercols[x].ymax
 				&& zbuffcmp(x, y, g_rendercols[x].depth))
 			{
 				v = mx2av1(g_rendercols[x].vmx, y);
@@ -66,8 +66,7 @@ void		getvmx(float this[2][1], float depth)
 ** @param unsigned int x	The coordinate of the column to render.
 */
 
-static void __attribute__((hot))
-				rasterizecol(t_renderenv *this, unsigned int x)
+static void	rasterizecol(t_renderenv *this, unsigned int x)
 {
 	union u_v3	p;
 	t_mx2a		vmxi;
@@ -84,7 +83,8 @@ static void __attribute__((hot))
 		g_rendercols[x].ymin = mx2av1(vmxi, 1);
 		g_rendercols[x].ymax = mx2av1(vmxi, 0);
 		p = homegeneous2d(&p.vec2, g_projmx);
-		g_rendercols[x].u = mx2av1(this->umx, mx3v2(this->figspace, &p.vec2).vec2.x);
+		g_rendercols[x].u =
+			mx2av1(this->umx, mx3v2(this->figspace, &p.vec2).vec2.x);
 	}
 }
 
@@ -93,8 +93,7 @@ static void __attribute__((hot))
 ** @param t_renderenv* this
 */
 
-void __attribute__((hot))
-			rasterize(t_renderenv *this)
+void		rasterize(t_renderenv *this)
 {
 	unsigned int	x;
 	unsigned int	max;
