@@ -31,14 +31,14 @@ extern void	renderworld()
 		wall->renderinfo.vertices[1] = mx3v2(g_player.w2lmx, &wall->vertices[1]).vec2;
 		renderqueuestage(&wall->renderinfo);
 	}
-	renderqueueflush();
 	i = -1;
 	while (++i < g_world.spritecount)
 	{
 		t_v2 p;
 
 		p = mx3v2(g_player.w2lmx, &g_world.sprites[i]).vec2;
-		renderbboard(&p, g_world.spritetexture);
+		bboardqueuestage(p);
 	}
+	renderqueueflush(g_world.spritetexture);
 	extrude();
 }

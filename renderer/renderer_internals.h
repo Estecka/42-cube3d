@@ -113,6 +113,7 @@ void			renderqueueinit();
 short			clipquad(const t_seg2 segment);
 void			neartruncate(const t_seg2 segment, t_seg2 destination);
 void			renderquad(const t_mesh *mesh);
+void			renderbboard(const t_v2	*position, t_mlx_img *texture);
 void			rasterize(t_renderenv *env);
 void			extrude();
 
