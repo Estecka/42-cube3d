@@ -109,14 +109,14 @@ extern void	renderqueuestage(const t_mesh *mesh)
 
 extern void	bboardqueuestage(const t_v2 pos)
 {
-	// t_v2	quad[2];
+	t_seg2	quad;
 	t_v2	*queue;
 	size_t	i;
 
-	// quad[0] = (t_v2){pos.x - 0.5f, pos.y};
-	// quad[1] = (t_v2){pos.x + 0.5f, pos.y};
-	// if (!clipquad(quad))
-	// 	return ;
+	quad[0] = (t_v2){pos.x - 0.5f, pos.y};
+	quad[1] = (t_v2){pos.x + 0.5f, pos.y};
+	if (!clipquad(quad))
+		return ;
 	queue = (t_v2*)g_bboardqueue.content;
 	i = 0;
 	while (i < g_bboardqueue.length)
