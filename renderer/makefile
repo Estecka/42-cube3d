@@ -1,6 +1,7 @@
 SRCS = renderinit.c \
 	rendertexture.c rendercol.c renderbboard.c zbuffer.c queue.c \
 	clipquad.c truncate.c renderquad.c rasterize.c \
+	fog.c \
 
 OBJS = ${SRCS:.c=.o}
 
@@ -8,8 +9,8 @@ NAME = librenderer.a
 TEST = renderer.out
 MLX = libmlx.dylib
 
-CC     = gcc
-CFLAGS = -Wall -Wextra -Ofast #-Werror
+CC     = clang
+CFLAGS = -O3 -Wall -Wextra -Werror
 LIBFLAGS = \
 		-L ./ -lmlx -lrenderer \
 		-L ../libft -lft \
@@ -23,7 +24,7 @@ ${NAME}: ${OBJS}
 test: ${TEST}
 ${TEST}: ${NAME} ${MLX} .test/main.c ../throw.c
 	make libs -C ../
-	gcc .test/main.c ../throw.c -o ${TEST} \
+	clang .test/main.c ../throw.c -o ${TEST} \
 		${LIBFLAGS} \
 		${CFLAGS} \
 

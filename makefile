@@ -7,29 +7,47 @@ SRCS	= main.c \
 
 OBJS	= ${SRCS:.c=.o}
 
-NAME	= cube3d.out
-MINILIBX = libmlx.dylib
+OS		= $(shell uname)
 
-CC		= gcc
-CFLAGS	= -Wall -Wextra -Ofast #-Werror
+NAME	= cub3d.out
+ifeq (${OS}, Linux)
+MINILIBX =	minilibx/linux/libmlx.a
+else
+MINILIBX = libmlx.dylib
+endif
+
+CC		= clang
+CFLAGS	= -O3 -Wall -Wextra -Werror
 LIBFLAGS = \
 	-L cub -lcub \
 	-L renderer -lrenderer \
+	-L bitmap -lbitmap \
 	-L ft_math -lftmath \
 	-L dynarray -ldynarray \
-	-L libft -lft \
 	-L ft_printf -lftprintf \
+	-L libft -lft \
 	-L mlxpp -lmlxpp \
-	-L ./ -lmlx \
+
+ifeq (${OS}, Linux)
+LIBFLAGS += \
+	-L minilibx/linux -lmlx \
+	-lbsd -lX11 -lXext \
+	-lm \
+
+else
+LIBFLAGS += \
+	-L ./ -lmlx\
+
+endif
 
 
 
-${NAME}: ${OBJS} ${MINILIBX} libs
-	gcc ${OBJS} -o ${NAME} \
+${NAME}: minilibx libs ${OBJS} 
+	clang ${OBJS} -o ${NAME} \
 		${LIBFLAGS} \
 		${CFLAGS} \
 
-libs:
+libs: minilibx
 	make -C mlxpp
 	make -C libft
 	make -C ft_printf
@@ -37,11 +55,23 @@ libs:
 	make -C dynarray
 	make -C cub
 	make -C renderer
+	make -C bitmap
 
-minilibx: ${MINILIBX}
+minilibx: ${MINILIBX} minilibx/mlx.h
 ${MINILIBX}:
-	make -C minilibx
+ifeq (${OS}, Linux)
+	make -C minilibx/linux
+else
+	make -C minilibx/macos-metal
 	cp minilibx/${MINILIBX} ./
+endif
+minilibx/mlx.h:
+ifeq (${OS}, Linux)
+	cp minilibx/linux/mlx.h minilibx/
+else
+	cp minilibx/macos-metal/mlx.h minilibx/
+endif
+
 
 
 all: ${NAME}
@@ -55,4 +85,7 @@ fclean: clean
 
 re: fclean ${NAME}
 
-.PHONY: all clean fclean re libs
+.PHONY: \
+	all clean fclean re \
+	libs \
+	minilibx \

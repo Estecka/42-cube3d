@@ -16,6 +16,18 @@
 # include "../cube3d.h"
 # include "../ft_math/ft_math.h"
 
+/*
+** @var t_quad vertices	The vertices of the mesh in view space.
+** @var t_mlx_img* texture The texture to apply.
+*/
+
+typedef struct s_rendermesh	t_mesh;
+struct			s_rendermesh
+{
+	t_seg2			vertices;
+	const t_mlx_img	*texture;
+};
+
 extern void		*g_mlx;
 extern void		*g_window;
 
@@ -24,6 +36,7 @@ extern void		*g_window;
 ** @var float altitude	The vertical viewing angle. 0.5f by default.
 */
 
+extern t_color	g_fogcolor;
 extern float	g_altitude;
 extern float	g_angle;
 
@@ -34,8 +47,8 @@ void			renderclear(union u_color color);
 void			rendersky(union u_color floor, union u_color s);
 void			renderset(unsigned int x, unsigned int y, union u_color color);
 
-void			renderqueuestage(const t_seg2 segment);
-void			renderbboard(const t_v2	*position);
+void			renderqueuestage(const t_mesh *mesh);
+void			bboardqueuestage(const t_v2 pos);
 void			renderqueueflush();
 void			extrude();
 

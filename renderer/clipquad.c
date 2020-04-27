@@ -41,8 +41,8 @@ static short	frustrumculling(const t_seg2 seg)
 {
 	t_seg2	trunc;
 	t_seg2	horto;
-	t_bbox2		bbox;
-	int			i;
+	t_bbox2	bbox;
+	int		i;
 
 	if ((seg[0].y > g_frustrum.max.y) ^ (seg[1].y > g_frustrum.max.y))
 		neartruncate(seg, trunc);

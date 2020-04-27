@@ -29,16 +29,16 @@ extern void	renderworld()
 		wall = g_world.walls + i;
 		wall->renderinfo.vertices[0] = mx3v2(g_player.w2lmx, &wall->vertices[0]).vec2;
 		wall->renderinfo.vertices[1] = mx3v2(g_player.w2lmx, &wall->vertices[1]).vec2;
-		renderqueuestage(wall->renderinfo.vertices);
+		renderqueuestage(&wall->renderinfo);
 	}
-	renderqueueflush();
 	i = -1;
 	while (++i < g_world.spritecount)
 	{
 		t_v2 p;
 
 		p = mx3v2(g_player.w2lmx, &g_world.sprites[i]).vec2;
-		renderbboard(&p);
+		bboardqueuestage(p);
 	}
+	renderqueueflush(g_world.spritetexture);
 	extrude();
 }

@@ -11,34 +11,31 @@
 /* ************************************************************************** */
 
 #include "renderer_internals.h"
-#define WALLSIZE 1
 
 /*
 ** Actually renders the column buffer on screen.
 */
 
-void			extrude()
+void		extrude(void)
 {
-	unsigned int 	x;
-	unsigned int 	y;
-	union u_color	color;
+	unsigned int	x;
+	unsigned int	y;
 	float			v;
 
-	color.rgba.a = 0;
 	y = -1;
 	while (++y < g_screenhgt)
 	{
 		x = -1;
 		while (++x < g_screenwdt)
 		{
-			if (g_rendercols[x].ymin <= y && y <= g_rendercols[x].ymax 
+			if (g_rendercols[x].ymin <= y && y <= g_rendercols[x].ymax
 				&& zbuffcmp(x, y, g_rendercols[x].depth))
 			{
-				color.rgba.r = (int)(255 * g_rendercols[x].u);
-				color.rgba.b = 255 - (int)(127.5 * (g_rendercols[x].depth + 1));
 				v = mx2av1(g_rendercols[x].vmx, y);
-				color.rgba.g = 255 * v;
-				renderset(x, y, color);
+				renderset(x, y, fogblend(
+					mlx_img_sample(g_rendercols[x].texture,
+						g_rendercols[x].u, 1 - v),
+					g_rendercols[x].realdepth));
 			}
 		}
 	}
@@ -69,22 +66,25 @@ void		getvmx(float this[2][1], float depth)
 ** @param unsigned int x	The coordinate of the column to render.
 */
 
-static void __attribute__((hot))
-				rasterizecol(t_renderenv *this, unsigned int x)
+static void	rasterizecol(t_renderenv *this, unsigned int x)
 {
-	float	depth;
-	t_mx2a	vmxi;
+	union u_v3	p;
+	t_mx2a		vmxi;
 
-	depth = (x * this->linescalar) + this->lineoffset;
-	if (rcolzcmp(x, depth))
+	p.vec2.x = (2 * x / (float)g_screenwdt) - 1;
+	p.vec2.y = (x * this->linescalar) + this->lineoffset;
+	if (rcolzcmp(x, p.vec2.y))
 	{
-		g_rendercols[x].depth = depth;
-		g_rendercols[x].u = mx2av1(this->umx, mx2av1(this->figspace, x));
-		depth = depthunproject2d(depth, g_projmx);
-		getvmx(g_rendercols[x].vmx, depth);
+		g_rendercols[x].texture = this->texture;
+		g_rendercols[x].depth = p.vec2.y;
+		g_rendercols[x].realdepth = depthunproject2d(p.vec2.y, g_projmx);
+		getvmx(g_rendercols[x].vmx, g_rendercols[x].realdepth);
 		mx2ainv(g_rendercols[x].vmx, vmxi);
 		g_rendercols[x].ymin = mx2av1(vmxi, 1);
 		g_rendercols[x].ymax = mx2av1(vmxi, 0);
+		p = homegeneous2d(&p.vec2, g_projmx);
+		g_rendercols[x].u =
+			mx2av1(this->umx, mx3v2(this->figspace, &p.vec2).vec2.x);
 	}
 }
 
@@ -93,8 +93,7 @@ static void __attribute__((hot))
 ** @param t_renderenv* this
 */
 
-void __attribute__((hot))
-			rasterize(t_renderenv *this)
+void		rasterize(t_renderenv *this)
 {
 	unsigned int	x;
 	unsigned int	max;

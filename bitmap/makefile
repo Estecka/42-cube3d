@@ -5,7 +5,7 @@ OBJS = ${SRCS:.c=.o}
 NAME	= libbitmap.a
 TEST	= test.out
 
-CC		= gcc
+CC		= clang
 CFLAGS	= -Wall -Wextra -Werror
 
 
@@ -15,7 +15,7 @@ ${NAME}: ${OBJS}
 
 test:
 	cp ../minilibx/libmlx.dylib ./
-	gcc -o ${TEST} .test/main.c -Wall -Wextra \
+	clang -o ${TEST} .test/main.c -Wall -Wextra \
 		-L ../mlxpp/ -lmlxpp \
 		-L ../minilibx -lmlx \
 

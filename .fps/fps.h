@@ -13,6 +13,8 @@
 #ifndef FPS_H
 #define FPS_H
 
+float   g_deltatime;
+
 void	FpsLoop();
 void	StopWatch();
 void 	StartWatch();

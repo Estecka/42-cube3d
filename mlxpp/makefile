@@ -4,8 +4,8 @@ OBJS = ${SRCS:.c=.o}
 
 NAME	= libmlxpp.a
 
-CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror
+CC		= clang
+CFLAGS	= -O3 -Wall -Wextra -Werror
 
 
 

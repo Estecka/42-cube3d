@@ -12,7 +12,7 @@
 
 #include "renderer_internals.h"
 
-static short g_i;
+static short	g_i;
 
 /*
 ** Sets a single texel in the render texture.
@@ -20,7 +20,7 @@ static short g_i;
 ** @param union u_color color The desired color.
 */
 
-extern void	renderset(unsigned int x, unsigned int y, union u_color color)
+extern void		renderset(unsigned int x, unsigned int y, union u_color color)
 {
 	g_rendertex[g_i].pixels[(y * (g_rendertex[g_i].pixel_line)) + x] = color;
 }
@@ -30,7 +30,7 @@ extern void	renderset(unsigned int x, unsigned int y, union u_color color)
 ** @param union u_color color The filler color.
 */
 
-extern void	renderclear(union u_color color)
+extern void		renderclear(union u_color color)
 {
 	unsigned int x;
 	unsigned int y;
@@ -48,36 +48,42 @@ extern void	renderclear(union u_color color)
 	}
 }
 
+static float	getdepth(unsigned int y)
+{
+	float altitude;
+	float r;
+
+	r = y - (g_angle * g_screenhgt);
+	r = (2 * r / (float)g_screenhgt);
+	altitude = r < 0 ? WALLSIZE - g_altitude : g_altitude;
+	r = r < 0 ? r : -r;
+	r = altitude * g_frustrum.max.y / (g_aspect * g_frustrum.min.x * r);
+	return (r);
+}
+
 /*
 ** Fills the render texture with two colors.
 ** @param union u_color f	The floor color.
 ** @param union u_color c	The sky color.
 */
 
-extern void	rendersky(union u_color f, union u_color c)
+extern void		rendersky(union u_color f, union u_color c)
 {
-	unsigned int x;
-	unsigned int y;
-	unsigned int h;
+	unsigned int	x;
+	unsigned int	y;
+	unsigned int	horizon;
+	t_color			color;
 
-	if (g_angle > 1)
-		g_angle = 1;
-	if (g_angle < 0)
-		g_angle = 0;
-	h = g_screenhgt * g_angle;
+	g_angle = g_angle < 0 ? 0 : g_angle;
+	g_angle = g_angle > 1 ? 1 : g_angle;
+	horizon = g_screenhgt * g_angle;
 	y = -1;
-	while (++y < h)
-	{
-		x = -1;
-		while (++x < g_screenwdt)
-			renderset(x, y, c);
-	}
-	y--;
 	while (++y < g_screenhgt)
 	{
+		color = fogblend(y < horizon ? c : f, getdepth(y));
 		x = -1;
 		while (++x < g_screenwdt)
-			renderset(x, y, f);
+			renderset(x, y, color);
 	}
 }
 
@@ -88,7 +94,7 @@ extern void	rendersky(union u_color f, union u_color c)
 ** @return int 0;
 */
 
-extern void	renderflush(void)
+extern void		renderflush(void)
 {
 	mlx_put_image_to_window(g_mlx, g_window, g_rendertex[g_i].ptr, 0, 0);
 	g_i = !g_i;

@@ -18,20 +18,6 @@
 # include "../renderer/renderer.h"
 
 /*
-** Struct to be sent to the renderer module.
-** The reference is to be worked on by the renderer.
-** @var t_quad vertices	The vertices of the mesh in view space.
-** @var t_mlx_img* texture The texture to apply.
-*/
-
-typedef struct s_rendermesh	t_mesh;
-struct	s_rendermesh
-{
-	t_seg2		vertices;
-	t_mlx_img	*texture;
-};
-
-/*
 ** A mesh that is'nt supposed to move at all.
 ** Its world coordinates are pre-baked, from g_wallmesh.
 ** @var t_quad vertices	The vertices of the mesh in world space.

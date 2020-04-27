@@ -33,13 +33,16 @@ extern void	StopWatch()
 
 extern void	FpsLoop()
 {
-	static clock_t lastTime = 0;
+	static clock_t prevTime = 0; 
+	static clock_t lastPeriod = 0;
 	static int framecount = 0;
 
 	framecount++;
 
 	clock_t currentTime = clock();
-	clock_t inter = currentTime - lastTime;
+	g_deltatime = (currentTime - prevTime) / (float)CLOCKS_PER_SEC;
+
+	clock_t inter = currentTime - lastPeriod;
 	if (inter > (PERIOD * CLOCKS_PER_SEC))
 	{
 		float interms = inter * CLOCKS_TO_MS;
@@ -56,7 +59,8 @@ extern void	FpsLoop()
 			watchcalls  = 0;
 		}
 
-		lastTime = currentTime;
+		lastPeriod = currentTime;
 		framecount = 0;
 	}
+	prevTime = currentTime;
 }

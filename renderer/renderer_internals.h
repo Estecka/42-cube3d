@@ -18,6 +18,8 @@
 # include "../dynarray/dynarray.h"
 # include "../minilibx/mlx.h"
 
+# define WALLSIZE 1
+
 typedef struct s_float_img	t_float_img;
 struct			s_float_img
 {
@@ -28,10 +30,11 @@ struct			s_float_img
 
 /*
 ** A rendering environnement for a single quad.
+** @var const t_mlx_img* texture	The texture to paint onto the mesh.
 ** @var t_seg2 pixvert	The pixel coordinates of the vertices.
 ** @var t_m2a umx	A 2x1 matrix that transforms from figure space to UV space.
-** @var t_m2a figspace	A 2x1 matrix that transforms a pixel from screen space
-**  to figure space.
+** @var t_m2 figspace	A 3x3 matrix that transforms from homogeneous clip spac
+** e to figure space.
 ** @var	linefloat	The scalar of the segment's line equation.
 ** @var	lineoffset	The offset of the segment's line equation.
 */
@@ -39,15 +42,19 @@ struct			s_float_img
 typedef struct s_renderenv	t_renderenv;
 struct			s_renderenv
 {
-	t_seg2	pixvert;
-	t_mx2a	umx;
-	t_mx2a	figspace;
-	float	linescalar;
-	float	lineoffset;
+	const t_mlx_img	*texture;
+	t_seg2			pixvert;
+	t_mx2a			umx;
+	t_mx3			figspace;
+	float			linescalar;
+	float			lineoffset;
 };
 
 /*
 ** A endering environnement for a single column of the extruder.
+** @param const t_mlx_img* texture	The texture of the wall.
+** @param float depth	The depth of the column in cartesian clip space.
+** @param float realdepth	The depth of the column in view space.
 ** @var float u	The U coordinate on the texture.
 ** @var t_mx2a vmx	The matrix that converts a Y pixel coordinate to the corres
 ** ponding V coordinate on the texture.
@@ -57,16 +64,19 @@ struct			s_renderenv
 typedef struct s_rendercol	t_rendercol;
 struct			s_rendercol
 {
-	float	depth;
-	float	u;
-	t_mx2a	vmx;
-	float	ymin;
-	float	ymax;
+	const t_mlx_img	*texture;
+	float			depth;
+	float			realdepth;
+	float			u;
+	t_mx2a			vmx;
+	float			ymin;
+	float			ymax;
 };
 
 /*
 ** @var t_bbox2 g_frustrum	The dimensions of the frustrum.
-** @var t_mx3 g_projmx	A matrix that transform the frustrum cube into clip space.
+** @var t_mx3 g_projmx	A matrix that transform the frustrum cube into clip spa
+** ce.
 ** @var const t_bbox2	g_clipspace	The dimensions of the clip space.
 */
 
@@ -102,8 +112,11 @@ void			renderqueueinit();
 
 short			clipquad(const t_seg2 segment);
 void			neartruncate(const t_seg2 segment, t_seg2 destination);
-void			renderquad(const t_seg2 segment);
+void			renderquad(const t_mesh *mesh);
+void			renderbboard(const t_v2	*position, t_mlx_img *texture);
 void			rasterize(t_renderenv *env);
 void			extrude();
+
+t_color			fogblend(t_color source, float depth);
 
 #endif

@@ -19,8 +19,8 @@
 */
 extern void	*g_mlx;
 
-typedef struct s_rgb	t_rgb;
-typedef struct s_rgb	t_rgb24;
+typedef struct s_rgb24	t_rgb;
+typedef struct s_rgb24	t_rgb24;
 struct		s_rgb24
 {
 	unsigned int	b : 8;
@@ -28,8 +28,8 @@ struct		s_rgb24
 	unsigned int	r : 8;
 };
 
-typedef struct s_rgba	t_rgba;
-typedef struct s_rgba	t_rgba32;
+typedef struct s_rgba32	t_rgba;
+typedef struct s_rgba32	t_rgba32;
 struct		s_rgba32
 {
 	unsigned int	b : 8;
@@ -85,7 +85,7 @@ struct		s_mlx_img
 ** @param unsigned int x, y	The coordinates of the texel.
 ** @param t_color	The color value.
 */
-void		mlx_img_set(t_mlx_img *this, unsigned int x, unsigned int y,
+void		mlx_img_set(const t_mlx_img *this, unsigned int x, unsigned int y,
 	t_color col);
 
 /*
@@ -94,14 +94,23 @@ void		mlx_img_set(t_mlx_img *this, unsigned int x, unsigned int y,
 ** @param t_mlx_img* this	The texture to read.
 ** @param unsigned int x, y	The coordinates of the texel.
 */
-t_color		mlx_img_get(t_mlx_img *this, unsigned int x, unsigned int y);
+t_color		mlx_img_get(const t_mlx_img *this, unsigned int x, unsigned int y);
 /*
 ** Gets a pointer to a texel.
 ** The color format is assumed to be 32-bits ARGB.
 ** @param t_mlx_img* this	The texture to read.
 ** @param unsigned int x, y	The coordinates of the texel.
 */
-t_color		*mlx_img_getptr(t_mlx_img *this, unsigned int x, unsigned int y);
+t_color		*mlx_img_getptr(const t_mlx_img *this,
+	unsigned int x, unsigned int y);
+
+/*
+** Gets a color on a texture from normalized coordinates.
+** @param t_mlx_img* this	The texture to read.
+** @param float u, v	The coordinates to sample, in the [0;1] range.
+** 	Out of bounds  coordinates are clamped.
+*/
+t_color		mlx_img_sample(const t_mlx_img *this, float u, float v);
 
 /*
 ** Allocates a vanilla mlx picture, and fills its informations into the given o

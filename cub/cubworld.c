@@ -23,27 +23,6 @@
 #define HMAX 1440
 
 /*
-** Fetches the texture at the given path.
-** The reference to the path is automatically free.
-** TODO This a dummy, and for now and only checks that the file exists.
-** @param char[] path	The path to the texture.
-** @return t_mlg_img*	The texture at the path.
-*/
-
-static void	*gettexture(char *path)
-{
-	int	fd;
-
-	fd = open(path, O_RDONLY);
-	if (fd < 0)
-		printf("Could not open file: %d\n\t%s\n", errno, path);
-	else
-		close(fd);
-	free(path);
-	return (NULL);
-}
-
-/*
 ** Identify the player on the map, and replaces it with a 0.
 ** Asserts that there is only one player.
 ** @param union u_cub this
@@ -121,11 +100,6 @@ extern void	cubfile2world(union u_cub *this)
 		this->world.resolution.y = HMAX;
 	this->world.floorcol.rgba.a = 0;
 	this->world.ceilcol.rgba.a = 0;
-	this->world.north = gettexture(this->file.north);
-	this->world.south = gettexture(this->file.south);
-	this->world.east = gettexture(this->file.east);
-	this->world.west = gettexture(this->file.west);
-	this->world.sprite = gettexture(this->file.sprite);
 	findplayer(this);
 	gridify(this);
 	if (!(pathfinder =
