@@ -11,7 +11,7 @@ OS		= $(shell uname)
 
 NAME	= cub3d.out
 ifeq (${OS}, Linux)
-MINILIBX =	minilibx/linux/libmlx.a
+MINILIBX =	minilibx/libmlx.a
 else
 MINILIBX = libmlx.dylib
 endif
@@ -30,7 +30,7 @@ LIBFLAGS = \
 
 ifeq (${OS}, Linux)
 LIBFLAGS += \
-	-L minilibx/linux -lmlx \
+	-L minilibx/ -lmlx \
 	-lbsd -lX11 -lXext \
 	-lm \
 
@@ -57,19 +57,11 @@ libs: minilibx
 	make -C renderer
 	make -C bitmap
 
-minilibx: ${MINILIBX} minilibx/mlx.h
+minilibx: ${MINILIBX}
 ${MINILIBX}:
-ifeq (${OS}, Linux)
-	make -C minilibx/linux
-else
-	make -C minilibx/macos-metal
+	make -C minilibx/
+ifeq (${OS}, Darwin)
 	cp minilibx/${MINILIBX} ./
-endif
-minilibx/mlx.h:
-ifeq (${OS}, Linux)
-	cp minilibx/linux/mlx.h minilibx/
-else
-	cp minilibx/macos-metal/mlx.h minilibx/
 endif
 
 
