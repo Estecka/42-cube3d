@@ -66,12 +66,10 @@ extern void		renderflush(void)
 /*
 ** Saves the current rendertexture in a bitmap file.
 ** @param const char[] path	The path to the file to write.
-** @return bool
-** 	true	OK
-** 	false	Error
 */
 
-extern short	rendersave(const char *path)
+extern void	rendersave(const char *path)
 {
-	return (bmp_write(&g_rendertex[g_i], path));
+	if(!bmp_write(&g_rendertex[g_i], path))
+		throw(errno, "[FATAL] Failed saving file output: %d", errno);
 }
