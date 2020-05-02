@@ -73,12 +73,12 @@ extern int	main(int argc, char **args)
 		throw(-1, "Invalid synopsis.");
 	fd = open(args[1], O_RDONLY);
 	if (fd < 0)
-		throw(errno, "Could not open file: %d", errno);
+		throw(errno, "Could not open file.");
 	cub.world = (t_cubworld){0};
 	parsefile(&cub.file, fd);
 	cubfile2world(&cub);
 	if (!(g_mlx = mlx_init()))
-		throw(errno, "[FATAL] MinilibX init failed : %d", errno);
+		throw(errno, "[FATAL] MinilibX init failed.");
 	renderinit(cub.world.resolution.x, cub.world.resolution.y);
 	worldinit(&cub.world);
 	if (argc == 2)

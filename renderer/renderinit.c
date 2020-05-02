@@ -66,7 +66,7 @@ static void		textureinit(unsigned int x, unsigned int y)
 		g_rendertex[i].pixel_line =
 			8 * g_rendertex[i].size_line / g_rendertex[i].bits_per_pixel;
 		if (!g_rendertex[i].ptr)
-			throw(errno, "[FATAL] Could not create render texture: %d", errno);
+			throw(errno, "[FATAL] Could not create render texture.");
 	}
 }
 
@@ -77,9 +77,9 @@ extern void		renderinit(unsigned int x, unsigned int y)
 	g_screenbb.max.x = x;
 	g_screenbb.max.y = y;
 	if (!zbuffinit(x, y))
-		throw(errno, "[FATAL] Could not initialize z-buffer: %d", errno);
+		throw(errno, "[FATAL] Could not initialize z-buffer.");
 	if (!rcolinit(x))
-		throw(errno, "[FATAL] Could not initialize rendercols: %d", errno);
+		throw(errno, "[FATAL] Could not initialize rendercols.");
 	renderqueueinit();
 	textureinit(x, y);
 	frustruminit();

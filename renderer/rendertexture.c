@@ -71,5 +71,5 @@ extern void		renderflush(void)
 extern void	rendersave(const char *path)
 {
 	if(!bmp_write(&g_rendertex[g_i], path))
-		throw(errno, "[FATAL] Failed saving file output: %d", errno);
+		throw(errno, "[FATAL] Failed saving file output.");
 }

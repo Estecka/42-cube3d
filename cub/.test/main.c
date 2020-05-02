@@ -29,7 +29,7 @@ int		main(int argc, char **args)
 		throw(-1, "Not enough arguments.");
 	fd = open(args[1], O_RDONLY);
 	if (fd < 0)
-		throw(errno, "Could not open file: %d", errno);
+		throw(errno, "Could not open file.");
 	ft_bzero(&map.file, sizeof(t_cubfile));
 	parsefile(&map.file, fd);
 

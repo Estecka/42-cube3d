@@ -19,7 +19,11 @@
 void	vthrow(int status, char *errformat, va_list args)
 {
 	ft_putstr("Error\n");
+	ft_putstr("Status code: ");
+	ft_putnbr(status);
+	ft_putchar('\n');
 	ft_vprintf(errformat, args);
+	ft_putchar('\n');
 	va_end(args);
 	exit(status);
 }

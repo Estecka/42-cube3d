@@ -25,12 +25,12 @@ t_strb	*createstrbuilder(void)
 	t_strb	*builder;
 
 	if (!(builder = malloc(sizeof(struct s_strb))))
-		throw(errno, "[FATAL] StringBuilder malloc failed. %d", errno);
+		throw(errno, "[FATAL] StringBuilder malloc failed.");
 	builder->content = malloc(sizeof(char) * 32);
 	if (!builder->content)
 	{
 		free(builder);
-		throw(errno, "[FATAL] StringBuilder malloc failed. %d", errno);
+		throw(errno, "[FATAL] StringBuilder malloc failed.");
 	}
 	builder->capacity = 32;
 	builder->size = 1;
@@ -58,7 +58,7 @@ short	strbappend(t_strb *builder, char c)
 	if (builder->size >= builder->capacity)
 	{
 		if (!(newstr = malloc(builder->capacity * 2)))
-			throw(errno, "[FATAL] StringBuilder append failed. %d", errno);
+			throw(errno, "[FATAL] StringBuilder append failed.");
 		i = 0;
 		while (i < builder->capacity)
 		{

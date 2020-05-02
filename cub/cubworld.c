@@ -105,7 +105,7 @@ extern void	cubfile2world(union u_cub *this)
 	if (!(pathfinder =
 		(char*const*)malloc2d(this->world.mapsize.x, this->world.mapsize.y,
 		sizeof(char))))
-		throw(errno, "[FATAL] Grid malloc failed: %d", errno);
+		throw(errno, "[FATAL] Pathfinder allocation failed.");
 	escaperoom(&this->world, pathfinder);
 	free((void*)pathfinder);
 }

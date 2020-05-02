@@ -41,7 +41,7 @@ void		parsegridrow(t_cubfile *this, char *line, t_dynarray *array)
 	}
 	src[width] = '\0';
 	if (!dynappend(array, &src))
-		throw(errno, "[FATAL] dynappend failed: %d", errno);
+		throw(errno, "[FATAL] dynappend failed.");
 	this->mapsize.y++;
 	if (width > this->mapsize.x)
 		this->mapsize.x = width;

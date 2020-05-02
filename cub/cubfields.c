@@ -62,8 +62,7 @@ char	*parsetexpath(const char *line)
 
 	dst = ft_strdup(line);
 	if (!dst)
-		throw(errno, "Fatal: Malloc failed in ParseTexturePath: %d\n%s",
-			errno, line);
+		throw(errno, "[FATAL] Malloc failed in ParseTexturePath: \n%s", line);
 	return (dst);
 }
 
