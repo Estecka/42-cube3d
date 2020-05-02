@@ -45,6 +45,23 @@ static int	update(t_cubworld *cub)
 	return (0);
 }
 
+static void	play(t_cubworld *world)
+{
+	g_window = mlx_new_window(g_mlx, world->resolution.x, world->resolution.y, "Cube3D : The Reckoning");
+	mlx_hook(g_window, 2, 1L<<0, keypressevent, NULL);
+	mlx_hook(g_window, 3, 1L<<1, keyreleaseevent, NULL);
+	mlx_hook(g_window, 17, 1<<17, exitonx, NULL);
+	mlx_loop_hook(g_mlx, update, world);
+	mlx_loop(g_mlx);
+}
+
+static void save(t_cubworld *world, const char *path)
+{
+	rendersky(world->floorcol, world->ceilcol);
+	renderworld();
+	rendersave(path);
+}
+
 extern int	main(int argc, char **args)
 {
 	int			fd;
@@ -52,6 +69,8 @@ extern int	main(int argc, char **args)
 
 	if (argc < 2)
 		throw(-1, "Not enough arguments.");
+	if (argc != 2 && (argc != 4 || ft_strncmp("--save", args[2], 7)))
+		throw(-1, "Invalid synopsis.");
 	fd = open(args[1], O_RDONLY);
 	if (fd < 0)
 		throw(errno, "Could not open file: %d", errno);
@@ -62,10 +81,8 @@ extern int	main(int argc, char **args)
 		throw(errno, "[FATAL] MinilibX init failed : %d", errno);
 	renderinit(cub.world.resolution.x, cub.world.resolution.y);
 	worldinit(&cub.world);
-	g_window = mlx_new_window(g_mlx, cub.world.resolution.x, cub.world.resolution.y, "Cube3D : The Reckoning");
-	mlx_hook(g_window, 2, 1L<<0, keypressevent, NULL);
-	mlx_hook(g_window, 3, 1L<<1, keyreleaseevent, NULL);
-	mlx_hook(g_window, 17, 1<<17, exitonx, NULL);
-	mlx_loop_hook(g_mlx, update, &cub);
-	mlx_loop(g_mlx);
+	if (argc == 2)
+		play(&cub.world);
+	else
+		save(&cub.world, args[3]);
 }

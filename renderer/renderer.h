@@ -42,6 +42,7 @@ extern float	g_angle;
 
 void			renderinit(unsigned int width, unsigned int height);
 void			renderflush();
+short			rendersave(const char *path);
 
 void			renderclear(union u_color color);
 void			rendersky(union u_color floor, union u_color s);

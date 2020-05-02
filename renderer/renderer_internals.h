@@ -17,6 +17,7 @@
 # include "../ft_math/ft_math.h"
 # include "../dynarray/dynarray.h"
 # include "../minilibx/mlx.h"
+# include "../bitmap/bitmap.h"
 
 # define WALLSIZE 1
 
