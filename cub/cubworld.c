@@ -55,7 +55,7 @@ static void	findplayer(union u_cub *this)
 }
 
 /*
-** Converts the tile list from an array of string to a grid of char.
+** Converts the tile list from an array of strings to a grid of char.
 ** Empty spaces are filled with '\0'.
 ** The source arrays are freed.
 ** @param union u_cub* this
@@ -76,9 +76,8 @@ static void	gridify(union u_cub *this)
 	{
 		x = -1;
 		while (this->file.tiles[y][++x] != '\0')
-		{
-			grid[x][y] = this->file.tiles[y][x];
-		}
+			grid[x][y] = this->file.tiles[y][x] == ' ' ?
+				0 : this->file.tiles[y][x];
 		free(this->file.tiles[y]);
 	}
 	free(this->file.tiles);
