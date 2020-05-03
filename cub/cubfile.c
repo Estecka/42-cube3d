@@ -41,7 +41,8 @@ static char		*parsefields(t_cubfile *this, int fd)
 
 /*
 ** Parse the map section of a cub file.
-** The very first row is assumed to be already parsed.
+** The map's layout is not validated, only the tile palette is verified.
+** The very first row is assumed to be already extarcted from the file.
 ** Checks that the file ends with the grid, empty lines are tolerated.
 ** @param t_cubfile* this	The object to fill.
 ** @param int fd	The file descriptor to read from.

@@ -13,8 +13,9 @@
 #include "cub_util.h"
 
 /*
-** Parses a row of the map.
-** Only invalid characters are being checked.
+** Parses a row of the map :
+** Validates the tile palette, and updates the map's dimensions.
+** The map's layout is not verified.
 ** @param t_cubfile* this
 ** @param char[] line	The line to parse.
 ** 	The reference is stored away, and should not be modified or freed afterward.
@@ -23,24 +24,15 @@
 
 void		parsegridrow(t_cubfile *this, char *line, t_dynarray *array)
 {
-	char		*src;
 	signed int	width;
 
-	src = line;
-	width = 0;
-	while (*line)
-	{
-		if (ft_strcontain("012NEWS", *line))
-		{
-			src[width] = *line;
-			width++;
-		}
-		else if (!ft_isspace(*line))
-			throw(-1, "Invalid character in map: %c", *line);
-		line++;
-	}
-	src[width] = '\0';
-	if (!dynappend(array, &src))
+	width = -1;
+	while (line[++width] && line[width] != '\n')
+		if (!ft_strcontain("012NEWS ", line[width]))
+			throw(-1, "Invalid character \"%c\"(0x%x) in line: \n%s",
+				line[width], line[width], line);
+	line[width] = '\0';
+	if (!dynappend(array, &line))
 		throw(errno, "[FATAL] dynappend failed.");
 	this->mapsize.y++;
 	if (width > this->mapsize.x)
