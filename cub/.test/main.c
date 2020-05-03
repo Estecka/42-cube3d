@@ -33,6 +33,7 @@ int		main(int argc, char **args)
 	ft_bzero(&map.file, sizeof(t_cubfile));
 	parsefile(&map.file, fd);
 
+	printf("\nRAW FILE : \n========== \n");
 	printf("\
 R %d %d \n\
 NO %s \n\
@@ -63,6 +64,7 @@ Map content: \n\
 
 
 	cubfile2world(&map);
+	printf("\nPROCESSED FILE : \n================ \n");
 	printf("\
 R %d %d \n\
 NO %p \n\

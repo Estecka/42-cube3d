@@ -16,6 +16,7 @@
 # include "../cube3d.h"
 
 /*
+** Represents the raw, unprocessed content of a cub file.
 ** @var t_v2i resolution	The defined resolution of the screen.
 ** @var char[] north	The path to the northern texture.
 ** @var char[] south	The path to the southern texture.
@@ -58,7 +59,7 @@ struct	s_cubfile
 ** @var union u_color floorcol	The colour of the floor.
 ** @var union u_color ceilcol	The colour of the ceiling.
 ** @var t_v2i mapsize	The dimensions of the map.
-** @var char[x][y] tiles	The individual tiles of the map.
+** @var char[x,y] tiles	The individual tiles of the map.
 ** 	Blanks are filled in with \0.
 ** 	The player is replaced with a '0'.
 **

@@ -49,8 +49,14 @@ static short	explore(t_cubworld *this, int x, int y, char*const *list)
 **  map, used as a draft.
 */
 
-void			escaperoom(t_cubworld *this, char*const *checklist)
+void			escaperoom(t_cubworld *this)
 {
+	char*const *checklist;
+
+	if (!(checklist =
+		(char*const*)malloc2d(this->mapsize.x, this->mapsize.y, sizeof(char))))
+		throw(errno, "[FATAL] Pathfinder allocation failed.");
 	if (!explore(this, this->playerspawn.x, this->playerspawn.y, checklist))
 		throw(-1, "The map is not closed.");
+	free((void*)checklist);
 }

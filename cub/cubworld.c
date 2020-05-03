@@ -92,8 +92,6 @@ static void	gridify(union u_cub *this)
 
 extern void	cubfile2world(union u_cub *this)
 {
-	char*const *pathfinder;
-
 	if (this->file.resolution.x > WMAX)
 		this->world.resolution.x = WMAX;
 	if (this->file.resolution.y > HMAX)
@@ -102,12 +100,7 @@ extern void	cubfile2world(union u_cub *this)
 	this->world.ceilcol.rgba.a = 0;
 	findplayer(this);
 	gridify(this);
-	if (!(pathfinder =
-		(char*const*)malloc2d(this->world.mapsize.x, this->world.mapsize.y,
-		sizeof(char))))
-		throw(errno, "[FATAL] Pathfinder allocation failed.");
-	escaperoom(&this->world, pathfinder);
-	free((void*)pathfinder);
+	escaperoom(&this->world);
 }
 
 /*
