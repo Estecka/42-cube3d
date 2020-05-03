@@ -100,7 +100,7 @@ extern void	cubfile2world(union u_cub *this)
 	this->world.ceilcol.rgba.a = 0;
 	findplayer(this);
 	gridify(this);
-	escaperoom(&this->world);
+	checkfullenclosure(&this->world);
 }
 
 /*

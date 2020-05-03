@@ -45,7 +45,6 @@ static short	explore(t_cubworld *this, int x, int y, char*const *list)
 /*
 ** Checks whether the player is able to escape the map.
 ** @param t_cubworld* this
-** @param char[][] checklist	A empty pre-allocated grid the same size of the
 **  map, used as a draft.
 */
 
@@ -59,4 +58,25 @@ void			escaperoom(t_cubworld *this)
 	if (!explore(this, this->playerspawn.x, this->playerspawn.y, checklist))
 		throw(-1, "The map is not closed.");
 	free((void*)checklist);
+}
+
+/*
+** Asserts that the void does not come in contact with any supposedly accessibl
+** e tile.
+** @param t_cubworld* this
+*/
+
+void			checkfullenclosure(t_cubworld *this)
+{
+	int x;
+	int y;
+
+	x = -1;
+	y = -1;
+	while (++x < this->mapsize.x)
+		while (++y < this->mapsize.y)
+			if (tile(this, x, y) != '1'
+				&& !(tile(this, x + 1, y) && tile(this, x - 1, y)
+				&& tile(this, x, y + 1) && tile(this, x, y - 1)))
+				throw(-1, "Tile at (%u, %u) is not enclosed.", x, y);
 }
