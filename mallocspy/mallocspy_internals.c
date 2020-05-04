@@ -54,6 +54,11 @@ extern short	spyunreg(void *ptr)
 	short	status;
 	size_t	i;
 
+	if (!ptr)
+	{
+		ft_printf("Tried to unregister a NULL pointer.\n");
+		return (0);
+	}
 	status = 0;
 	i = 0;
 	while (i < g_spycap)

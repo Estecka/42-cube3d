@@ -14,8 +14,8 @@ CC		= clang
 CFLAGS	= -O3 -Wall -Wextra -Werror
 LIBFLAGS = \
 	-L ./ -lmallocspy \
-	-L ${LIBFTDIR} -lft \
 	-L ${PRINTFDIR} -lftprintf \
+	-L ${LIBFTDIR} -lft \
 
 
 ${NAME}: ${OBJS}
@@ -45,6 +45,6 @@ fclean: clean
 	rm -f ${NAME}
 	rm -f ${TEST}
 
-re: fclean ${NAME}
+re: fclean all
 
 .PHONY: all clean fclean re libft printf cub

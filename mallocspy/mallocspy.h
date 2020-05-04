@@ -71,7 +71,7 @@ void	*spyreg(void *pointer);
 ** @param void* pointer The pointer to unregister
 ** @return bool
 ** 	true  The pointer was unregistered.
-** 	fakse The pointer was not registered to begin with.
+** 	false The pointer was not registered to begin with.
 */
 
 short	spyunreg(void *pointer);
