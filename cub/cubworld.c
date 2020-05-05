@@ -34,6 +34,7 @@ static void	findplayer(union u_cub *this)
 	int		y;
 	char	c;
 
+	this->world.playerspawn = (t_v2i) {-1, -1};
 	this->world.playerspawnangle = NAN;
 	y = -1;
 	while (++y < this->file.mapsize.y)
@@ -42,8 +43,8 @@ static void	findplayer(union u_cub *this)
 		while ((c = this->file.tiles[y][++x]))
 			if (ft_strcontain("NEWS", c))
 			{
-				throwif(!isnan(this->world.playerspawnangle),
-					-1, "Extraneous player at %d %d:\n%s",
+				if (!isnan(this->world.playerspawnangle))
+					throw(-1, "Extraneous player at %d %d:\n%s",
 					x, y, this->file.tiles[y]);
 				this->file.tiles[y][x] = '0';
 				this->world.playerspawn = (t_v2i) {x, y};
@@ -52,6 +53,8 @@ static void	findplayer(union u_cub *this)
 				this->world.playerspawnangle *= 90 * DEG2RAD;
 			}
 	}
+	if (isnan(this->world.playerspawnangle))
+		throw(-1, "Player not found.");
 }
 
 /*
