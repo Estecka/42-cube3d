@@ -132,7 +132,7 @@ extern void		worldinit(t_cubworld *info)
 	{
 		if (!bmp_read(&(&info->north)[i], (&info->northpath)[i]))
 			throw(errno ? errno : -1, "Failed to read texture: \n%s",
-			info->northpath);
+			(&info->northpath)[i]);
 	}
 	g_player.position.x = info->playerspawn.x;
 	g_player.position.y = info->playerspawn.y;
