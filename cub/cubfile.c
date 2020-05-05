@@ -14,6 +14,19 @@
 #include "cub_util.h"
 
 /*
+** @return bool
+** 	true	The line could be anything but the beginning of the tilemap.
+** 	false	The line is the beginning of the tilemap.
+*/
+
+static short	isfield(const char *line)
+{
+	while (*line == ' ')
+		line++;
+	return (!ft_strcontain("012", *line));
+}
+
+/*
 ** Parse the one-liner fields of the file.
 ** @param t_cubfile* this	The cubfile to fill.
 ** @param int fd	The file descriptor to read from.
@@ -25,7 +38,7 @@ static char		*parsefields(t_cubfile *this, int fd)
 	char	*line;
 	short	gnl;
 
-	while (0 < (gnl = get_next_line(fd, &line)) && line[0] != '1')
+	while (0 < (gnl = get_next_line(fd, &line)) && isfield(line))
 		parsefield(line, this);
 	if (gnl < 0)
 		throw(errno, "[FATAL] GNL error.");
