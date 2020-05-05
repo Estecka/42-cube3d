@@ -67,11 +67,11 @@ Map content: \n\
 	printf("\nPROCESSED FILE : \n================ \n");
 	printf("\
 R %d %d \n\
-NO %p \n\
-SO %p \n\
-WE %p \n\
-EA %p \n\
-S  %p \n\
+NO %s \n\
+SO %s \n\
+WE %s \n\
+EA %s \n\
+S  %s \n\
 F  %d,%d,%d \n\
 C  %d,%d,%d \n\
 \n\
@@ -91,10 +91,10 @@ Map content: \n\
 		map.world.mapsize.x, map.world.mapsize.y
 		);
 		
-	for (int y=map.world.mapsize.y-1; 0<=y; y--)
+	for (int y=0; y<map.world.mapsize.y; y++)
 	{
 		for (int x=0; x<map.world.mapsize.x; x++)
-			printf("%c ", map.world.tiles[x][y]);
+			printf("%c ", map.world.tiles[x][y]?:' ');
 		printf("\n");
 	}
 }
