@@ -72,11 +72,10 @@ void			checkfullenclosure(t_cubworld *this)
 	int y;
 
 	x = -1;
-	y = -1;
-	while (++x < this->mapsize.x)
+	while (++x < this->mapsize.x && (y = -1))
 		while (++y < this->mapsize.y)
-			if (tile(this, x, y) != '1'
+			if (tile(this, x, y) && tile(this, x, y) != '1'
 				&& !(tile(this, x + 1, y) && tile(this, x - 1, y)
 				&& tile(this, x, y + 1) && tile(this, x, y - 1)))
-				throw(-1, "Tile at (%u, %u) is not enclosed.", x, y);
+				throw(-1, "Tile at (%d, %d) is not enclosed.", x, y);
 }

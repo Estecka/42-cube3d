@@ -1,0 +1,17 @@
+R 800 600
+
+NO ./.assets/Stone.bmp
+SO ./.assets/Stone.bmp
+EA ./.assets/Stone.bmp
+WE ./.assets/Stone.bmp
+
+S  ./.assets/Pepper.bmp
+
+
+F 80,70,64 
+C 100,110,128 
+
+
+000
+0W0
+000
