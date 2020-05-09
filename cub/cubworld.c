@@ -70,8 +70,8 @@ static void	gridify(union u_cub *this)
 	signed int		x;
 	signed int		y;
 
-	grid = (char*const*)malloc2d(this->file.mapsize.x, this->file.mapsize.y,
-	sizeof(char));
+	grid = (char*const*)spyreg(
+		malloc2d(this->file.mapsize.x, this->file.mapsize.y, sizeof(char)));
 	if (!grid)
 		throw(errno, "[FATAL] Grid allocation failed.");
 	y = -1;

@@ -26,6 +26,7 @@
 # include "cub.h"
 # include "../dynarray/dynarray.h"
 # include "../get_next_line/get_next_line.h"
+# include "../mallocspy/mallocspy.h"
 
 void	parsefield(char *line, t_cubfile *dst);
 void	parseresolution(const char *line, int *width, int *height);
