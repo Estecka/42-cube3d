@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include "libft/libft.h"
 #include "ft_printf/ft_printf.h"
+#include "mallocspy/mallocspy.h"
 
 void	vthrow(int status, char *errformat, va_list args)
 {
@@ -25,6 +26,7 @@ void	vthrow(int status, char *errformat, va_list args)
 	ft_vprintf(errformat, args);
 	ft_putchar('\n');
 	va_end(args);
+	spyflush();
 	exit(status);
 }
 
