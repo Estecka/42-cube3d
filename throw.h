@@ -23,4 +23,6 @@ void	throwif(short condition, int status, char *errformat, ...
 
 void	vthrow(int status, char *errformat, va_list args);
 
+void    *spyregpp(void *ptr);
+
 #endif
