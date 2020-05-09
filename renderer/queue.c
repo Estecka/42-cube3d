@@ -17,9 +17,11 @@ t_dynarray	g_bboardqueue;
 
 void		renderqueueinit(void)
 {
-	if (!dyninit(&g_renderqueue, sizeof(void*), 32))
+	if (!dyninit(&g_renderqueue, sizeof(void*), 32)
+		&& !spyregpp(g_renderqueue.content))
 		throw(errno, "[FATAL] Renderqueue initialization failed.");
-	if (!dyninit(&g_bboardqueue, sizeof(t_v2), 32))
+	if (!dyninit(&g_bboardqueue, sizeof(t_v2), 32)
+		&& !spyregpp(g_bboardqueue.content))
 		throw(errno, "[FATAL] Bboardqueue initialization failed.");
 }
 
@@ -97,7 +99,9 @@ extern void	renderqueuestage(const t_mesh *mesh)
 			break ;
 		i++;
 	}
-	if (!dyninsert(&g_renderqueue, i, &mesh))
+	if (!spyunreg(g_renderqueue.content) 
+		&& !dyninsert(&g_renderqueue, i, &mesh)
+		&& !spyregpp(g_renderqueue.content))
 		throw(errno, "[FATAL] Renderqueue insertion failed.");
 }
 
@@ -125,6 +129,8 @@ extern void	bboardqueuestage(const t_v2 pos)
 			break ;
 		i++;
 	}
-	if (!dyninsert(&g_bboardqueue, i, &pos))
+	if (!spyunreg(g_bboardqueue.content)
+		&& !dyninsert(&g_bboardqueue, i, &pos)
+		&& !spyregpp(g_bboardqueue.content))
 		throw(errno, "[FATAL] Bboardqueue insertion failed.");
 }
