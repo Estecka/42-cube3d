@@ -50,6 +50,7 @@ static int	update(t_cubworld *cub)
 static void	play(t_cubworld *world)
 {
 	g_window = mlx_new_window(g_mlx, world->resolution.x, world->resolution.y, "Cube3D : The Reckoning");
+	spyregpp(&g_window);
 	mlx_hook(g_window, 2, 1L<<0, keypressevent, NULL);
 	mlx_hook(g_window, 3, 1L<<1, keyreleaseevent, NULL);
 	mlx_hook(g_window, 17, 1<<17, exitonx, NULL);
@@ -81,6 +82,7 @@ extern int	main(int argc, char **args)
 	cubfile2world(&cub);
 	if (!(g_mlx = mlx_init()))
 		throw(errno, "[FATAL] MinilibX init failed.");
+	spyregpp(&g_mlx);
 	renderinit(cub.world.resolution.x, cub.world.resolution.y);
 	worldinit(&cub.world);
 	if (argc == 2)
