@@ -53,7 +53,7 @@ static void	play(t_cubworld *world)
 	spyregpp(&g_window);
 	mlx_hook(g_window, 2, 1L<<0, keypressevent, NULL);
 	mlx_hook(g_window, 3, 1L<<1, keyreleaseevent, NULL);
-	mlx_hook(g_window, 17, 1<<17, exitonx, NULL);
+	mlx_hook(g_window, 33, 1L<<17, exitonx, NULL);
 	mlx_loop_hook(g_mlx, update, world);
 	mlx_loop(g_mlx);
 }
