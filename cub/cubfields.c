@@ -56,14 +56,12 @@ void	parseresolution(const char *line, int *width, int *height)
 ** @return An allocated copy of the path
 */
 
-char	*parsetexpath(const char *line)
+void	parsetexpath(const char *line, char **dst)
 {
-	char	*dst;
-
-	dst = ft_strdup(line);
-	if (!dst)
+	*dst = ft_strdup(line);
+	if (!*dst)
 		throw(errno, "[FATAL] Malloc failed in ParseTexturePath: \n%s", line);
-	return (dst);
+	spyregpp(dst);
 }
 
 /*

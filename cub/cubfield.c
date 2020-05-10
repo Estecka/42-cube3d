@@ -80,15 +80,15 @@ void			parsefield(char *line, t_cubfile *dst)
 	else if (id == R && dst->resolution.x == 0 && dst->resolution.y == 0)
 		parseresolution(skip_id(line), &dst->resolution.x, &dst->resolution.y);
 	else if (id == S && dst->sprite == NULL)
-		dst->sprite = parsetexpath(skip_id(line));
+		parsetexpath(skip_id(line), &dst->sprite);
 	else if (id == NO && dst->north == NULL)
-		dst->north = parsetexpath(skip_id(line));
+		parsetexpath(skip_id(line), &dst->north);
 	else if (id == SO && dst->south == NULL)
-		dst->south = parsetexpath(skip_id(line));
+		parsetexpath(skip_id(line), &dst->south);
 	else if (id == WE && dst->west == NULL)
-		dst->west = parsetexpath(skip_id(line));
+		parsetexpath(skip_id(line), &dst->west);
 	else if (id == EA && dst->east == NULL)
-		dst->east = parsetexpath(skip_id(line));
+		parsetexpath(skip_id(line), &dst->east);
 	else if (id != 0)
 		throw(-1, "Unexpected identifier: \n%s", line);
 	free(line);

@@ -85,6 +85,7 @@ static void	gridify(union u_cub *this)
 	}
 	free(this->file.tiles);
 	this->world.tiles = grid;
+	spyregpp(&this->world.tiles);
 }
 
 /*

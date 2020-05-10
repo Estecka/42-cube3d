@@ -9,9 +9,11 @@ TEST_SRCS = .test/main.c \
 
 NAME	= libcub.a
 TEST	= test.out
-LIBFT	= ../libft/libft.a
-PRINTF	= ../ft_printf/libftprintf.a
-DYNARRAY= ../dynarray/libdynarray.a
+LIBS = \
+	../libft/libft.a \
+	../ft_printf/libftprintf.a \
+	../dynarray/libdynarray.a \
+	../mallocspy/libmallocspy.a \
 
 CC		= clang
 CFLAGS	= -Wall -Wextra -Werror
@@ -20,23 +22,24 @@ LIBFLAGS = \
 	-L ../dynarray -ldynarray \
 	-L ../ft_printf -lftprintf \
 	-L ../libft -lft \
+	-L ../mallocspy -lmallocspy \
 
 
 
 ${NAME}: ${OBJS} 
 	ar rcs ${NAME} ${OBJS}
 
-${LIBFT}: 
+libs: ${LIBS}
+${LIBS}:
 	make -C ../libft
-${PRINTF}:
 	make -C ../ft_printf
-${DYNARRAY}:
 	make -C ../dynarray
+	make -C ../mallocspy
 
 all: ${NAME} ${TEST}
 
 test: ${TEST}
-${TEST}: ${NAME} ${PRINTF} ${LIBFT} ${DYNARRAY} ${TEST_SRCS}
+${TEST}: ${NAME} ${LIBS} ${TEST_SRCS}
 	clang -o ${TEST} ${TEST_SRCS} \
 		${LIBFLAGS} \
 		${CFLAGS} \

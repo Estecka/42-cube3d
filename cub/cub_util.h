@@ -26,10 +26,11 @@
 # include "cub.h"
 # include "../dynarray/dynarray.h"
 # include "../get_next_line/get_next_line.h"
+# include "../mallocspy/mallocspy.h"
 
 void	parsefield(char *line, t_cubfile *dst);
 void	parseresolution(const char *line, int *width, int *height);
-char	*parsetexpath(const char *line);
+void    parsetexpath(const char *line, char **dst);
 t_rgba	parsecolor(const char *line);
 void	parsegridrow(t_cubfile *this, char *line, t_dynarray *array);
 void	escaperoom(t_cubworld *this);
