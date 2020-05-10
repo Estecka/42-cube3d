@@ -35,7 +35,10 @@ extern int		keypressevent(int keycode, void *null)
 {
 	(void)null;
 	if (keycode == KCESC)
+	{
+		spyflush();
 		exit(0);
+	}
 	else if (keycode ==  KCSPACE)
 		g_log = 1;
 	if (keycode < KCMAX)

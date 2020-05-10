@@ -13,8 +13,10 @@
 #include "throw.h"
 
 #include <stdlib.h>
+#include <errno.h>
 #include "libft/libft.h"
 #include "ft_printf/ft_printf.h"
+#include "mallocspy/mallocspy.h"
 
 void	vthrow(int status, char *errformat, va_list args)
 {
@@ -25,6 +27,7 @@ void	vthrow(int status, char *errformat, va_list args)
 	ft_vprintf(errformat, args);
 	ft_putchar('\n');
 	va_end(args);
+	spyflush();
 	exit(status);
 }
 
@@ -45,4 +48,14 @@ void	throw(int status, char *errformat, ...)
 
 	va_start(args, errformat);
 	vthrow(status, errformat, args);
+}
+
+void	*spyregpp(void *ptr)
+{
+	if (ptr && !spyreg(ptr))
+	{
+		free(ptr);
+		throw(errno, "[FATAL] Mallocspy registration failed.");
+	}
+	return (ptr);
 }

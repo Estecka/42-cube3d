@@ -19,6 +19,7 @@
 #include "renderer/renderer.h"
 #include "worldbuilder/worldbuilder.h"
 #include "controller/controller.h"
+#include "mallocspy/mallocspy.h"
 
 #include "minilibx/mlx.h"
 #include "keycode.h"
@@ -29,6 +30,7 @@ void		*g_window = NULL;
 static int	exitonx(void *null)
 {
 	(void)null;
+	spyflush();
 	exit(0);
 	return (0);
 }

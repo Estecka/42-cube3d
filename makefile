@@ -24,6 +24,7 @@ LIBFLAGS = \
 	-L bitmap -lbitmap \
 	-L ft_math -lftmath \
 	-L dynarray -ldynarray \
+	-L mallocspy -lmallocspy \
 	-L ft_printf -lftprintf \
 	-L libft -lft \
 	-L mlxpp -lmlxpp \
@@ -48,6 +49,7 @@ ${NAME}: minilibx libs ${OBJS}
 		${CFLAGS} \
 
 libs: minilibx
+	make -C mallocspy
 	make -C mlxpp
 	make -C libft
 	make -C ft_printf
