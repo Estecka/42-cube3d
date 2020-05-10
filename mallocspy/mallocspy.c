@@ -10,9 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mallocspy.h"
+#include "mallocspy_internals.h"
 
-extern void	*spymalloc(size_t size)
+#ifndef SPYPROXY
+
+extern void		*spymalloc(size_t size)
 {
 	void	*ptr;
 
@@ -27,11 +29,13 @@ extern void	*spymalloc(size_t size)
 	return (ptr);
 }
 
-extern void	spyfree(void *ptr)
+#endif
+
+extern void		spyfree(void **ptr)
 {
 	if (spyunreg(ptr))
-		free(ptr);
-	else if (ptr && SPYVERBOSE && SPYBRAVE)
+		free(SPYPROXY ? *ptr : ptr);
+	else if (ptr && (!SPYPROXY || *ptr) && SPYVERBOSE && SPYBRAVE)
 	{
 		ft_printf("Attempting to free the pointer anyway.\n");
 		free(ptr);
@@ -39,3 +43,23 @@ extern void	spyfree(void *ptr)
 	else if (SPYVERBOSE)
 		ft_printf("The pointer was not freed.\n");
 }
+
+#if SPYPROXY
+
+extern size_t	spyclean(void)
+{
+	size_t	i;
+	size_t	count;
+
+	i = -1;
+	count = 0;
+	while (++i < g_spycap)
+		if (g_spylist[i] && !*g_spylist[i])
+		{
+			g_spylist[i] = NULL;
+			count ++;
+		}
+	return (count);
+}
+
+#endif

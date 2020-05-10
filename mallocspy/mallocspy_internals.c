@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mallocspy.h"
+#include "mallocspy_internals.h"
 
-static void		**g_spylist = NULL;
-static size_t	g_spycap = 0;
+void			***g_spylist = NULL;
+size_t			g_spycap = 0;
 
 /*
 ** Initialize or expands the list of pointer.
@@ -25,7 +25,7 @@ static size_t	g_spycap = 0;
 
 static short	spyexpand(void)
 {
-	void	**newlist;
+	void	***newlist;
 	size_t	newcap;
 	size_t	i;
 
@@ -130,7 +130,7 @@ extern size_t	spylog(void)
 	return (count);
 }
 
-extern	size_t	spyflush(void)
+extern size_t	spyflush(void)
 {
 	size_t	i;
 	size_t	count;
@@ -140,9 +140,17 @@ extern	size_t	spyflush(void)
 	while (++i < g_spycap)
 		if (g_spylist[i] != NULL)
 		{
-			free(g_spylist[i]);
+			free(SPYPROXY ? *g_spylist[i] : g_spylist[i]);
+			if (SPYPROXY)
+				*g_spylist[i] = NULL;
 			g_spylist[i] = NULL;
 			count++;
 		}
+	if (g_spycap)
+	{
+		free(g_spylist);
+		g_spylist = NULL;
+		g_spycap = 0;
+	}
 	return (count);
 }

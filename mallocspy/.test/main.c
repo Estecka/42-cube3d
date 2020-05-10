@@ -21,6 +21,13 @@ int main(void)
 	short b;
 	void* mallocs[64];
 
+	#if SPYPROXY
+
+	printf("[WARNING] No tests available for SpyProxy operating mode.\n");
+	return(-1);
+
+	#else
+
 	printf("\n\tSpyReg :\n");
 	for(int i=0; i<64; i++)
 	{
@@ -109,4 +116,5 @@ int main(void)
 	ul = (int)spylog();
 	if (ul != 0)
 		printf("Expected 0, got %d.\n", (int)ul);
+	#endif
 }
