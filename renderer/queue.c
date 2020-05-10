@@ -19,8 +19,10 @@ void		renderqueueinit(void)
 {
 	if (!dyninit(&g_renderqueue, sizeof(void*), 32))
 		throw(errno, "[FATAL] Renderqueue initialization failed.");
+	spyregpp(&g_renderqueue.content);
 	if (!dyninit(&g_bboardqueue, sizeof(t_v2), 32))
 		throw(errno, "[FATAL] Bboardqueue initialization failed.");
+	spyregpp(&g_bboardqueue.content);
 }
 
 static void	renderqueueclear(void)

@@ -25,6 +25,7 @@ short	rcolinit(unsigned int width)
 	g_rendercols = malloc(sizeof(t_rendercol) * width);
 	if (g_rendercols)
 	{
+		spyregpp(&g_rendercols);
 		rcolclear();
 		return (1);
 	}

@@ -56,17 +56,18 @@ static void		textureinit(unsigned int x, unsigned int y)
 	i = -1;
 	while (++i < 2)
 	{
+		g_rendertex[i].ptr = mlx_new_image(g_mlx, x, y);
+		if (!g_rendertex[i].ptr)
+			throw(errno, "[FATAL] Could not create render texture.");
+		spyregpp(&g_rendertex[i].ptr);
 		g_rendertex[i].width = x;
 		g_rendertex[i].height = y;
-		g_rendertex[i].ptr = mlx_new_image(g_mlx, x, y);
 		g_rendertex[i].pixels =
 			(union u_color*)mlx_get_data_addr(g_rendertex[i].ptr,
 				&g_rendertex[i].bits_per_pixel, &g_rendertex[i].size_line,
 				&g_rendertex[i].endian);
 		g_rendertex[i].pixel_line =
 			8 * g_rendertex[i].size_line / g_rendertex[i].bits_per_pixel;
-		if (!g_rendertex[i].ptr)
-			throw(errno, "[FATAL] Could not create render texture.");
 	}
 }
 

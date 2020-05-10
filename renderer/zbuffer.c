@@ -27,6 +27,7 @@ short	zbuffinit(unsigned int width, unsigned int height)
 	g_zbuffer.content = malloc(sizeof(float) * width * height);
 	if (g_zbuffer.content)
 	{
+		spyregpp(&g_zbuffer.content);
 		zbuffclear();
 		return (1);
 	}
