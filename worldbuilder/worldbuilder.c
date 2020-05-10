@@ -84,7 +84,8 @@ static void		wallinit(t_cubworld *info)
 	t_dynarray		array;
 	t_v2i			i;
 
-	dyninit(&array, sizeof(t_staticmesh), 256);
+	if(!dyninit(&array, sizeof(t_staticmesh), 256))
+		throw(errno, "[FATAL] Dyninit failed in WorldBuilder's WallInit.");
 	i.y = -1;
 	while (++i.y < info->mapsize.y)
 	{
@@ -95,6 +96,7 @@ static void		wallinit(t_cubworld *info)
 	}
 	g_world.wallcount = array.length;
 	g_world.walls = (t_staticmesh*)array.content;
+	spyregpp(&g_world.walls);
 }
 
 static void		spriteinit(t_cubworld *info)
@@ -104,7 +106,8 @@ static void		spriteinit(t_cubworld *info)
 	signed int		x;
 	signed int		y;
 
-	dyninit(&array, sizeof(t_v2), 32);
+	if (!dyninit(&array, sizeof(t_v2), 32))
+		throw(errno, "[FATAL] Dyninit failed in WorldBuilder's SpriteInit");
 	y = -1;
 	while (++y < info->mapsize.y)
 	{
@@ -121,6 +124,7 @@ static void		spriteinit(t_cubworld *info)
 	}
 	g_world.spritecount = array.length;
 	g_world.sprites = (t_v2*)array.content;
+	spyregpp(&g_world.sprites);
 }
 
 extern void		worldinit(t_cubworld *info)
@@ -133,6 +137,7 @@ extern void		worldinit(t_cubworld *info)
 		if (!bmp_read(&(&info->north)[i], (&info->northpath)[i]))
 			throw(errno ? errno : -1, "Failed to read texture: \n%s",
 			(&info->northpath)[i]);
+		spyregpp(&((&info->north)[i].ptr));
 	}
 	g_player.position.x = info->playerspawn.x;
 	g_player.position.y = info->playerspawn.y;
