@@ -56,7 +56,7 @@ void			escaperoom(t_cubworld *this)
 		(char*const*)malloc2d(this->mapsize.x, this->mapsize.y, sizeof(char))))
 		throw(errno, "[FATAL] Pathfinder allocation failed.");
 	if (!explore(this, this->playerspawn.x, this->playerspawn.y, checklist))
-		throw(-1, "The map is not closed.");
+		throw(-1, "[CUB] The map is not closed.");
 	free((void*)checklist);
 }
 
@@ -77,5 +77,5 @@ void			checkfullenclosure(t_cubworld *this)
 			if (tile(this, x, y) && tile(this, x, y) != '1'
 				&& !(tile(this, x + 1, y) && tile(this, x - 1, y)
 				&& tile(this, x, y + 1) && tile(this, x, y - 1)))
-				throw(-1, "Tile at (%d, %d) is not enclosed.", x, y);
+				throw(-1, "[CUB] Tile at (%d, %d) is not enclosed.", x, y);
 }

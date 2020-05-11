@@ -135,7 +135,7 @@ extern void		worldinit(t_cubworld *info)
 	while (++i < 5)
 	{
 		if (!bmp_read(&(&info->north)[i], (&info->northpath)[i]))
-			throw(errno ? errno : -1, "Failed to read texture: \n%s",
+			throw(errno ? errno : -1, "[BMP] Failed to read texture: \n%s",
 			(&info->northpath)[i]);
 		spyregpp(&((&info->north)[i].ptr));
 	}

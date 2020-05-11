@@ -44,7 +44,7 @@ static void	findplayer(union u_cub *this)
 			if (ft_strcontain("NEWS", c))
 			{
 				if (!isnan(this->world.playerspawnangle))
-					throw(-1, "Extraneous player at %d %d:\n%s",
+					throw(-1, "[CUB] Extraneous player at %d %d:\n%s",
 					x, y, this->file.tiles[y]);
 				this->file.tiles[y][x] = '0';
 				this->world.playerspawn = (t_v2i) {x, y};
@@ -54,7 +54,7 @@ static void	findplayer(union u_cub *this)
 			}
 	}
 	if (isnan(this->world.playerspawnangle))
-		throw(-1, "Player not found.");
+		throw(-1, "[CUB] Player not found.");
 }
 
 /*
@@ -81,9 +81,9 @@ static void	gridify(union u_cub *this)
 		while (this->file.tiles[y][++x] != '\0')
 			grid[x][y] = this->file.tiles[y][x] == ' ' ?
 				0 : this->file.tiles[y][x];
-		free(this->file.tiles[y]);
+		spyfree((void**)&this->file.tiles[y]);
 	}
-	free(this->file.tiles);
+	spyfree((void**)&this->file.tiles);
 	this->world.tiles = grid;
 	spyregpp(&this->world.tiles);
 }
@@ -95,6 +95,9 @@ static void	gridify(union u_cub *this)
 
 extern void	cubfile2world(union u_cub *this)
 {
+	for (int i=0; i < this->file.mapsize.y; i++)
+		spyregpp(&this->file.tiles[i]);
+	spyregpp(&this->file.tiles);
 	if (this->file.resolution.x > WMAX)
 		this->world.resolution.x = WMAX;
 	if (this->file.resolution.y > HMAX)

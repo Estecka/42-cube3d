@@ -9,7 +9,7 @@ valgrind \
     --leak-resolution=high \
     --show-reachable=yes \
     --log-file=$LOG \
-    ./$EXEC $1 \
+    ./$EXEC $1 $2 $3\
 
 
 grep -A1 "valgrind" ${LOG}|grep $EXEC
