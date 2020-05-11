@@ -38,17 +38,19 @@ static char		*parsefields(t_cubfile *this, int fd)
 	char	*line;
 	short	gnl;
 
+	spyregpp(&line);
 	while (0 < (gnl = get_next_line(fd, &line)) && isfield(line))
 		parsefield(line, this);
 	if (gnl < 0)
 		throw(errno, "[FATAL] GNL error.");
 	if (gnl == 0)
-		throw(-1, "No map found in the file");
+		throw(-1, "[CUB] No map found in the file");
 	if (this->resolution.x == 0 || this->resolution.y == 0
 		|| this->north == NULL || this->south == NULL || this->east == NULL
 		|| this->west == NULL || this->sprite == NULL
 		|| this->floorcol.rgba.a == 0 || this->ceilcol.rgba.a == 0)
-		throw(-1, "Missing cub file fields.");
+		throw(-1, "[CUB] Incomplete fields in the file.");
+	spyunreg(&line);
 	return (line);
 }
 

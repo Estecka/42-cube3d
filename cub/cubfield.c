@@ -90,6 +90,6 @@ void			parsefield(char *line, t_cubfile *dst)
 	else if (id == EA && dst->east == NULL)
 		parsetexpath(skip_id(line), &dst->east);
 	else if (id != 0)
-		throw(-1, "Unexpected identifier: \n%s", line);
+		throw(-1, "[CUB] Unexpected identifier: \n%s", line);
 	free(line);
 }

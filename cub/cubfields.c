@@ -46,7 +46,7 @@ void	parseresolution(const char *line, int *width, int *height)
 	while (*line && ft_isspace(*line))
 		line++;
 	if (*line || *height == 0 || *width == 0)
-		throw(-1, "Bad resolution format: \n%s", src);
+		throw(-1, "[CUB] Bad resolution format: \n%s", src);
 }
 
 /*
@@ -60,7 +60,7 @@ void	parsetexpath(const char *line, char **dst)
 {
 	*dst = ft_strdup(line);
 	if (!*dst)
-		throw(errno, "[FATAL] Malloc failed in ParseTexturePath: \n%s", line);
+		throw(errno, "[FATAL] strdup failed in ParseTexturePath: \n%s", line);
 	spyregpp(dst);
 }
 
@@ -80,16 +80,16 @@ t_rgba	parsecolor(const char *line)
 	while (ft_isdigit(*line))
 		color.r = (10 * color.r) + *(line++) - '0';
 	if (*line != ',' || !ft_isdigit(*(++line)))
-		throw(-1, "Invalid character after Red: %s", src);
+		throw(-1, "[CUB] Invalid character after Red: %s", src);
 	while (ft_isdigit(*line))
 		color.g = (10 * color.g) + *(line++) - '0';
 	if (*line != ',' || !ft_isdigit(*(++line)))
-		throw(-1, "Invalid character after Green: %s", src);
+		throw(-1, "[CUB] Invalid character after Green: %s", src);
 	while (ft_isdigit(*line))
 		color.b = (10 * color.b) + *(line++) - '0';
 	while (ft_isspace(*line))
 		line++;
 	if (*line)
-		throw(-1, "Invalid character after Blue: %s", src);
+		throw(-1, "[CUB] Invalid character after Blue: %s", src);
 	return (color);
 }

@@ -29,11 +29,11 @@ void		parsegridrow(t_cubfile *this, char *line, t_dynarray *array)
 	width = -1;
 	while (line[++width] && line[width] != '\n')
 		if (!ft_strcontain("012NEWS ", line[width]))
-			throw(-1, "Invalid character \"%c\"(0x%x) in line: \n%s",
+			throw(-1, "[CUB] Invalid character \"%c\"(0x%x) in line: \n%s",
 				line[width], line[width], line);
 	line[width] = '\0';
 	if (!dynappend(array, &line))
-		throw(errno, "[FATAL] dynappend failed.");
+		throw(errno, "[FATAL] Dynappend failed in ParseGridRow.");
 	this->mapsize.y++;
 	if (width > this->mapsize.x)
 		this->mapsize.x = width;
