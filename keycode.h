@@ -13,7 +13,6 @@
 #ifndef KEYCODE_H
 # define KEYCODE_H
 
-
 # ifdef __APPLE__
 #  define KCESC	53
 

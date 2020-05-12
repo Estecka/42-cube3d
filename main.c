@@ -47,16 +47,17 @@ static int	update(t_cubworld *cub)
 
 static void	play(t_cubworld *world)
 {
-	g_window = mlx_new_window(g_mlx, world->resolution.x, world->resolution.y, "Cube3D : The Reckoning");
+	g_window = mlx_new_window(g_mlx, world->resolution.x, world->resolution.y,
+		"Cube3D : The Reckoning");
 	spyregpp(&g_window);
-	mlx_hook(g_window, 2, 1L<<0, keypressevent, NULL);
-	mlx_hook(g_window, 3, 1L<<1, keyreleaseevent, NULL);
-	mlx_hook(g_window, 33, 1L<<17, exitonx, NULL);
+	mlx_hook(g_window, 2, 1L << 0, keypressevent, NULL);
+	mlx_hook(g_window, 3, 1L << 1, keyreleaseevent, NULL);
+	mlx_hook(g_window, 33, 1L << 17, exitonx, NULL);
 	mlx_loop_hook(g_mlx, update, world);
 	mlx_loop(g_mlx);
 }
 
-static void save(t_cubworld *world, const char *path)
+static void	save(t_cubworld *world, const char *path)
 {
 	rendersky(world->floorcol, world->ceilcol);
 	renderworld();

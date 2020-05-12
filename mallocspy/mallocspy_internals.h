@@ -10,7 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mallocspy.h"
+#ifndef MALLOCSPY_INTERNALS_H
+# define MALLOCSPY_INTERNALS_H
 
-void ***g_spylist;
-size_t  g_spycap;
+# include "mallocspy.h"
+
+void	***g_spylist;
+size_t	g_spycap;
+
+#endif

@@ -61,8 +61,8 @@ t_mx3 mx, t_mlx_img *texture)
 	values = (t_staticmesh*)array->content;
 	position = (t_v2){pos.x, pos.y};
 	mx3pos(mx, &position);
-	values[array->length].vertices[0] =  mx3v2(mx, &g_wallmesh[0]).vec2;
-	values[array->length].vertices[1] =  mx3v2(mx, &g_wallmesh[1]).vec2;
+	values[array->length].vertices[0] = mx3v2(mx, &g_wallmesh[0]).vec2;
+	values[array->length].vertices[1] = mx3v2(mx, &g_wallmesh[1]).vec2;
 	values[array->length].renderinfo.texture = texture;
 	array->length++;
 }
@@ -84,7 +84,7 @@ static void		wallinit(t_cubworld *info)
 	t_dynarray		array;
 	t_v2i			i;
 
-	if(!dyninit(&array, sizeof(t_staticmesh), 256))
+	if (!dyninit(&array, sizeof(t_staticmesh), 256))
 		throw(errno, "[FATAL] Dyninit failed in WorldBuilder's WallInit.");
 	i.y = -1;
 	while (++i.y < info->mapsize.y)

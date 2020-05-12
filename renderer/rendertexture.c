@@ -68,8 +68,8 @@ extern void		renderflush(void)
 ** @param const char[] path	The path to the file to write.
 */
 
-extern void	rendersave(const char *path)
+extern void		rendersave(const char *path)
 {
-	if(!bmp_write(&g_rendertex[g_i], path))
+	if (!bmp_write(&g_rendertex[g_i], path))
 		throw(errno, "[BMP] Failed saving file output.");
 }

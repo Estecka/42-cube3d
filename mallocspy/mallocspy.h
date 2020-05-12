@@ -120,7 +120,7 @@ size_t	spyflush(void);
 ** @return size_t   The amount of unregistered variables.
 */
 
-size_t  spyclean(void);
+size_t	spyclean(void);
 
 # endif
 

@@ -23,7 +23,7 @@
 #define ROTSPEED 1
 
 #ifdef __APPLE_
-# define KXMAX 258
+# define KCMAX 258
 #elif __linux__
 # define KCMAX 65506
 #endif
@@ -41,7 +41,7 @@ extern int		keypressevent(int keycode, void *null)
 		spyflush();
 		exit(0);
 	}
-	else if (keycode ==  KCSPACE)
+	else if (keycode == KCSPACE)
 		g_log = 1;
 	if (keycode < KCMAX)
 		g_keymask[keycode] = 1;
@@ -58,7 +58,7 @@ extern int		keyreleaseevent(int keycode, void *null)
 
 static float	deltatime(void)
 {
-	return (1/(float)30);
+	return (1 / (float)30);
 }
 
 static float	controllerloop2(void)
@@ -66,7 +66,7 @@ static float	controllerloop2(void)
 	if (g_keymask[KCSPACE])
 	{
 		g_altitude = 0.25f;
-		return (1/3.f);
+		return (1 / 3.f);
 	}
 	else
 	{

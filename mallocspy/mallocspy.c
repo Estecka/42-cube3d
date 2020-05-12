@@ -57,7 +57,7 @@ extern size_t	spyclean(void)
 		if (g_spylist[i] && !*g_spylist[i])
 		{
 			g_spylist[i] = NULL;
-			count ++;
+			count++;
 		}
 	return (count);
 }
