@@ -26,6 +26,7 @@ void		parsegridrow(t_cubfile *this, char *line, t_dynarray *array)
 {
 	signed int	width;
 
+	spyregpp(&line);
 	width = -1;
 	while (line[++width] && line[width] != '\n')
 		if (!ft_strcontain("012NEWS ", line[width]))
@@ -34,7 +35,10 @@ void		parsegridrow(t_cubfile *this, char *line, t_dynarray *array)
 	line[width] = '\0';
 	if (!dynappend(array, &line))
 		throw(errno, "[FATAL] Dynappend failed in ParseGridRow.");
+	this->tiles = (char**)array->content;
 	this->mapsize.y++;
+	spyunreg(&line);
+	spyregpp(&this->tiles[this->mapsize.y - 1]);
 	if (width > this->mapsize.x)
 		this->mapsize.x = width;
 }

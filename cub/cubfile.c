@@ -74,6 +74,8 @@ static void		parsemap(t_cubfile *this, int fd, char *firstrow)
 
 	if (!dyninit(&array, sizeof(char*), 16))
 		throw(errno, "[FATAL] Dyinit failed.");
+	this->tiles = (char**)array.content;
+	spyregpp(&this->tiles);
 	parsegridrow(this, firstrow, &array);
 	while (0 <= (gnl = get_next_line(fd, &line)))
 	{
@@ -89,9 +91,6 @@ static void		parsemap(t_cubfile *this, int fd, char *firstrow)
 		free(line);
 	if (gnl < 0)
 		throw(errno, "[FATAL] GNL error.");
-	this->tiles = (char**)array.content;
-	if (this->mapsize.x == 0 || this->mapsize.y == 0)
-		throw(-1, "Map is empty.");
 }
 
 /*
@@ -110,7 +109,7 @@ extern void		parsefile(t_cubfile *this, int fd)
 	parsemap(this, fd, mapfirstrow);
 	while (0 < (gnl = get_next_char(fd, &c)))
 		if (!ft_isspace(c) && c != '\0' && c != (char)EOF)
-			throw(-1, "Garbage character after the map: %c", c);
+			throw(-1, "[CUB] Garbage character after the map: %c", c);
 	if (gnl < 0)
 		throw(errno, "[FATAL] GNL error.");
 }

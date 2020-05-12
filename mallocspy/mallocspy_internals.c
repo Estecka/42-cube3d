@@ -135,9 +135,9 @@ extern size_t	spyflush(void)
 	size_t	i;
 	size_t	count;
 
-	i = -1;
+	i = g_spycap;
 	count = 0;
-	while (++i < g_spycap)
+	while (--i < g_spycap)
 		if (g_spylist[i] != NULL)
 		{
 			free(SPYPROXY ? *g_spylist[i] : g_spylist[i]);

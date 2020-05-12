@@ -95,9 +95,6 @@ static void	gridify(union u_cub *this)
 
 extern void	cubfile2world(union u_cub *this)
 {
-	for (int i=0; i < this->file.mapsize.y; i++)
-		spyregpp(&this->file.tiles[i]);
-	spyregpp(&this->file.tiles);
 	if (this->file.resolution.x > WMAX)
 		this->world.resolution.x = WMAX;
 	if (this->file.resolution.y > HMAX)
