@@ -12,6 +12,7 @@
 
 #include <stdio.h>
 #include <time.h>
+#include "fps.h"
 
 #define PERIOD 1
 #define CLOCKS_TO_MS (1000/(float)CLOCKS_PER_SEC)

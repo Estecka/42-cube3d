@@ -17,6 +17,8 @@
 #include <stdio.h>
 #include "../ft_math/ft_math.h"
 
+#include "../mallocspy/mallocspy.h"
+
 #define MOVSPEED 1
 #define ROTSPEED 1
 
