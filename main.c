@@ -35,12 +35,14 @@ static int	exitonx(void *null)
 	return (0);
 }
 
+#include ".fps/fps.c"
 static int	update(t_cubworld *cub)
 {
 	controllerloop();
 	rendersky(cub->floorcol, cub->ceilcol);
 	renderworld();
 	renderflush();
+	FpsLoop();
 	g_log = 0;
 	return (0);
 }

@@ -18,6 +18,7 @@
 #include "../ft_math/ft_math.h"
 
 #include "../mallocspy/mallocspy.h"
+#include "../.fps/fps.h"
 
 #define MOVSPEED 1
 #define ROTSPEED 1
@@ -58,7 +59,7 @@ extern int		keyreleaseevent(int keycode, void *null)
 
 static float	deltatime(void)
 {
-	return (1 / (float)30);
+	return (g_deltatime);
 }
 
 static float	controllerloop2(void)
