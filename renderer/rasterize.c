@@ -101,11 +101,11 @@ void		rasterize(t_renderenv *this)
 	if (this->pixvert[0].x < 0)
 		x = 0;
 	else
-		x = (int)this->pixvert[0].x;
-	max = this->pixvert[1].x;
+		x = (int)this->pixvert[0].x + 1;
+	max = (int)this->pixvert[1].x;
 	if (max >= g_screenwdt)
 		max = g_screenwdt - 1;
-	while (x < max)
+	while (x <= max)
 	{
 		rasterizecol(this, x);
 		x++;
