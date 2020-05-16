@@ -14,8 +14,13 @@
 #include <time.h>
 #include "fps.h"
 
-#define PERIOD 1
 #define CLOCKS_TO_MS (1000/(float)CLOCKS_PER_SEC)
+
+/*
+* @var unsigned int watchcalls	The amount of stopwatches called during the current period.
+* @var clock_t watchstart	The ellapsed time in clocks since the last call to `StartWatch`.
+* @var clock_t watchclocks	The cumulative time in clocks measured by all stopwatches during the current period. 
+*/
 
 static unsigned int watchcalls = 0;
 static clock_t watchstart = 0;
@@ -32,19 +37,35 @@ extern void	StopWatch()
 	watchcalls++;
 }
 
-extern void	FpsLoop()
+/*
+* @var clock_t prevFrame	The time in clocks when the previous frame started.
+* @var clock_t prevPeriod	The time in clocks when the previous period started.
+* @var signed int framecount	The ellapsed time in frames since the current period started.
+*/
+
+/*
+* @var clock_t currentTime	The current time in clocks. This marks the end of the previous frame and the beginning of the next one.
+* @var clock_t inter	The duration of the current period in clocks.
+* @var float interms	The duration of the current period in milliseconds.
+* @var bool isPeriod	Whether the current period has fully ellapsed.
+* @var float watchtime	The cumulative time in milliseconds, measured by all stopwatches during the current period.
+* @var float workload	The portion of time in percentage, that `watchtime` represents.
+*/
+
+extern short FpsLoop()
 {
-	static clock_t prevTime = 0; 
-	static clock_t lastPeriod = 0;
+	static clock_t prevFrame = 0; 
+	static clock_t prevPeriod = 0;
 	static int framecount = 0;
 
 	framecount++;
 
 	clock_t currentTime = clock();
-	g_deltatime = (currentTime - prevTime) / (float)CLOCKS_PER_SEC;
+	g_deltatime = (currentTime - prevFrame) / (float)CLOCKS_PER_SEC;
 
-	clock_t inter = currentTime - lastPeriod;
-	if (inter > (PERIOD * CLOCKS_PER_SEC))
+	clock_t inter = currentTime - prevPeriod;
+	short isPeriod = inter > (PERIOD * CLOCKS_PER_SEC);
+	if (isPeriod)
 	{
 		float interms = inter * CLOCKS_TO_MS;
 
@@ -60,8 +81,9 @@ extern void	FpsLoop()
 			watchcalls  = 0;
 		}
 
-		lastPeriod = currentTime;
+		prevPeriod = currentTime;
 		framecount = 0;
 	}
-	prevTime = currentTime;
+	prevFrame = currentTime;
+	return isPeriod;
 }
