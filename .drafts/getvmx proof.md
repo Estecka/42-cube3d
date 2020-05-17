@@ -1,7 +1,7 @@
 We are looking for an affine function `y = ax + b` such as x is the coordinate of a pixel on-screen, and y the normalized position of the pixel on the wall.
 To avoid confusion with the X and Y axes of the world, I will instead refer to the input pixel coordinate as `pix` and the output normalized wall coordinate as `Wz`.
 
-[insert graphic]
+[Graphic](getvmx.jpg)
 
 By dividing pix by screen_height, we get its normalized position on the screen (`Pz`), and can represent it as a plane in front of the observer :
 `Pz = pix / sc_hgt`
