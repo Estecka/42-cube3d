@@ -1,9 +1,9 @@
 R 1200 675 
 
-NO ./.assets/Stone.bmp
-SO ./.assets/Stone.bmp
-EA ./.assets/Stone.bmp
-WE ./.assets/Stone.bmp
+NO ./.assets/N.bmp
+SO ./.assets/S.bmp
+EA ./.assets/E.bmp
+WE ./.assets/W.bmp
 
 S  ./.assets/Pepper.bmp
 
