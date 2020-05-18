@@ -88,4 +88,5 @@ extern int	main(int argc, char **args)
 		play(&cub.world);
 	else
 		save(&cub.world, args[3]);
+	spyflush();
 }
