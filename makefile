@@ -43,7 +43,8 @@ endif
 
 
 
-${NAME}: minilibx libs ${OBJS} 
+${NAME}: minilibx/mlx.h ${OBJS} 
+	make libs
 	clang ${OBJS} -o ${NAME} \
 		${LIBFLAGS} \
 		${CFLAGS} \
@@ -59,6 +60,7 @@ libs: minilibx
 	make -C renderer
 	make -C bitmap
 
+minilibx/mlx.h: minilibx
 minilibx: ${MINILIBX}
 ${MINILIBX}:
 	make -C minilibx/
