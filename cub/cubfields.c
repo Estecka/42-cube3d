@@ -24,7 +24,7 @@
 ** @param int* height Outputs the height of the screen.
 */
 
-void	parseresolution(const char *line, int *width, int *height)
+void			parseresolution(const char *line, int *width, int *height)
 {
 	const char *src;
 
@@ -56,7 +56,7 @@ void	parseresolution(const char *line, int *width, int *height)
 ** @return An allocated copy of the path
 */
 
-void	parsetexpath(const char *line, char **dst)
+void			parsetexpath(const char *line, char **dst)
 {
 	*dst = ft_strdup(line);
 	if (!*dst)
@@ -65,31 +65,51 @@ void	parsetexpath(const char *line, char **dst)
 }
 
 /*
+** Parses a single RGB component of a color, and moves the cursor forward as ne
+** eded.
+** @param const char** line	A pointer to the current cursor.
+** @param const char*	src	The full line. Required only for error messages.
+** @return short	The color component
+*/
+
+static short	parsecolorrgb(char rgb, const char **line, const char *src)
+{
+	short value;
+
+	value = 0;
+	while (ft_isdigit(**line))
+	{
+		value = (10 * value) + *((*line)++) - '0';
+		if (value < 0 || value > 255)
+			throw(-1, "[CUB] Invalid %c color component : \n%s", rgb, src);
+	}
+	if (rgb == 'B')
+	{
+		while (ft_isspace(**line))
+			(*line)++;
+		if (**line)
+			throw(-1, "[CUB] Garbage character after color: \n%s", src);
+	}
+	else if (**line != ',' || !ft_isdigit(*(++*line)))
+		throw(-1, "[CUB] Invalid character after %c: \n%s", rgb, src);
+	return (value);
+}
+
+/*
 ** Parse the RGB components of a color.
 ** @param const char* line
 ** @return A fully opaque color.
 */
 
-t_rgba	parsecolor(const char *line)
+t_rgba			parsecolor(const char *line)
 {
 	t_rgba		color;
 	const char	*src;
 
 	src = line;
 	color = (t_rgba){ 0, 0, 0, 1 };
-	while (ft_isdigit(*line))
-		color.r = (10 * color.r) + *(line++) - '0';
-	if (*line != ',' || !ft_isdigit(*(++line)))
-		throw(-1, "[CUB] Invalid character after Red: %s", src);
-	while (ft_isdigit(*line))
-		color.g = (10 * color.g) + *(line++) - '0';
-	if (*line != ',' || !ft_isdigit(*(++line)))
-		throw(-1, "[CUB] Invalid character after Green: %s", src);
-	while (ft_isdigit(*line))
-		color.b = (10 * color.b) + *(line++) - '0';
-	while (ft_isspace(*line))
-		line++;
-	if (*line)
-		throw(-1, "[CUB] Invalid character after Blue: %s", src);
+	color.r = parsecolorrgb('R', &line, src);
+	color.g = parsecolorrgb('G', &line, src);
+	color.b = parsecolorrgb('B', &line, src);
 	return (color);
 }
