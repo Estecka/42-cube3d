@@ -84,7 +84,7 @@ clean:
 	rm -f *.o
 	rm -f *.gch
 
-fclean: clean
+fclean:
 	for l in ${LIBS}; do \
 		make fclean -C $$l ;\
 	done
