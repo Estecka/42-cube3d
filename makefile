@@ -9,6 +9,17 @@ OBJS	= ${SRCS:.c=.o}
 
 OS		= $(shell uname)
 
+LIBS = \
+	mallocspy \
+	mlxpp \
+	libft \
+	ft_printf \
+	ft_math \
+	dynarray \
+	cub \
+	renderer \
+	bitmap \
+
 NAME	= cub3D.out
 ifeq (${OS}, Linux)
 MINILIBX =	minilibx/libmlx.a
@@ -50,15 +61,9 @@ ${NAME}: minilibx/mlx.h ${OBJS}
 		${CFLAGS} \
 
 libs: minilibx
-	make -C mallocspy
-	make -C mlxpp
-	make -C libft
-	make -C ft_printf
-	make -C ft_math
-	make -C dynarray
-	make -C cub
-	make -C renderer
-	make -C bitmap
+	for l in ${LIBS}; do \
+		make -C $$l ;\
+	done
 
 minilibx/mlx.h: minilibx
 minilibx: ${MINILIBX}
@@ -73,10 +78,18 @@ endif
 all: ${NAME}
 
 clean:
+	for l in ${LIBS}; do \
+		make clean -C $$l ;\
+	done
 	rm -f *.o
 	rm -f *.gch
 
 fclean: clean
+	for l in ${LIBS}; do \
+		make fclean -C $$l ;\
+	done
+	rm -f *.o
+	rm -f *.gch
 	rm -f ${NAME}
 
 re: fclean ${NAME}
