@@ -9,7 +9,7 @@ OBJS	= ${SRCS:.c=.o}
 
 OS		= $(shell uname)
 
-NAME	= cub3d.out
+NAME	= cub3D.out
 ifeq (${OS}, Linux)
 MINILIBX =	minilibx/libmlx.a
 else
