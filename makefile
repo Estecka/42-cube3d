@@ -1,5 +1,6 @@
 SRCS	= main.c \
 	throw.c \
+	clampresolution.c \
 	stringbuilder/stringbuilder.c \
 	get_next_line/get_next_line.c \
 	worldbuilder/worldbuilder.c worldbuilder/transform.c worldbuilder/renderworld.c \

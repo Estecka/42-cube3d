@@ -81,6 +81,8 @@ extern int	main(int argc, char **args)
 	cubfile2world(&cub);
 	if (!(g_mlx = mlx_init()))
 		throw(errno, "[FATAL] MinilibX init failed.");
+	if (argc < 3)
+		clampresolution(&cub.world);
 	spyregpp(&g_mlx);
 	renderinit(cub.world.resolution.x, cub.world.resolution.y);
 	worldinit(&cub.world);

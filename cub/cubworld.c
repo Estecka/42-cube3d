@@ -95,10 +95,6 @@ static void	gridify(union u_cub *this)
 
 extern void	cubfile2world(union u_cub *this)
 {
-	if (this->file.resolution.x > WMAX)
-		this->world.resolution.x = WMAX;
-	if (this->file.resolution.y > HMAX)
-		this->world.resolution.y = HMAX;
 	this->world.floorcol.rgba.a = 0;
 	this->world.ceilcol.rgba.a = 0;
 	findplayer(this);
