@@ -69,13 +69,12 @@ extern int	main(int argc, char **args)
 	int			fd;
 	union u_cub	cub;
 
-	if (argc < 2)
-		throw(-1, "Not enough arguments.");
-	if (argc != 2 && (argc != 4 || ft_strncmp("--save", args[2], 7)))
-		throw(-1, "Invalid synopsis.");
+	throwif(argc < 2, -1, "[ARG] Not enough arguments.");
+	if (argc != 2 && (argc > 4 || ft_strncmp("--save", args[2], 7)))
+		throw(-1, "[ARG] Invalid synopsis.");
 	fd = open(args[1], O_RDONLY);
 	if (fd < 0)
-		throw(errno, "Could not open file.");
+		throw(errno, "[ARG] Could not open file.");
 	cub.world = (t_cubworld){0};
 	parsefile(&cub.file, fd);
 	cubfile2world(&cub);
@@ -89,6 +88,6 @@ extern int	main(int argc, char **args)
 	if (argc == 2)
 		play(&cub.world);
 	else
-		save(&cub.world, args[3]);
+		save(&cub.world, argc > 3 ? args[3] : "output.bmp");
 	spyflush();
 }
