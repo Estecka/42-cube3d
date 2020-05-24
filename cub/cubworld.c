@@ -49,7 +49,7 @@ static void	findplayer(union u_cub *this)
 				this->file.tiles[y][x] = '0';
 				this->world.playerspawn = (t_v2i) {x, y};
 				this->world.playerspawnangle =
-					((c == 'W') * 1) + ((c == 'S') * 2) + ((c == 'E') * 3);
+					((c == 'E') * 1) + ((c == 'S') * 2) + ((c == 'W') * 3);
 				this->world.playerspawnangle *= 90 * DEG2RAD;
 			}
 	}
