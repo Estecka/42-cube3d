@@ -14,6 +14,31 @@
 #include "cub_util.h"
 
 /*
+** Checks whether a filename as the *.cub extension.
+** @param const string path	The path or filename to check.
+** @return bool
+** 	true	The file has the cub extension.
+** 	false	The file doesn't have the cub extension.
+*/
+
+extern short	iscubext(const char *path)
+{
+	const char	*cursor;
+
+	cursor = path;
+	while (*cursor)
+		cursor++;
+	cursor -= 4;
+	if (cursor < path || ft_strncmp(cursor, ".cub", 4))
+	{
+		throw(-1, "[CUB] File does not have the \".cub\" extension.");
+		return (0);
+	}
+	else
+		return (1);
+}
+
+/*
 ** @return bool
 ** 	true	The line could be anything but the beginning of the tilemap.
 ** 	false	The line is the beginning of the tilemap.

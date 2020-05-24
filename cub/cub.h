@@ -101,6 +101,7 @@ union	u_cub
 	struct s_cubfile	file;
 };
 
+short	iscubext(const char *path);
 void	parsefile(t_cubfile *this, int fd);
 void	cubfile2world(union u_cub *this);
 char	tile(t_cubworld *this, int x, int y);

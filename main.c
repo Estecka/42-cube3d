@@ -72,6 +72,7 @@ extern int	main(int argc, char **args)
 	throwif(argc < 2, -1, "[ARG] Not enough arguments.");
 	if (argc != 2 && (argc > 4 || ft_strncmp("--save", args[2], 7)))
 		throw(-1, "[ARG] Invalid synopsis.");
+	iscubext(args[1]);
 	fd = open(args[1], O_RDONLY);
 	if (fd < 0)
 		throw(errno, "[ARG] Could not open file.");
