@@ -11,15 +11,16 @@ OBJS	= ${SRCS:.c=.o}
 OS		= $(shell uname)
 
 LIBS = \
-	mallocspy \
-	mlxpp \
-	libft \
-	ft_printf \
-	ft_math \
-	dynarray \
-	cub \
-	renderer \
-	bitmap \
+	mallocspy/libmallocspy.a \
+	mlxpp/libmlxpp.a \
+	libft/libft.a \
+	ft_printf/libftprintf.a \
+	ft_math/libftmath.a \
+	dynarray/libdynarray.a \
+	cub/libcub.a \
+	renderer/librenderer.a \
+	bitmap/libbitmap.a \
+
 
 NAME	= cub3D.out
 ifeq (${OS}, Linux)
@@ -55,16 +56,13 @@ endif
 
 
 
-${NAME}: minilibx/mlx.h ${OBJS} 
-	make libs
+${NAME}: minilibx/mlx.h ${OBJS} ${LIBS}
 	clang ${OBJS} -o ${NAME} \
 		${LIBFLAGS} \
 		${CFLAGS} \
 
-libs: minilibx
-	for l in ${LIBS}; do \
-		make -C $$l ;\
-	done
+%.a: force_check
+	make $(@F) -C $(@D)
 
 minilibx/mlx.h: minilibx
 minilibx: ${MINILIBX}
@@ -80,14 +78,14 @@ all: ${NAME}
 
 clean:
 	for l in ${LIBS}; do \
-		make clean -C $$l ;\
+		make clean -C $$(dirname $$l) ;\
 	done
 	rm -f *.o
 	rm -f *.gch
 
 fclean:
 	for l in ${LIBS}; do \
-		make fclean -C $$l ;\
+		make fclean -C $$(dirname $$l) ;\
 	done
 	rm -f *.o
 	rm -f *.gch
@@ -96,6 +94,7 @@ fclean:
 re: fclean ${NAME}
 
 .PHONY: \
+	force_check \
 	all clean fclean re \
 	libs \
 	minilibx \
