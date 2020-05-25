@@ -1,6 +1,6 @@
 #!/bin/bash
 
-EXEC=cub3d.out
+EXEC=cub3D
 LOG=valgrind.log
 
 valgrind \

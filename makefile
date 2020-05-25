@@ -22,7 +22,7 @@ LIBS = \
 	bitmap/libbitmap.a \
 
 
-NAME	= cub3D.out
+NAME	= cub3D
 ifeq (${OS}, Linux)
 MINILIBX =	minilibx/libmlx.a
 else
