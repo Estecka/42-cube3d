@@ -56,7 +56,7 @@ endif
 
 
 
-${NAME}: minilibx/mlx.h ${OBJS} ${LIBS}
+${NAME}: minilibx/mlx.h ${MINILIBX} ${LIBS} ${OBJS}
 	clang ${OBJS} -o ${NAME} \
 		${LIBFLAGS} \
 		${CFLAGS} \
@@ -64,11 +64,12 @@ ${NAME}: minilibx/mlx.h ${OBJS} ${LIBS}
 %.a: force_check
 	make $(@F) -C $(@D)
 
-minilibx/mlx.h: minilibx
-minilibx: ${MINILIBX}
+minilibx/mlx.h:
+	make mlx.h -C minilibx
+
+ifeq (${OS}, Darwin)
 ${MINILIBX}:
 	make -C minilibx/
-ifeq (${OS}, Darwin)
 	cp minilibx/${MINILIBX} ./
 endif
 
@@ -96,5 +97,4 @@ re: fclean ${NAME}
 .PHONY: \
 	force_check \
 	all clean fclean re \
-	libs \
 	minilibx \

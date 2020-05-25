@@ -2,10 +2,10 @@ OS		= $(shell uname)
 
 ifeq (${OS}, Linux)
 NAME = libmlx.a
-SUBDIR = linux/
+SUBDIR = linux
 else
 NAME = libmlx.dylib
-SUBDIR = macos-metal/
+SUBDIR = macos-metal
 endif
 
 all: mlx.h ${NAME}
@@ -15,11 +15,11 @@ mlx.h:
 
 ${NAME}:
 	make -C ${SUBDIR}
-	cp ${SUBDIR}${NAME} ./
+	cp ${SUBDIR}/${NAME} ./
 
 clean:
 	make clean -C ${SUBDIR}
-	rm -f ${SUBDIR}${NAME}
+	rm -f ${SUBDIR}/${NAME}
 fclean: clean
 	rm -f ${NAME}
 	rm -f ${mlx.h}
